@@ -30,6 +30,7 @@ public class RackManager {
 	}
 
 	public static RackManager getInstance() {
+
 		if (instance == null) {
 			instance = new RackManager();
 		}

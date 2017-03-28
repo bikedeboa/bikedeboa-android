@@ -11,5 +11,5 @@ public class LocalLight {
 	@SerializedName("lng")
 	public Double longitude;
 	@SerializedName("average")
-	public Double averageScore;
+	public Float averageScore;
 }

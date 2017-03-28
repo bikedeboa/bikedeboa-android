@@ -11,7 +11,7 @@ public class Rack extends RealmObject {
 	@PrimaryKey
 	private int id;
 	private double latitude, longitude;
-	private double averageScore;
+	private float averageScore;
 	// Complete description
 	private String text;
 	private String structureType;
@@ -44,7 +44,7 @@ public class Rack extends RealmObject {
 		return longitude;
 	}
 
-	public double getAverageScore() {
+	public float getAverageScore() {
 		return averageScore;
 	}
 

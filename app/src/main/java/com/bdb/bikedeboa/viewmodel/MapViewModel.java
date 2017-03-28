@@ -32,7 +32,10 @@ public class MapViewModel extends BaseObservable implements RackManager.RackMana
 
 		for (Rack rack : rackList) {
 			LatLng coords = new LatLng(rack.getLatitude(), rack.getLongitude());
-			this.googleMap.addMarker(new MarkerOptions().position(coords));
+			this.googleMap.addMarker(new MarkerOptions()
+					.position(coords)
+					.zIndex(rack.getAverageScore()))
+					.setTag(rack.getId());
 		}
 	}
 
