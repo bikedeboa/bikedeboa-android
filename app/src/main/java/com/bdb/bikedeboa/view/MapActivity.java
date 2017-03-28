@@ -1,35 +1,30 @@
-package com.bdb.bikedeboa;
+package com.bdb.bikedeboa.view;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.bdb.bikedeboa.model.manager.NetworkManager;
+import com.bdb.bikedeboa.R;
+import com.bdb.bikedeboa.viewmodel.MapViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import io.realm.Realm;
-
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
 	private GoogleMap googleMap;
+	private MapViewModel mapViewModel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_maps);
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map);
 		mapFragment.getMapAsync(this);
-
-		NetworkManager.init();
-
-		Realm.init(this);
-		Realm realm = Realm.getDefaultInstance();
 	}
 
 
@@ -46,9 +41,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	public void onMapReady(GoogleMap googleMap) {
 		this.googleMap = googleMap;
 
-		// Add a marker in Sydney and move the camera
-		LatLng sydney = new LatLng(-34, 151);
-		this.googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-		this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+		mapViewModel = new MapViewModel(this.googleMap);
+		// Move camera to Porto Alegre
+		this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(-30.0346, -51.2177)));
 	}
 }
