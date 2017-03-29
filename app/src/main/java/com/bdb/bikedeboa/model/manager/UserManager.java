@@ -10,7 +10,7 @@ import retrofit2.Response;
 
 public final class UserManager {
 
-	private static final String TAG = "UserManager";
+	private static final String TAG = UserManager.class.getSimpleName();
 	private static String authKey;
 
 	public static void authenticate() {

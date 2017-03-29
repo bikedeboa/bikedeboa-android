@@ -16,7 +16,7 @@ import retrofit2.Response;
 
 public class RackManager {
 
-	private final String TAG = "RackManager";
+	private static final String TAG = RackManager.class.getSimpleName();
 	private static RackManager instance;
 	private RackManagerCallback rackManagerCallback;
 	private Realm realm;
@@ -90,6 +90,7 @@ public class RackManager {
 	private Callback<LocalFull> localFullCallback = new Callback<LocalFull>() {
 		@Override
 		public void onResponse(Call<LocalFull> call, Response<LocalFull> response) {
+
 			if (response != null) {
 
 				LocalFull localFull = response.body();
