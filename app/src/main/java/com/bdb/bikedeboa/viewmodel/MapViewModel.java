@@ -1,7 +1,6 @@
 package com.bdb.bikedeboa.viewmodel;
 
 import android.databinding.BaseObservable;
-import android.databinding.Bindable;
 
 import com.bdb.bikedeboa.model.manager.RackManager;
 import com.bdb.bikedeboa.model.model.Rack;
@@ -15,9 +14,6 @@ public class MapViewModel extends BaseObservable implements RackManager.RackMana
 
 	private GoogleMap googleMap;
 	private RackManager rackManager;
-
-	@Bindable
-	public boolean updateRacks;
 
 	public MapViewModel(GoogleMap googleMap) {
 		this.googleMap = googleMap;
@@ -46,6 +42,10 @@ public class MapViewModel extends BaseObservable implements RackManager.RackMana
 
 	@Override
 	public void onRackUpdate(Rack rack) {
+		// notifyPropertyChanged... when the detail fragment is implemented
+	}
 
+	public void onRackClicked(int rackId) {
+		rackManager.fetchLocalFull(rackId);
 	}
 }

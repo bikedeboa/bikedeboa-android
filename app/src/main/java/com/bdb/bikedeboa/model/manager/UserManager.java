@@ -20,7 +20,7 @@ public final class UserManager {
 	}
 
 	public static boolean isAuthenticated() {
-		// Doesn't think about expired keys (yet)
+		// Doesn't think about expired keys (yet) -- might not have to, tests needed
 		return authKey != null;
 	}
 

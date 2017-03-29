@@ -7,9 +7,9 @@ public class LocalLight {
 	@SerializedName("id")
 	public Integer id;
 	@SerializedName("lat")
-	public Double latitude;
+	public Double lat;
 	@SerializedName("lng")
-	public Double longitude;
+	public Double lng;
 	@SerializedName("average")
-	public Float averageScore;
+	public Float average;
 }

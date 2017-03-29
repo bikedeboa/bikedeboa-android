@@ -3,6 +3,7 @@ package com.bdb.bikedeboa.model.manager;
 import android.util.Log;
 
 import com.bdb.bikedeboa.model.model.Rack;
+import com.bdb.bikedeboa.model.network.response.LocalFull;
 import com.bdb.bikedeboa.model.network.response.LocalLight;
 
 import java.util.ArrayList;
@@ -54,18 +55,15 @@ public class RackManager {
 		}
 	}
 
-	// Network requests
 	public void fetchLocalLightList() {
 		NetworkManager.getLocalLightList(localLightCallback);
 	}
 
-	// Network requests callbacks
 	private Callback<List<LocalLight>> localLightCallback = new Callback<List<LocalLight>>() {
 		@Override
 		public void onResponse(Call<List<LocalLight>> call, Response<List<LocalLight>> response) {
 
 			List<LocalLight> localLightList = response.body();
-
 			if (localLightList != null) {
 				realm.beginTransaction();
 				for (LocalLight localLight : localLightList) {
@@ -79,6 +77,37 @@ public class RackManager {
 		@Override
 		public void onFailure(Call<List<LocalLight>> call, Throwable t) {
 			Log.w(TAG, "Failure fetching /local/light.");
+		}
+	};
+
+	public void fetchLocalFull(int rackId) {
+
+		if (UserManager.isAuthenticated()) {
+			NetworkManager.getLocalFull(localFullCallback, rackId, UserManager.getAuthKey());
+		}
+	}
+
+	private Callback<LocalFull> localFullCallback = new Callback<LocalFull>() {
+		@Override
+		public void onResponse(Call<LocalFull> call, Response<LocalFull> response) {
+			if (response != null) {
+
+				LocalFull localFull = response.body();
+				Rack rack = realm.where(Rack.class)
+						.equalTo("id", localFull.id)
+						.findFirst();
+
+				realm.beginTransaction();
+				rack.completeRack(localFull);
+				realm.commitTransaction();
+
+				RackManager.this.rackManagerCallback.onRackUpdate(rack);
+			}
+		}
+
+		@Override
+		public void onFailure(Call<LocalFull> call, Throwable t) {
+			Log.w(TAG, "Failure fetching /local/:id.");
 		}
 	};
 
