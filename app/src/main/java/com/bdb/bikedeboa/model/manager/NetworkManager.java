@@ -1,6 +1,7 @@
 package com.bdb.bikedeboa.model.manager;
 
 import com.bdb.bikedeboa.model.network.Service;
+import com.bdb.bikedeboa.model.network.response.LocalFull;
 import com.bdb.bikedeboa.model.network.response.LocalLight;
 import com.bdb.bikedeboa.model.network.response.Token;
 
@@ -30,14 +31,20 @@ public final class NetworkManager {
 
 	public static void getLocalLightList(Callback<List<LocalLight>> callback) {
 
-		Call<List<LocalLight>> localListCall = service.getLocalsLight();
-		localListCall.enqueue(callback);
+		Call<List<LocalLight>> call = service.getLocalsLight();
+		call.enqueue(callback);
 	}
 
 	public static void getAuthToken(Callback<Token> callback, String username, String password) {
 
-		Call<Token> tokenCall = service.getAuthToken(username, password);
-		tokenCall.enqueue(callback);
+		Call<Token> call = service.getAuthToken(username, password);
+		call.enqueue(callback);
+	}
+
+	public static void getLocalFull(Callback<LocalFull> callback, int rackId, String authKey) {
+
+		Call<LocalFull> call = service.getLocalFull(rackId, authKey);
+		call.enqueue(callback);
 	}
 
 }
