@@ -37,7 +37,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		this.googleMap = googleMap;
 		this.googleMap.setOnMarkerClickListener(this);
 
-		mapViewModel = new MapViewModel(this.googleMap);
+		mapViewModel = new MapViewModel(this.googleMap, this);
 		customizeMap();
 
 		// Move camera to Porto Alegre
