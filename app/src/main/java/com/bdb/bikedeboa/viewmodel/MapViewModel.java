@@ -1,9 +1,11 @@
 package com.bdb.bikedeboa.viewmodel;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.model.manager.RackManager;
@@ -22,6 +24,7 @@ public class MapViewModel extends BaseObservable implements RackManager.RackMana
 		GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveListener {
 
 	private Context context;
+	private Resources res;
 	private GoogleMap googleMap;
 	private RackManager rackManager;
 	private List<Marker> markerList;
@@ -33,6 +36,7 @@ public class MapViewModel extends BaseObservable implements RackManager.RackMana
 		this.rackManager = RackManager.getInstance();
 		this.cameraZoom = googleMap.getCameraPosition().zoom;
 		this.markerList = new ArrayList<>();
+		this.res = context.getResources();
 
 		// Set listeners
 		rackManager.setRackManagerCallback(this);
@@ -45,6 +49,13 @@ public class MapViewModel extends BaseObservable implements RackManager.RackMana
 
 	private void placeMarkers(List<Rack> rackList) {
 
+		// Clean previous markers
+		for (Marker marker : markerList) {
+			marker.remove();
+		}
+		markerList.clear();
+
+		// Add new
 		for (Rack rack : rackList) {
 			LatLng coords = new LatLng(rack.getLatitude(), rack.getLongitude());
 			float rackScore = rack.getAverageScore();
@@ -67,53 +78,61 @@ public class MapViewModel extends BaseObservable implements RackManager.RackMana
 
 	private BitmapDescriptor getCustomPin(float rackScore, boolean mini) {
 
-		Bitmap pinBitmap = null;
-		float scale = 0;
-
+		// Select correct resource
+		Drawable drawable = null;
 		if (rackScore == 0) {
 			if (mini) {
-				pinBitmap = ((BitmapDrawable) context.getResources()
-						.getDrawable(R.drawable.pin_gray_mini)).getBitmap();
+				drawable = res.getDrawable(R.drawable.pin_gray_mini);
 			} else {
-				pinBitmap = ((BitmapDrawable) context.getResources()
-						.getDrawable(R.drawable.pin_gray)).getBitmap();
+				drawable = res.getDrawable(R.drawable.pin_gray);
 			}
-			scale = 0.8f;
 		} else if (rackScore > 0 && rackScore <= 2) {
 			if (mini) {
-				pinBitmap =	((BitmapDrawable) context.getResources()
-						.getDrawable(R.drawable.pin_red_mini)).getBitmap();
+				drawable =	res.getDrawable(R.drawable.pin_red_mini);
 			} else {
-				pinBitmap =	((BitmapDrawable) context.getResources()
-						.getDrawable(R.drawable.pin_red)).getBitmap();
+				drawable =	res.getDrawable(R.drawable.pin_red);
 			}
 		} else if (rackScore > 2 && rackScore < 3.5) {
 			if (mini) {
-				pinBitmap = ((BitmapDrawable) context.getResources()
-						.getDrawable(R.drawable.pin_yellow_mini)).getBitmap();
+				drawable = res.getDrawable(R.drawable.pin_yellow_mini);
 			} else {
-				pinBitmap = ((BitmapDrawable) context.getResources()
-						.getDrawable(R.drawable.pin_yellow)).getBitmap();
+				drawable = res.getDrawable(R.drawable.pin_yellow);
 			}
 		} else if (rackScore >= 3.5) {
 			if (mini) {
-				pinBitmap = ((BitmapDrawable) context.getResources()
-						.getDrawable(R.drawable.pin_green_mini)).getBitmap();
+				drawable = res.getDrawable(R.drawable.pin_green_mini);
 			} else {
-				pinBitmap = ((BitmapDrawable) context.getResources()
-						.getDrawable(R.drawable.pin_green)).getBitmap();
+				drawable = res.getDrawable(R.drawable.pin_green);
 			}
 		}
 
-		if (scale == 0) {
-			scale = 0.5f + (rackScore/10);
+		float scale;
+		int alpha;
+		if (mini) {
+			scale = rackScore == 0 ? 0.4f : 0.1f + (rackScore/10);
+			alpha = (int) (255*0.7);
+		} else {
+			scale = rackScore == 0 ? 0.8f : 0.6f + (rackScore/10);
+			alpha = (int) (255*0.9);
 		}
 
-		pinBitmap = Bitmap.createScaledBitmap(pinBitmap,
-				Math.round(pinBitmap.getWidth() * scale),
-				Math.round(pinBitmap.getHeight() * scale), false);
+		Bitmap bitmap;
+		try {
+			// Svg was way too big, that's why I'm dividing by seven
+			// (mostly because I don't want to change the svgs too)
+			bitmap = Bitmap.createBitmap(
+					(int) (scale * drawable.getIntrinsicWidth()/7),
+					(int) (scale * drawable.getIntrinsicHeight()/7),
+					Bitmap.Config.ARGB_4444);
 
-		return BitmapDescriptorFactory.fromBitmap(pinBitmap);
+			Canvas canvas = new Canvas(bitmap);
+			drawable.setAlpha(alpha);
+			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+			drawable.draw(canvas);
+		} catch (OutOfMemoryError e) {
+			return null;
+		}
+		return BitmapDescriptorFactory.fromBitmap(bitmap);
 	}
 
 	@Override
