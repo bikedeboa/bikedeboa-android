@@ -90,7 +90,7 @@ public class RackManager {
 	private Callback<LocalFull> localFullCallback = new Callback<LocalFull>() {
 		@Override
 		public void onResponse(Call<LocalFull> call, Response<LocalFull> response) {
-
+			// Complete or update data of an already existing rack
 			if (response != null) {
 
 				LocalFull localFull = response.body();

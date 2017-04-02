@@ -13,9 +13,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.Marker;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
 	private static final String TAG = MapActivity.class.getSimpleName();
 	private GoogleMap googleMap;
@@ -35,19 +34,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		this.googleMap = googleMap;
-		this.googleMap.setOnMarkerClickListener(this);
-
-		mapViewModel = new MapViewModel(this.googleMap);
-		customizeMap();
-
 		// Move camera to Porto Alegre
 		LatLng portoAlegre = new LatLng(-30.039005, -51.224059);
 		this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(portoAlegre, 14));
+		customizeMap();
+
+		mapViewModel = new MapViewModel(this.googleMap, this);
 	}
 
-	// Customise the styling of the base map using a JSON object define in a raw resource file.
+	// Customise the styling of the base map using a JSON object defined in a raw resource file.
 	private void customizeMap() {
-
 		try {
 			boolean success = this.googleMap
 					.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.styles_map));
@@ -58,14 +54,5 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		} catch (Resources.NotFoundException e) {
 			Log.e(TAG, "Can't find style. Error: ", e);
 		}
-	}
-
-	@Override
-	public boolean onMarkerClick(Marker marker) {
-
-		int rackId = (int) marker.getTag();
-		mapViewModel.onRackClicked(rackId);
-		// Return false if we want the camera to move to the marker and an info window to appear
-		return true;
 	}
 }
