@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+    >
+
+        <data>
+            <variable
+                name="viewModel"
+                type="com.bdb.bikedeboa.viewmodel.DetailViewModel" />
+        </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.bdb.bikedeboa.view.DetailActivity">
+        <ImageView
+            android:id="@+id/rack_photo"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            tools:src="@drawable/spinner"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/how_to_get_there"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Como chegar"/>
+
+            <Button
+                android:id="@+id/rate"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Avaliar"/>
+
+            <Button
+                android:id="@+id/suggest_change"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Sugerir"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.title}"
+            tools:text="Redenção"/>
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.address}"
+            tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
+
+        <ImageView
+            android:id="@+id/map_lite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</layout>
