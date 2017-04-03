@@ -20,8 +20,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapViewModel extends BaseObservable implements RackManager.RackManagerCallback,
-		GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveListener {
+public class MapViewModel extends BaseObservable implements RackManager.RackListCallback {
 
 	private Context context;
 	private Resources res;
@@ -39,9 +38,7 @@ public class MapViewModel extends BaseObservable implements RackManager.RackMana
 		this.res = context.getResources();
 
 		// Set listeners
-		rackManager.setRackManagerCallback(this);
-		googleMap.setOnMarkerClickListener(this);
-		googleMap.setOnCameraMoveListener(this);
+		rackManager.setRackListCallback(this);
 
 		// Fetch racks currently stored at the local db
 		placeMarkers(rackManager.getRackList());
@@ -140,21 +137,6 @@ public class MapViewModel extends BaseObservable implements RackManager.RackMana
 		placeMarkers(rackList);
 	}
 
-	@Override
-	public void onRackUpdate(Rack rack) {
-		// notifyPropertyChanged... when the detail fragment is implemented
-	}
-
-	@Override
-	public boolean onMarkerClick(Marker marker) {
-
-		int rackId = (int) marker.getTag();
-		rackManager.fetchLocalFull(rackId);
-		// Return false if we want the camera to move to the marker and an info window to appear
-		return true;
-	}
-
-	@Override
 	public void onCameraMove() {
 
 		float currentZoom = googleMap.getCameraPosition().zoom;

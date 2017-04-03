@@ -17,12 +17,12 @@ public class Rack extends RealmObject {
 	// Complete description
 	private String text;
 	private String structureType;
-	private boolean isPublic;
+	private String isPublic; // Not using boolean here because this info is not required -- and a null would break the program
 	private String photoUrl;
 	private String description;
 	private String address;
 //	private RealmList<Review> reviewList;
-	private RealmList<Tag> tagList = new RealmList<>();;
+	private RealmList<Tag> tagList = new RealmList<>();
 	private int checkIns;
 	private boolean isComplete = false;
 
@@ -44,7 +44,7 @@ public class Rack extends RealmObject {
 		this.address = localFull.address;
 		this.checkIns = localFull.checkIns;
 		//this.reviewList
-		this.isComplete = true; // TODO: Doesn't consider if reviews were fetched -- second request needed
+		this.isComplete = true; // Doesn't consider if reviews were fetched -- second request needed
 		for (LocalFull.Tag tag : localFull.tags) {
 			this.tagList.add(new Tag(tag.name, tag.count));
 		}
@@ -74,7 +74,7 @@ public class Rack extends RealmObject {
 		return structureType;
 	}
 
-	public boolean isPublic() {
+	public String isPublic() {
 		return isPublic;
 	}
 

@@ -16,7 +16,7 @@ public class LocalFull {
 	@SerializedName("structureType")
 	public String structureType;
 	@SerializedName("isPublic")
-	public Boolean isPublic;
+	public String isPublic;
 	@SerializedName("text")
 	public String text;
 	@SerializedName("photo")

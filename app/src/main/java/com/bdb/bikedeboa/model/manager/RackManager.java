@@ -18,7 +18,8 @@ public class RackManager {
 
 	private static final String TAG = RackManager.class.getSimpleName();
 	private static RackManager instance;
-	private RackManagerCallback rackManagerCallback;
+	private RackListCallback rackListCallback;
+	private SingleRackCallback singleRackCallback;
 	private Realm realm;
 	private List<Rack> rackList;
 
@@ -38,20 +39,30 @@ public class RackManager {
 		return instance;
 	}
 
-	public void setRackManagerCallback(RackManagerCallback rackManagerCallback) {
-		this.rackManagerCallback = rackManagerCallback;
+	public void setRackListCallback(RackListCallback rackListCallback) {
+		this.rackListCallback = rackListCallback;
+	}
+
+	public void setSingleRackCallback(SingleRackCallback singleRackCallback) {
+		this.singleRackCallback = singleRackCallback;
 	}
 
 	public List<Rack> getRackList() {
 		return rackList;
 	}
 
+	public Rack getRack(int rackId) {
+		return realm.where(Rack.class)
+				.equalTo("id", rackId)
+				.findFirst();
+	}
+
 	private void updateRackList() {
 
 		rackList.clear();
 		rackList.addAll(realm.where(Rack.class).findAll());
-		if (rackManagerCallback != null) {
-			rackManagerCallback.onRackListUpdate(rackList);
+		if (rackListCallback != null) {
+			rackListCallback.onRackListUpdate(rackList);
 		}
 	}
 
@@ -67,7 +78,14 @@ public class RackManager {
 			if (localLightList != null) {
 				realm.beginTransaction();
 				for (LocalLight localLight : localLightList) {
-					realm.copyToRealmOrUpdate(new Rack(localLight));
+					Rack rack = realm.where(Rack.class)
+							.equalTo("id", localLight.id)
+							.findFirst();
+
+					// Add to realm if rack is new and avoid overriding complete racks
+					if (rack == null || !rack.isComplete()) {
+						realm.copyToRealmOrUpdate(new Rack(localLight));
+					}
 				}
 				realm.commitTransaction();
 				updateRackList();
@@ -98,11 +116,16 @@ public class RackManager {
 						.equalTo("id", localFull.id)
 						.findFirst();
 
-				realm.beginTransaction();
-				rack.completeRack(localFull);
-				realm.commitTransaction();
+				if (rack != null) {
+					realm.beginTransaction();
+					rack.completeRack(localFull);
+					realm.commitTransaction();
 
-				RackManager.this.rackManagerCallback.onRackUpdate(rack);
+					if (singleRackCallback != null) {
+						RackManager.this.singleRackCallback.onRackUpdate(rack);
+					}
+				}
+
 			}
 		}
 
@@ -112,10 +135,11 @@ public class RackManager {
 		}
 	};
 
-	public interface RackManagerCallback {
-
+	public interface RackListCallback {
 		void onRackListUpdate(List<Rack> rackList);
+	}
 
+	public interface SingleRackCallback {
 		void onRackUpdate(Rack rack);
 	}
 }

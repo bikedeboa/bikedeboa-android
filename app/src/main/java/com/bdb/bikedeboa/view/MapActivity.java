@@ -1,5 +1,6 @@
 package com.bdb.bikedeboa.view;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -13,8 +14,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+import static com.bdb.bikedeboa.util.Constants.RACK_ID;
+
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
+		GoogleMap.OnMarkerClickListener,
+		GoogleMap.OnCameraMoveListener {
 
 	private static final String TAG = MapActivity.class.getSimpleName();
 	private GoogleMap googleMap;
@@ -39,6 +45,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 		this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(portoAlegre, 14));
 		customizeMap();
 
+		// Set listeners
+		googleMap.setOnMarkerClickListener(this);
+		googleMap.setOnCameraMoveListener(this);
+
 		mapViewModel = new MapViewModel(this.googleMap, this);
 	}
 
@@ -54,5 +64,26 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 		} catch (Resources.NotFoundException e) {
 			Log.e(TAG, "Can't find style. Error: ", e);
 		}
+	}
+
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+
+		int rackId = (int) marker.getTag();
+		launchDetailActivity(rackId);
+		// Return false if we want the camera to move to the marker and an info window to appear
+		return true;
+	}
+
+	@Override
+	public void onCameraMove() {
+		mapViewModel.onCameraMove();
+	}
+
+	public void launchDetailActivity(int rackId) {
+
+		Intent intent = new Intent(this, DetailActivity.class);
+		intent.putExtra(RACK_ID, rackId);
+		startActivity(intent);
 	}
 }
