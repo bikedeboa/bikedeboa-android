@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-    >
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-        <data>
-            <variable
-                name="viewModel"
-                type="com.bdb.bikedeboa.viewmodel.DetailViewModel" />
-        </data>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.bdb.bikedeboa.viewmodel.DetailViewModel"/>
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context="com.bdb.bikedeboa.view.DetailActivity">
+
         <ImageView
             android:id="@+id/rack_photo"
             android:layout_width="match_parent"
             android:layout_height="180dp"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            app:imageAddress="@{viewModel.image}"
             tools:src="@drawable/spinner"/>
 
         <android.support.v7.widget.LinearLayoutCompat
@@ -26,23 +31,23 @@
 
             <Button
                 android:id="@+id/how_to_get_there"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 tools:text="Como chegar"/>
 
             <Button
                 android:id="@+id/rate"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 tools:text="Avaliar"/>
 
             <Button
                 android:id="@+id/suggest_change"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 tools:text="Sugerir"/>
 
         </android.support.v7.widget.LinearLayoutCompat>

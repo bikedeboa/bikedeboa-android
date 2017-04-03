@@ -78,7 +78,14 @@ public class RackManager {
 			if (localLightList != null) {
 				realm.beginTransaction();
 				for (LocalLight localLight : localLightList) {
-					realm.copyToRealmOrUpdate(new Rack(localLight));
+					Rack rack = realm.where(Rack.class)
+							.equalTo("id", localLight.id)
+							.findFirst();
+
+					// Add to realm if rack is new and avoid overriding complete racks
+					if (rack == null || !rack.isComplete()) {
+						realm.copyToRealmOrUpdate(new Rack(localLight));
+					}
 				}
 				realm.commitTransaction();
 				updateRackList();
@@ -109,13 +116,16 @@ public class RackManager {
 						.equalTo("id", localFull.id)
 						.findFirst();
 
-				realm.beginTransaction();
-				rack.completeRack(localFull);
-				realm.commitTransaction();
+				if (rack != null) {
+					realm.beginTransaction();
+					rack.completeRack(localFull);
+					realm.commitTransaction();
 
-				if (singleRackCallback != null) {
-					RackManager.this.singleRackCallback.onRackUpdate(rack);
+					if (singleRackCallback != null) {
+						RackManager.this.singleRackCallback.onRackUpdate(rack);
+					}
 				}
+
 			}
 		}
 

@@ -2,6 +2,7 @@ package com.bdb.bikedeboa.viewmodel;
 
 import android.databinding.BaseObservable;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.bdb.bikedeboa.model.manager.RackManager;
 import com.bdb.bikedeboa.model.model.Rack;
 
@@ -9,7 +10,7 @@ public class DetailViewModel extends BaseObservable implements
 		RackManager.SingleRackCallback {
 
 	private final RackManager rackManager;
-	private final Rack rack;
+	private Rack rack;
 
 	public DetailViewModel(int rackId) {
 		this.rackManager = RackManager.getInstance();
@@ -25,7 +26,7 @@ public class DetailViewModel extends BaseObservable implements
 
 	@Override
 	public void onRackUpdate(Rack rack) {
-
+		notifyPropertyChanged(BR._all);
 	}
 
 	public String getTitle() {
@@ -34,5 +35,9 @@ public class DetailViewModel extends BaseObservable implements
 
 	public String getAddress() {
 		return rack.getAddress();
+	}
+
+	public String getImage() {
+		return rack.getPhotoUrl();
 	}
 }
