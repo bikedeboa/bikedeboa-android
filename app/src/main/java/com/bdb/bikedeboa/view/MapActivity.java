@@ -1,5 +1,6 @@
 package com.bdb.bikedeboa.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 import static com.bdb.bikedeboa.util.Constants.RACK_ID;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -25,6 +28,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	private static final String TAG = MapActivity.class.getSimpleName();
 	private GoogleMap googleMap;
 	private MapViewModel mapViewModel;
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

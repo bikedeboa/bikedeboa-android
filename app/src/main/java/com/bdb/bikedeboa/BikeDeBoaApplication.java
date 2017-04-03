@@ -8,12 +8,19 @@ import com.bdb.bikedeboa.model.manager.UserManager;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class BikeDeBoaApplication extends Application {
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		CalligraphyConfig.initDefault(
+				new CalligraphyConfig.Builder()
+						.setDefaultFontPath("Raleway-Regular.ttf")
+						.setFontAttrId(R.attr.fontPath)
+						.build());
 
 		initDatabase();
 		NetworkManager.init();

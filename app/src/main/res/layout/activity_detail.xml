@@ -34,35 +34,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="Como chegar"/>
+                fontPath="font/Raleway-Light.ttf"
+                android:text="Como chegar"/>
 
             <Button
                 android:id="@+id/rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="Avaliar"/>
+                fontPath="font/Raleway-Light.ttf"
+                android:text="Avaliar"/>
 
             <Button
                 android:id="@+id/suggest_change"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="Sugerir"/>
+                fontPath="font/Raleway-Light.ttf"
+                android:text="Sugerir Mudança"/>
 
         </android.support.v7.widget.LinearLayoutCompat>
 
         <TextView
             android:id="@+id/name"
+            fontPath="font/Raleway-SemiBold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:text="@{viewModel.title}"
+            android:textColor="@android:color/black"
+            android:textSize="28sp"
             tools:text="Redenção"/>
 
         <TextView
             android:id="@+id/address"
+            fontPath="font/Raleway-SemiBold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:text="@{viewModel.address}"
             tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
 
