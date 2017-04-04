@@ -40,4 +40,9 @@ public class DetailViewModel extends BaseObservable implements
 	public String getImage() {
 		return rack.getPhotoUrl();
 	}
+
+
+	public boolean hasImage() {
+		return rack.getPhotoUrl() != null && !rack.getPhotoUrl().equals("");
+	}
 }

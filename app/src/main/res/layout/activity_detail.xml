@@ -22,36 +22,74 @@
             android:layout_height="180dp"
             android:padding="0dp"
             android:scaleType="centerCrop"
+            app:visible="@{viewModel.hasImage}"
             app:imageAddress="@{viewModel.image}"
             tools:src="@drawable/spinner"/>
 
         <android.support.v7.widget.LinearLayoutCompat
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/how_to_get_there"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <android.support.v7.widget.LinearLayoutCompat
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
-                fontPath="font/Raleway-Light.ttf"
-                android:text="Como chegar"/>
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/rate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                fontPath="font/Raleway-Light.ttf"
-                android:text="Avaliar"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
 
-            <Button
-                android:id="@+id/suggest_change"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                <Button
+                    android:id="@+id/how_to_get_there"
+                    fontPath="font/Raleway-Light.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Como chegar"/>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
-                fontPath="font/Raleway-Light.ttf"
-                android:text="Sugerir Mudança"/>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+
+                <Button
+                    android:id="@+id/rate"
+                    fontPath="font/Raleway-Light.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Avaliar"/>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+
+                <Button
+                    android:id="@+id/suggest_change"
+                    fontPath="font/Raleway-Light.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sugerir Mudança"/>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
 
         </android.support.v7.widget.LinearLayoutCompat>
 
@@ -60,10 +98,10 @@
             fontPath="font/Raleway-SemiBold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingTop="4dp"
-            android:paddingBottom="4dp"
             android:text="@{viewModel.title}"
             android:textColor="@android:color/black"
             android:textSize="28sp"
