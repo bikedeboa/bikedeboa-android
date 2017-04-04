@@ -16,7 +16,7 @@ public class BindingAdapters {
 		Glide.with(imageView.getContext())
 				.load(imageAddress)
 				.thumbnail(Glide.with(imageView.getContext())
-						.load(R.drawable.spinning_wheel))
+						.load(R.drawable.wheel_loading))
 				.diskCacheStrategy(DiskCacheStrategy.RESULT)
 				.into(imageView);
 	}
