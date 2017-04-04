@@ -22,76 +22,105 @@
             android:layout_height="180dp"
             android:padding="0dp"
             android:scaleType="centerCrop"
-            app:visible="@{viewModel.hasImage}"
             app:imageAddress="@{viewModel.image}"
+            app:visible="@{viewModel.hasImage}"
             tools:src="@drawable/spinner"/>
 
         <android.support.v7.widget.LinearLayoutCompat
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
 
             <android.support.v7.widget.LinearLayoutCompat
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/route"
+                    android:tint="@android:color/darker_gray"/>
 
-                <Button
+                <TextView
                     android:id="@+id/how_to_get_there"
-                    fontPath="font/Raleway-Light.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Como chegar"/>
+                    android:textAlignment="center"
+                    fontPath="font/Raleway-Regular.ttf"
+                    android:textSize="10sp"
+                    android:text="Como chegar"
+                    android:textAllCaps="true"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
+            <include layout="@layout/divider_vertical"/>
+
             <android.support.v7.widget.LinearLayoutCompat
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/review"
+                    android:tint="@android:color/darker_gray"/>
 
-                <Button
+                <TextView
                     android:id="@+id/rate"
-                    fontPath="font/Raleway-Light.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:layout_weight="1"
+                    fontPath="font/Raleway-Regular.ttf"
+                    android:textAllCaps="true"
+                    android:textSize="10sp"
                     android:text="Avaliar"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
+            <include layout="@layout/divider_vertical"/>
+
             <android.support.v7.widget.LinearLayoutCompat
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:padding="3dp"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/pencil_edit_button"
+                    android:tint="@android:color/darker_gray"/>
 
-                <Button
+                <TextView
                     android:id="@+id/suggest_change"
-                    fontPath="font/Raleway-Light.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:layout_weight="1"
+                    fontPath="font/Raleway-Regular.ttf"
+                    android:textAllCaps="true"
+                    android:textSize="10sp"
                     android:text="Sugerir Mudança"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
-
         </android.support.v7.widget.LinearLayoutCompat>
+
+        <include layout="@layout/divider_horizontal" />
 
         <TextView
             android:id="@+id/name"
@@ -101,7 +130,7 @@
             android:paddingBottom="4dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingTop="4dp"
+            android:paddingTop="16dp"
             android:text="@{viewModel.title}"
             android:textColor="@android:color/black"
             android:textSize="28sp"
@@ -114,6 +143,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
+            android:textSize="14sp"
             android:text="@{viewModel.address}"
             tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
 
