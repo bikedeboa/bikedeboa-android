@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.Marker;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.bdb.bikedeboa.R.id.map;
 import static com.bdb.bikedeboa.util.Constants.RACK_ID;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -41,7 +42,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		setContentView(R.layout.activity_maps);
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.map);
+				.findFragmentById(map);
 		mapFragment.getMapAsync(this);
 	}
 
@@ -62,6 +63,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 	// Customise the styling of the base map using a JSON object defined in a raw resource file.
 	private void customizeMap() {
+
+		this.googleMap.getUiSettings().setRotateGesturesEnabled(false);
 		try {
 			boolean success = this.googleMap
 					.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.styles_map));

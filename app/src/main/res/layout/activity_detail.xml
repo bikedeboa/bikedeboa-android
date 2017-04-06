@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -29,9 +30,9 @@
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:orientation="horizontal">
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
@@ -49,13 +50,13 @@
 
                 <TextView
                     android:id="@+id/how_to_get_there"
+                    fontPath="font/Raleway-Medium.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    fontPath="font/Raleway-Regular.ttf"
-                    android:textSize="10sp"
                     android:text="Como chegar"
-                    android:textAllCaps="true"/>
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textSize="10sp"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -77,14 +78,14 @@
 
                 <TextView
                     android:id="@+id/rate"
+                    fontPath="font/Raleway-Medium.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
                     android:layout_weight="1"
-                    fontPath="font/Raleway-Regular.ttf"
+                    android:text="Avaliar"
+                    android:textAlignment="center"
                     android:textAllCaps="true"
-                    android:textSize="10sp"
-                    android:text="Avaliar"/>
+                    android:textSize="10sp"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -100,27 +101,27 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:padding="3dp"
                     android:layout_marginBottom="5dp"
+                    android:padding="3dp"
                     android:src="@drawable/pencil_edit_button"
                     android:tint="@android:color/darker_gray"/>
 
                 <TextView
                     android:id="@+id/suggest_change"
+                    fontPath="font/Raleway-Medium.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
                     android:layout_weight="1"
-                    fontPath="font/Raleway-Regular.ttf"
+                    android:text="Sugerir Mudança"
+                    android:textAlignment="center"
                     android:textAllCaps="true"
-                    android:textSize="10sp"
-                    android:text="Sugerir Mudança"/>
+                    android:textSize="10sp"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
         </android.support.v7.widget.LinearLayoutCompat>
 
-        <include layout="@layout/divider_horizontal" />
+        <include layout="@layout/divider_horizontal"/>
 
         <TextView
             android:id="@+id/name"
@@ -143,14 +144,18 @@
             android:layout_height="wrap_content"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:textSize="14sp"
             android:text="@{viewModel.address}"
+            android:textSize="14sp"
             tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
 
-        <ImageView
+        <com.google.android.gms.maps.MapView
             android:id="@+id/map_lite"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
+            map:cameraZoom="18"
+            map:liteMode="true"
+            map:mapType="normal"/>
 
     </LinearLayout>
 </layout>
