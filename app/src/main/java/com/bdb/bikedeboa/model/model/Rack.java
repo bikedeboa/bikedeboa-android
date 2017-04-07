@@ -44,10 +44,11 @@ public class Rack extends RealmObject {
 		this.address = localFull.address;
 		this.checkIns = localFull.checkIns;
 		//this.reviewList
-		this.isComplete = true; // Doesn't consider if reviews were fetched -- second request needed
+		this.tagList.clear();
 		for (LocalFull.Tag tag : localFull.tags) {
 			this.tagList.add(new Tag(tag.name, tag.count));
 		}
+		this.isComplete = true; // Doesn't consider if reviews were fetched -- second request needed
 	}
 
 	public int getId() {
