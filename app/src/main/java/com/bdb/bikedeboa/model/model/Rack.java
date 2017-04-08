@@ -98,4 +98,8 @@ public class Rack extends RealmObject {
 	public boolean isComplete() {
 		return isComplete;
 	}
+
+	public RealmList<Tag> getTagList() {
+		return tagList;
+	}
 }

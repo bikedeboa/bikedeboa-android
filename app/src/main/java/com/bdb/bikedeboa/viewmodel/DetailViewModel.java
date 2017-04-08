@@ -11,12 +11,15 @@ import com.android.databinding.library.baseAdapters.BR;
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.model.manager.RackManager;
 import com.bdb.bikedeboa.model.model.Rack;
+import com.bdb.bikedeboa.model.model.Tag;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 public class DetailViewModel extends BaseObservable implements
 		RackManager.SingleRackCallback {
@@ -60,6 +63,10 @@ public class DetailViewModel extends BaseObservable implements
 
 	public boolean hasImage() {
 		return rack.getPhotoUrl() != null && !rack.getPhotoUrl().equals("");
+	}
+
+	public List<Tag> getTagList() {
+		return rack.getTagList();
 	}
 
 	public BitmapDescriptor getCustomPin() {
