@@ -69,10 +69,27 @@ public class DetailViewModel extends BaseObservable implements
 		return rack.getTagList();
 	}
 
+	public float getAverageRating() {
+		return rack.getAverageRating();
+	}
+
+	public String getAverageRatingString() {
+
+		if (rack.getAverageRating() % 1 == 0) {
+			return String.format("%.0f", rack.getAverageRating());
+		} else {
+			return String.format("%.1f", rack.getAverageRating());
+		}
+	}
+
+	public String getReviewNumberString() {
+		return res.getQuantityString(R.plurals.n_ratings, rack.getReviewNumber(), rack.getReviewNumber());
+	}
+
 	public BitmapDescriptor getCustomPin() {
 		// Select correct resource
 		Drawable drawable = null;
-		float rackScore = rack.getAverageScore();
+		float rackScore = rack.getAverageRating();
 		if (rackScore == 0) {
 			drawable = res.getDrawable(R.drawable.pin_gray);
 		} else if (rackScore > 0 && rackScore <= 2) {

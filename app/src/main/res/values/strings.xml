@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">bikedeboa</string>
     <string name="title_activity_maps">Map</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="how_to_get_there">Como chegar</string>
+    <string name="rate">Avaliar</string>
+    <string name="suggest_change">Sugerir Mudança</string>
+    <plurals name="n_ratings">
+        <item quantity="one">%d avaliação </item>
+        <item quantity="other">%d avaliações</item>
+    </plurals>
 </resources>

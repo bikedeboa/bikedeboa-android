@@ -53,7 +53,7 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 		// Add new
 		for (Rack rack : rackList) {
 			LatLng coords = new LatLng(rack.getLatitude(), rack.getLongitude());
-			float rackScore = rack.getAverageScore();
+			float rackScore = rack.getAverageRating();
 			Marker marker = this.googleMap.addMarker(new MarkerOptions()
 					.position(coords)
 					.icon(getCustomPin(rackScore, cameraZoom < 13))

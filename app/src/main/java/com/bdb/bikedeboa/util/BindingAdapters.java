@@ -1,8 +1,13 @@
 package com.bdb.bikedeboa.util;
 
+import android.content.Context;
 import android.databinding.BindingAdapter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.adroitandroid.chipcloud.Chip;
 import com.adroitandroid.chipcloud.ChipCloud;
@@ -28,6 +33,7 @@ public class BindingAdapters {
 
 	@BindingAdapter({"visible"})
 	public static void getVisibility(View view, boolean visible) {
+
 		if (visible) {
 			view.setVisibility(View.VISIBLE);
 		} else {
@@ -49,6 +55,31 @@ public class BindingAdapters {
 			for (Tag tag : tagList) {
 				chipCloud.addChip(tag.getName());
 			}
+		}
+	}
+
+	@BindingAdapter({"stars"})
+	public static void setStars(LinearLayout linearLayout, float rating) {
+
+		Context context = linearLayout.getContext();
+		int color = ContextCompat.getColor(context,R.color.mediumGray);
+		if (rating > 0 && rating <= 2) {
+			color = ContextCompat.getColor(context,R.color.red);
+		} else if (rating > 2 && rating < 3.5) {
+			color = ContextCompat.getColor(context,R.color.yellow);
+		} else if (rating >= 3.5) {
+			color = ContextCompat.getColor(context,R.color.green);
+		}
+
+		// Child 0 is the textView with the written score
+		Drawable roundedBackground = ContextCompat.getDrawable(context, R.drawable.rounded_edges);
+		roundedBackground.setColorFilter(color, PorterDuff.Mode.ADD);
+		linearLayout.getChildAt(0).setBackground(roundedBackground);
+
+		int nStars = Math.round(rating);
+		for (int i = 1; i <= nStars; ++i) {
+			ImageView imageView = (ImageView) linearLayout.getChildAt(i);
+			imageView.setColorFilter(color);
 		}
 	}
 }

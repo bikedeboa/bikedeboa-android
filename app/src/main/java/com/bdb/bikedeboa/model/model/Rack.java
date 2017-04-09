@@ -13,7 +13,7 @@ public class Rack extends RealmObject {
 	@PrimaryKey
 	private int id;
 	private double latitude, longitude;
-	private float averageScore;
+	private float averageRating;
 	// Complete description
 	private String text;
 	private String structureType;
@@ -21,9 +21,10 @@ public class Rack extends RealmObject {
 	private String photoUrl;
 	private String description;
 	private String address;
+	private int checkInNumber;
+	private int reviewNumber;
 //	private RealmList<Review> reviewList;
 	private RealmList<Tag> tagList = new RealmList<>();
-	private int checkIns;
 	private boolean isComplete = false;
 
 	public Rack() {}
@@ -32,7 +33,7 @@ public class Rack extends RealmObject {
 		this.id = localLight.id;
 		this.latitude = localLight.lat;
 		this.longitude = localLight.lng;
-		this.averageScore = localLight.average != null ? localLight.average : 0;
+		this.averageRating = localLight.average != null ? localLight.average : 0;
 	}
 
 	public void completeRack(LocalFull localFull) {
@@ -42,7 +43,8 @@ public class Rack extends RealmObject {
 		this.photoUrl = localFull.photo;
 		this.description = localFull.description;
 		this.address = localFull.address;
-		this.checkIns = localFull.checkIns;
+		this.checkInNumber = localFull.checkIns;
+		this.reviewNumber = localFull.reviews;
 		//this.reviewList
 		this.tagList.clear();
 		for (LocalFull.Tag tag : localFull.tags) {
@@ -63,8 +65,8 @@ public class Rack extends RealmObject {
 		return longitude;
 	}
 
-	public float getAverageScore() {
-		return averageScore;
+	public float getAverageRating() {
+		return averageRating;
 	}
 
 	public String getText() {
@@ -92,7 +94,11 @@ public class Rack extends RealmObject {
 	}
 
 	public int getCheckIns() {
-		return checkIns;
+		return checkInNumber;
+	}
+
+	public int getReviewNumber() {
+		return reviewNumber;
 	}
 
 	public boolean isComplete() {
