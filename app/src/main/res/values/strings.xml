@@ -12,6 +12,7 @@
     <string name="suspenso">Bicicletário Suspenso</string>
     <string name="grade">Bicicletário de Grade</string>
     <string name="outro">Outro</string>
+    <string name="rate_this_rack">Dê sua nota</string>
     <plurals name="n_ratings">
         <item quantity="one">%d avaliação </item>
         <item quantity="other">%d avaliações</item>

@@ -5,7 +5,9 @@
     <color name="colorAccent">#63BCE7</color>
     <color name="darkGray">#9e9e9e</color>
     <color name="mediumGray">#bbbbbb</color>
+    <color name="lightMediumGray">#d6d6d6</color>
     <color name="lightGray">#ebebeb</color>
+    <color name="lighterGray">#f4f4f4</color>
     <!--Official pallete-->
     <color name="green">#30bb6a</color>
     <color name="darkGreen">#04883A</color>
