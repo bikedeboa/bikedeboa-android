@@ -11,151 +11,365 @@
             type="com.bdb.bikedeboa.viewmodel.DetailViewModel"/>
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         tools:context="com.bdb.bikedeboa.view.DetailActivity">
 
-        <ImageView
-            android:id="@+id/rack_photo"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:padding="0dp"
-            android:scaleType="centerCrop"
-            app:imageAddress="@{viewModel.image}"
-            app:visible="@{viewModel.hasImage}"
-            tools:src="@drawable/spinner"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <android.support.v7.widget.LinearLayoutCompat
+            <ImageView
+                android:id="@+id/rack_photo"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                app:imageAddress="@{viewModel.image}"
+                app:visible="@{viewModel.hasImage}"
+                tools:src="@drawable/spinner"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.LinearLayoutCompat
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:src="@drawable/route"
-                    android:tint="@android:color/darker_gray"/>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/route"
+                        android:tint="@color/darkGray"/>
 
-                <TextView
-                    android:id="@+id/how_to_get_there"
-                    fontPath="font/Raleway-Medium.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Como chegar"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textSize="10sp"/>
+                    <TextView
+                        android:id="@+id/how_to_get_there"
+                        fontPath="font/Raleway-Medium.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/how_to_get_there"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textSize="10sp"/>
 
-            </android.support.v7.widget.LinearLayoutCompat>
+            </LinearLayout>
 
-            <include layout="@layout/divider_vertical"/>
+                <include layout="@layout/divider_vertical"/>
 
-            <android.support.v7.widget.LinearLayoutCompat
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:src="@drawable/review"
-                    android:tint="@android:color/darker_gray"/>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/review"
+                        android:tint="@color/darkGray"/>
 
-                <TextView
-                    android:id="@+id/rate"
-                    fontPath="font/Raleway-Medium.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Avaliar"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textSize="10sp"/>
+                    <TextView
+                        android:id="@+id/rate"
+                        fontPath="font/Raleway-Medium.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/rate"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textSize="10sp"/>
 
-            </android.support.v7.widget.LinearLayoutCompat>
+            </LinearLayout>
 
-            <include layout="@layout/divider_vertical"/>
+                <include layout="@layout/divider_vertical"/>
 
-            <android.support.v7.widget.LinearLayoutCompat
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:padding="3dp"
+                        android:src="@drawable/pencil_edit_button"
+                        android:tint="@color/darkGray"/>
+
+                    <TextView
+                        android:id="@+id/suggest_change"
+                        fontPath="font/Raleway-Medium.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/suggest_change"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textSize="10sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+            <include layout="@layout/divider_horizontal"/>
+
+            <TextView
+                android:id="@+id/name"
+                fontPath="font/Raleway-SemiBold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="16dp"
+                android:text="@{viewModel.title}"
+                android:textColor="@color/dark_grey"
+                android:textSize="28sp"
+                tools:text="Redenção"/>
+
+            <TextView
+                android:id="@+id/address"
+                fontPath="font/Raleway-SemiBold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:text="@{viewModel.address}"
+                android:textSize="14sp"
+                tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_lite"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="16dp"
+                map:cameraZoom="18"
+                map:liteMode="true"
+                map:mapType="normal"/>
+
+            <LinearLayout
+                android:id="@+id/stars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:stars="@{viewModel.averageRating}"
+                app:visible="@{viewModel.averageRating > 0}">
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="@{viewModel.averageRatingString}"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        tools:text="4.3"/>
+
+                </LinearLayout>
+
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.reviewNumberString}"
+                android:textAlignment="center"
+                android:textColor="@color/mediumGray"
+                app:visible="@{viewModel.averageRating > 0}"
+                tools:text="4 avaliações"/>
+
+            <com.adroitandroid.chipcloud.ChipCloud
+                xmlns:chipcloud="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/chip_cloud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="16dp"
+                app:tags="@{viewModel.tagList}"
+                chipcloud:deselectedColor="@color/lightGray"
+                chipcloud:deselectedFontColor="@color/darkGray"
+                chipcloud:gravity="center"
+                chipcloud:selectMode="none"
+                chipcloud:textSize="13sp"
+                chipcloud:verticalSpacing="10dp"/>
+
+            <include layout="@layout/divider_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:visible="@{viewModel.hasOwnershipAndType}">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:padding="3dp"
-                    android:src="@drawable/pencil_edit_button"
-                    android:tint="@android:color/darker_gray"/>
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:src="@{viewModel.ownershipImage}"
+                        tools:src="@drawable/icon_public"/>
+
+                    <TextView
+                        fontPath="font/Raleway-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{viewModel.ownership}"
+                        android:textColor="@color/mediumGray"
+                        tools:text="@string/public_rack"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:src="@{viewModel.structureTypeImage}"
+                        tools:src="@drawable/tipo_deroda"/>
+
+                    <TextView
+                        fontPath="font/Raleway-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{viewModel.structureType}"
+                        android:textColor="@color/mediumGray"
+                        tools:text="@string/deroda"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:background="@color/lighterGray"
+                android:orientation="vertical"
+                android:paddingBottom="12dp">
 
                 <TextView
-                    android:id="@+id/suggest_change"
-                    fontPath="font/Raleway-Medium.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Sugerir Mudança"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/rate_this_rack"
                     android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textSize="10sp"/>
+                    android:textColor="@color/mediumGray"
+                    android:textSize="12dp"/>
 
-            </android.support.v7.widget.LinearLayoutCompat>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-        </android.support.v7.widget.LinearLayoutCompat>
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="2dp"
+                        android:src="@drawable/star_empty"
+                        android:tint="@color/lightMediumGray"/>
 
-        <include layout="@layout/divider_horizontal"/>
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="2dp"
+                        android:src="@drawable/star_empty"
+                        android:tint="@color/lightMediumGray"/>
 
-        <TextView
-            android:id="@+id/name"
-            fontPath="font/Raleway-SemiBold.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="4dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="16dp"
-            android:text="@{viewModel.title}"
-            android:textColor="@android:color/black"
-            android:textSize="28sp"
-            tools:text="Redenção"/>
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="2dp"
+                        android:src="@drawable/star_empty"
+                        android:tint="@color/lightMediumGray"/>
 
-        <TextView
-            android:id="@+id/address"
-            fontPath="font/Raleway-SemiBold.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:text="@{viewModel.address}"
-            android:textSize="14sp"
-            tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="2dp"
+                        android:src="@drawable/star_empty"
+                        android:tint="@color/lightMediumGray"/>
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/map_lite"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="16dp"
-            map:cameraZoom="18"
-            map:liteMode="true"
-            map:mapType="normal"/>
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="2dp"
+                        android:src="@drawable/star_empty"
+                        android:tint="@color/lightMediumGray"/>
 
-    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 </layout>

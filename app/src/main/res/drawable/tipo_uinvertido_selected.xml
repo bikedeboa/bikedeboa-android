@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="140.834dp"
-    android:height="147.25dp"
-    android:viewportWidth="140.834"
-    android:viewportHeight="147.25">
+        android:width="140.834dp"
+        android:height="147.25dp"
+        android:viewportWidth="140.834"
+        android:viewportHeight="147.25">
 
     <path
-        android:strokeColor="#bbbbbb"
+        android:strokeColor="#47B870"
         android:strokeWidth="5.6693"
         android:strokeLineJoin="round"
         android:strokeMiterLimit="10"
         android:strokeLineCap="round"
         android:pathData="M 137.708 143.522 L 3.167 143.522" />
     <path
-        android:strokeColor="#bbbbbb"
+        android:strokeColor="#47B870"
         android:strokeWidth="5.6693"
         android:strokeLineJoin="round"
         android:strokeMiterLimit="10"

@@ -28,7 +28,7 @@ public class LocalFull {
 	@SerializedName("createdAt")
 	public String createdAt;
 	@SerializedName("reviews")
-	public String reviews;
+	public int reviews;
 	@SerializedName("checkins")
 	public int checkIns;
 	@SerializedName("tags")

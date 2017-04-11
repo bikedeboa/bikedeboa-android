@@ -5,10 +5,10 @@ import android.app.Application;
 import com.bdb.bikedeboa.model.manager.NetworkManager;
 import com.bdb.bikedeboa.model.manager.RackManager;
 import com.bdb.bikedeboa.model.manager.UserManager;
+import com.bdb.bikedeboa.util.AssetHelper;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class BikeDeBoaApplication extends Application {
 
@@ -16,16 +16,11 @@ public class BikeDeBoaApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 
-		CalligraphyConfig.initDefault(
-				new CalligraphyConfig.Builder()
-						.setDefaultFontPath("Raleway-Regular.ttf")
-						.setFontAttrId(R.attr.fontPath)
-						.build());
-
+		AssetHelper.init(this.getResources());
 		initDatabase();
 		NetworkManager.init();
 		UserManager.authenticate();
-		RackManager.getInstance().fetchLocalLightList();
+		RackManager.init(this).fetchLocalLightList();
 	}
 
 	private void initDatabase() {

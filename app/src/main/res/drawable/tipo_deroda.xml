@@ -107,14 +107,14 @@ h12.231C47.947,66.505,49.454,68.012,49.454,69.872L49.454,69.872z" />
         android:strokeLineCap="round"
         android:pathData="M42.704,78.542c0,0,16.971,28.829,34.53,10.829" />
     <path
-        android:strokeColor="#47B870"
+        android:strokeColor="#BBBBBB"
         android:strokeWidth="5.6693"
         android:strokeLineJoin="round"
         android:strokeMiterLimit="10"
         android:strokeLineCap="round"
         android:pathData="M 88.377 143.401 L 137.803 143.401 L 137.803 103.892 Z" />
     <path
-        android:strokeColor="#47B870"
+        android:strokeColor="#BBBBBB"
         android:strokeWidth="5.6693"
         android:strokeLineJoin="round"
         android:strokeMiterLimit="10"

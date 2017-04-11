@@ -1,5 +1,7 @@
 package com.bdb.bikedeboa.model.model;
 
+import android.content.Context;
+
 import com.bdb.bikedeboa.model.network.response.LocalFull;
 import com.bdb.bikedeboa.model.network.response.LocalLight;
 
@@ -13,41 +15,48 @@ public class Rack extends RealmObject {
 	@PrimaryKey
 	private int id;
 	private double latitude, longitude;
-	private float averageScore;
+	private float averageRating;
 	// Complete description
 	private String text;
 	private String structureType;
-	private String isPublic; // Not using boolean here because this info is not required -- and a null would break the program
+	private String isPublic; // Public, private or unknown (i.e., null)
 	private String photoUrl;
 	private String description;
 	private String address;
-//	private RealmList<Review> reviewList;
+	private int checkInNumber;
+	private int reviewNumber;
+	//	private RealmList<Review> reviewList;
 	private RealmList<Tag> tagList = new RealmList<>();
-	private int checkIns;
 	private boolean isComplete = false;
 
-	public Rack() {}
+	public Rack() {
+	}
 
 	public Rack(LocalLight localLight) {
 		this.id = localLight.id;
 		this.latitude = localLight.lat;
 		this.longitude = localLight.lng;
-		this.averageScore = localLight.average != null ? localLight.average : 0;
+		this.averageRating = localLight.average != null ? localLight.average : 0;
 	}
 
-	public void completeRack(LocalFull localFull) {
+	public void completeRack(LocalFull localFull, Context context) {
+
 		this.text = localFull.text;
-		this.structureType = localFull.structureType;
-		this.isPublic = localFull.isPublic;
 		this.photoUrl = localFull.photo;
 		this.description = localFull.description;
 		this.address = localFull.address;
-		this.checkIns = localFull.checkIns;
-		//this.reviewList
-		this.isComplete = true; // Doesn't consider if reviews were fetched -- second request needed
+		this.checkInNumber = localFull.checkIns;
+		this.reviewNumber = localFull.reviews;
+		this.structureType = localFull.structureType;
+		this.isPublic = localFull.isPublic;
+
+		this.tagList.clear();
 		for (LocalFull.Tag tag : localFull.tags) {
 			this.tagList.add(new Tag(tag.name, tag.count));
 		}
+
+		//this.reviewList -- needs extra request
+		this.isComplete = true; // Doesn't consider if reviews were fetched -- second request needed
 	}
 
 	public int getId() {
@@ -62,8 +71,8 @@ public class Rack extends RealmObject {
 		return longitude;
 	}
 
-	public float getAverageScore() {
-		return averageScore;
+	public float getAverageRating() {
+		return averageRating;
 	}
 
 	public String getText() {
@@ -91,10 +100,18 @@ public class Rack extends RealmObject {
 	}
 
 	public int getCheckIns() {
-		return checkIns;
+		return checkInNumber;
+	}
+
+	public int getReviewNumber() {
+		return reviewNumber;
 	}
 
 	public boolean isComplete() {
 		return isComplete;
+	}
+
+	public RealmList<Tag> getTagList() {
+		return tagList;
 	}
 }

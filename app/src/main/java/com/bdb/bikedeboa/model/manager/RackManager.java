@@ -1,5 +1,6 @@
 package com.bdb.bikedeboa.model.manager;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.bdb.bikedeboa.model.model.Rack;
@@ -21,21 +22,27 @@ public class RackManager {
 	private RackListCallback rackListCallback;
 	private SingleRackCallback singleRackCallback;
 	private Realm realm;
+	private Context context;
 	private List<Rack> rackList;
 
-	private RackManager() {
+	private RackManager(Context context) {
 
+		this.context = context;
 		rackList = new ArrayList<>();
 		realm = Realm.getDefaultInstance();
 		// Update rack list to match db on instantiation
 		updateRackList();
 	}
 
-	public static RackManager getInstance() {
+	public static RackManager init(Context context) {
 
 		if (instance == null) {
-			instance = new RackManager();
+			instance = new RackManager(context);
 		}
+		return instance;
+	}
+
+	public static RackManager getInstance() {
 		return instance;
 	}
 
@@ -118,7 +125,7 @@ public class RackManager {
 
 				if (rack != null) {
 					realm.beginTransaction();
-					rack.completeRack(localFull);
+					rack.completeRack(localFull, context);
 					realm.commitTransaction();
 
 					if (singleRackCallback != null) {
