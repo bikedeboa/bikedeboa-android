@@ -27,6 +27,7 @@ public class BindingAdapters {
 				.load(imageAddress)
 				.thumbnail(Glide.with(imageView.getContext())
 						.load(R.drawable.wheel_loading))
+				.crossFade()
 				.diskCacheStrategy(DiskCacheStrategy.RESULT)
 				.into(imageView);
 	}
@@ -62,14 +63,7 @@ public class BindingAdapters {
 	public static void setStars(LinearLayout linearLayout, float rating) {
 
 		Context context = linearLayout.getContext();
-		int color = ContextCompat.getColor(context,R.color.mediumGray);
-		if (rating > 0 && rating <= 2) {
-			color = ContextCompat.getColor(context,R.color.red);
-		} else if (rating > 2 && rating < 3.5) {
-			color = ContextCompat.getColor(context,R.color.yellow);
-		} else if (rating >= 3.5) {
-			color = ContextCompat.getColor(context,R.color.green);
-		}
+		int color = AssetHelper.getColorFromScore(rating);
 
 		// Child 0 is the textView with the written score
 		Drawable roundedBackground = ContextCompat.getDrawable(context, R.drawable.rounded_edges);

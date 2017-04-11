@@ -3,16 +3,11 @@ package com.bdb.bikedeboa.viewmodel;
 import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 
-import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.model.manager.RackManager;
 import com.bdb.bikedeboa.model.model.Rack;
+import com.bdb.bikedeboa.util.AssetHelper;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -56,7 +51,7 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 			float rackScore = rack.getAverageRating();
 			Marker marker = this.googleMap.addMarker(new MarkerOptions()
 					.position(coords)
-					.icon(getCustomPin(rackScore, cameraZoom < 13))
+					.icon(AssetHelper.getCustomPin(rackScore, cameraZoom < 13))
 					.zIndex(rackScore)); // Order z by rack average review
 			marker.setTag(rack.getId()); // Use tag to identify rack
 			markerList.add(marker);
@@ -67,67 +62,8 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 
 		for (Marker marker : markerList) {
 			// Z index is the review average value
-			marker.setIcon(getCustomPin(marker.getZIndex(), mini));
+			marker.setIcon(AssetHelper.getCustomPin(marker.getZIndex(), mini));
 		}
-	}
-
-	private BitmapDescriptor getCustomPin(float rackScore, boolean mini) {
-
-		// Select correct resource
-		Drawable drawable = null;
-		if (rackScore == 0) {
-			if (mini) {
-				drawable = res.getDrawable(R.drawable.pin_gray_mini);
-			} else {
-				drawable = res.getDrawable(R.drawable.pin_gray);
-			}
-		} else if (rackScore > 0 && rackScore <= 2) {
-			if (mini) {
-				drawable =	res.getDrawable(R.drawable.pin_red_mini);
-			} else {
-				drawable =	res.getDrawable(R.drawable.pin_red);
-			}
-		} else if (rackScore > 2 && rackScore < 3.5) {
-			if (mini) {
-				drawable = res.getDrawable(R.drawable.pin_yellow_mini);
-			} else {
-				drawable = res.getDrawable(R.drawable.pin_yellow);
-			}
-		} else if (rackScore >= 3.5) {
-			if (mini) {
-				drawable = res.getDrawable(R.drawable.pin_green_mini);
-			} else {
-				drawable = res.getDrawable(R.drawable.pin_green);
-			}
-		}
-
-		float scale;
-		int alpha;
-		if (mini) {
-			scale = rackScore == 0 ? 0.4f : 0.1f + (rackScore/10);
-			alpha = (int) (255*0.7);
-		} else {
-			scale = rackScore == 0 ? 0.8f : 0.6f + (rackScore/10);
-			alpha = (int) (255*0.9);
-		}
-
-		Bitmap bitmap;
-		try {
-			// Svg was way too big, that's why I'm dividing by seven
-			// (mostly because I don't want to change the svgs too)
-			bitmap = Bitmap.createBitmap(
-					(int) (scale * drawable.getIntrinsicWidth()/7),
-					(int) (scale * drawable.getIntrinsicHeight()/7),
-					Bitmap.Config.ARGB_4444);
-
-			Canvas canvas = new Canvas(bitmap);
-			drawable.setAlpha(alpha);
-			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-			drawable.draw(canvas);
-		} catch (OutOfMemoryError e) {
-			return null;
-		}
-		return BitmapDescriptorFactory.fromBitmap(bitmap);
 	}
 
 	@Override

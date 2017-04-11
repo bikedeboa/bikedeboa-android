@@ -31,18 +31,18 @@
                 app:visible="@{viewModel.hasImage}"
                 tools:src="@drawable/spinner"/>
 
-            <android.support.v7.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -62,15 +62,15 @@
                         android:textAllCaps="true"
                         android:textSize="10sp"/>
 
-                </android.support.v7.widget.LinearLayoutCompat>
+            </LinearLayout>
 
                 <include layout="@layout/divider_vertical"/>
 
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -91,15 +91,15 @@
                         android:textAllCaps="true"
                         android:textSize="10sp"/>
 
-                </android.support.v7.widget.LinearLayoutCompat>
+            </LinearLayout>
 
                 <include layout="@layout/divider_vertical"/>
 
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -121,9 +121,9 @@
                         android:textAllCaps="true"
                         android:textSize="10sp"/>
 
-                </android.support.v7.widget.LinearLayoutCompat>
+            </LinearLayout>
 
-            </android.support.v7.widget.LinearLayoutCompat>
+        </LinearLayout>
 
             <include layout="@layout/divider_horizontal"/>
 
@@ -245,7 +245,6 @@
                 chipcloud:gravity="center"
                 chipcloud:selectMode="none"
                 chipcloud:textSize="13sp"
-                chipcloud:typeface="font/Raleway-Medium.ttf"
                 chipcloud:verticalSpacing="10dp"/>
 
             <include layout="@layout/divider_horizontal"/>

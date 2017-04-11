@@ -3,8 +3,6 @@ package com.bdb.bikedeboa.viewmodel;
 import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
 import com.android.databinding.library.baseAdapters.BR;
@@ -12,10 +10,9 @@ import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.model.manager.RackManager;
 import com.bdb.bikedeboa.model.model.Rack;
 import com.bdb.bikedeboa.model.model.Tag;
+import com.bdb.bikedeboa.util.AssetHelper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -74,7 +71,7 @@ public class DetailViewModel extends BaseObservable implements
 	}
 
 	public String getAverageRatingString() {
-
+		// Avoid 4.0
 		if (rack.getAverageRating() % 1 == 0) {
 			return String.format("%.0f", rack.getAverageRating());
 		} else {
@@ -87,55 +84,24 @@ public class DetailViewModel extends BaseObservable implements
 	}
 
 	public boolean hasOwnershipAndType() {
-		return rack.getOwnership() != null && rack.getStructureType() != null;
+		return rack.isPublic() != null && !rack.isPublic().equals("null") &&
+				rack.getStructureType() != null && !rack.getStructureType().equals("null");
 	}
 
 	public String getOwnership() {
-		return rack.getOwnership();
+		return AssetHelper.getOwnershipString(rack.isPublic());
 	}
 
 	public String getStructureType() {
-		return rack.getStructureType();
+		return AssetHelper.getStructureTypeString(rack.getStructureType());
 	}
 
-	public String getOwnershipImage() {
-		return rack.getOwnershipImage();
+	public Drawable getOwnershipImage() {
+		return AssetHelper.getOwnershipImage(rack.isPublic());
 	}
 
-	public String getStructureTypeImage() {
-		return rack.getStructureTypeImage();
-	}
-
-	public BitmapDescriptor getCustomPin() {
-		// Select correct resource
-		Drawable drawable = null;
-		float rackScore = rack.getAverageRating();
-		if (rackScore == 0) {
-			drawable = res.getDrawable(R.drawable.pin_gray);
-		} else if (rackScore > 0 && rackScore <= 2) {
-			drawable = res.getDrawable(R.drawable.pin_red);
-		} else if (rackScore > 2 && rackScore < 3.5) {
-			drawable = res.getDrawable(R.drawable.pin_yellow);
-		} else if (rackScore >= 3.5) {
-			drawable = res.getDrawable(R.drawable.pin_green);
-		}
-
-		Bitmap bitmap;
-		try {
-			// Svg was way too big, that's why I'm dividing by seven
-			// (mostly because I don't want to change the svgs too)
-			bitmap = Bitmap.createBitmap(
-					drawable.getIntrinsicWidth() / 7,
-					drawable.getIntrinsicHeight() / 7,
-					Bitmap.Config.ARGB_4444);
-
-			Canvas canvas = new Canvas(bitmap);
-			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-			drawable.draw(canvas);
-		} catch (OutOfMemoryError e) {
-			return null;
-		}
-		return BitmapDescriptorFactory.fromBitmap(bitmap);
+	public Drawable getStructureTypeImage() {
+		return AssetHelper.getStructureTypeImage(rack.getStructureType());
 	}
 
 	private void setUpMap() {
@@ -144,6 +110,6 @@ public class DetailViewModel extends BaseObservable implements
 		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pinPosition, 18));
 		googleMap.addMarker(new MarkerOptions()
 				.position(pinPosition)
-				.icon(getCustomPin()));
+				.icon(AssetHelper.getCustomPin(rack.getAverageRating(), false)));
 	}
 }

@@ -1,9 +1,7 @@
 package com.bdb.bikedeboa.model.model;
 
 import android.content.Context;
-import android.net.Uri;
 
-import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.model.network.response.LocalFull;
 import com.bdb.bikedeboa.model.network.response.LocalLight;
 
@@ -21,9 +19,7 @@ public class Rack extends RealmObject {
 	// Complete description
 	private String text;
 	private String structureType;
-	private String structureTypeImage;
-	private String ownership; // Public, private or unknown (i.e., null)
-	private String ownershipImage;
+	private String isPublic; // Public, private or unknown (i.e., null)
 	private String photoUrl;
 	private String description;
 	private String address;
@@ -51,56 +47,8 @@ public class Rack extends RealmObject {
 		this.address = localFull.address;
 		this.checkInNumber = localFull.checkIns;
 		this.reviewNumber = localFull.reviews;
-
-		if (localFull.structureType != null) {
-			switch (localFull.structureType) {
-				case "uinvertido":
-					this.structureType = context.getString(R.string.uinvertido);
-					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_uinvertido").toString();
-					break;
-				case "deroda":
-					this.structureType = context.getString(R.string.deroda);
-					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_deroda").toString();
-					break;
-				case "trave":
-					this.structureType = context.getString(R.string.trave);
-					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_trave").toString();
-					break;
-				case "suspenso":
-					this.structureType = context.getString(R.string.suspenso);
-					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_suspenso").toString();
-					break;
-				case "grade":
-					this.structureType = context.getString(R.string.grade);
-					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_grade").toString();
-					break;
-				case "other":
-					this.structureType = context.getString(R.string.outro);
-					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_other").toString();
-					break;
-				default:
-					this.structureType = null;
-					this.structureTypeImage = null;
-					break;
-			}
-		}
-
-		if (localFull.isPublic != null) {
-			switch (localFull.isPublic) {
-				case "true":
-					this.ownership = context.getString(R.string.public_rack);
-					this.ownershipImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/icon_public").toString();
-					break;
-				case "false":
-					this.ownership = context.getString(R.string.private_rack);
-					this.ownershipImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/icon_private").toString();
-					break;
-				default:
-					this.ownership = null;
-					this.ownershipImage = null;
-					break;
-			}
-		}
+		this.structureType = localFull.structureType;
+		this.isPublic = localFull.isPublic;
 
 		this.tagList.clear();
 		for (LocalFull.Tag tag : localFull.tags) {
@@ -135,16 +83,8 @@ public class Rack extends RealmObject {
 		return structureType;
 	}
 
-	public String getStructureTypeImage() {
-		return structureTypeImage;
-	}
-
-	public String getOwnership() {
-		return ownership;
-	}
-
-	public String getOwnershipImage() {
-		return ownershipImage;
+	public String isPublic() {
+		return isPublic;
 	}
 
 	public String getPhotoUrl() {
