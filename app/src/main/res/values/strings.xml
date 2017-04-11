@@ -4,6 +4,14 @@
     <string name="how_to_get_there">Como chegar</string>
     <string name="rate">Avaliar</string>
     <string name="suggest_change">Sugerir Mudança</string>
+    <string name="public_rack">Público</string>
+    <string name="private_rack">Privado</string>
+    <string name="uinvertido">Bicicletário U Invertido</string>
+    <string name="deroda">Bicicletário de Roda</string>
+    <string name="trave">Bicicletário Trave</string>
+    <string name="suspenso">Bicicletário Suspenso</string>
+    <string name="grade">Bicicletário de Grade</string>
+    <string name="outro">Outro</string>
     <plurals name="n_ratings">
         <item quantity="one">%d avaliação </item>
         <item quantity="other">%d avaliações</item>

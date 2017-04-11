@@ -107,21 +107,21 @@ v-12.23C25.772,92.981,27.279,91.475,29.139,91.475L29.139,91.475z" />
         android:strokeLineCap="round"
         android:pathData="M37.809,98.225c0,0,28.829-16.971,10.829-34.53" />
     <path
-        android:strokeColor="#47B870"
+        android:strokeColor="#BBBBBB"
         android:strokeWidth="5.6693"
         android:strokeLineJoin="round"
         android:strokeMiterLimit="10"
         android:strokeLineCap="round"
         android:pathData="M 102.668 52.552 L 102.668 3.125 L 63.159 3.125 Z" />
     <path
-        android:strokeColor="#47B870"
+        android:strokeColor="#BBBBBB"
         android:strokeWidth="5.6693"
         android:strokeLineJoin="round"
         android:strokeMiterLimit="10"
         android:strokeLineCap="round"
         android:pathData="M 102.668 50.661 L 102.668 143.521" />
     <path
-        android:strokeColor="#47B870"
+        android:strokeColor="#BBBBBB"
         android:strokeWidth="5.6693"
         android:strokeLineJoin="round"
         android:strokeMiterLimit="10"

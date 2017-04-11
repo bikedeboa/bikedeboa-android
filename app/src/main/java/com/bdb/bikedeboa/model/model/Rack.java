@@ -1,5 +1,9 @@
 package com.bdb.bikedeboa.model.model;
 
+import android.content.Context;
+import android.net.Uri;
+
+import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.model.network.response.LocalFull;
 import com.bdb.bikedeboa.model.network.response.LocalLight;
 
@@ -17,17 +21,20 @@ public class Rack extends RealmObject {
 	// Complete description
 	private String text;
 	private String structureType;
-	private String isPublic; // Not using boolean here because this info is not required -- and a null would break the program
+	private String structureTypeImage;
+	private String ownership; // Public, private or unknown (i.e., null)
+	private String ownershipImage;
 	private String photoUrl;
 	private String description;
 	private String address;
 	private int checkInNumber;
 	private int reviewNumber;
-//	private RealmList<Review> reviewList;
+	//	private RealmList<Review> reviewList;
 	private RealmList<Tag> tagList = new RealmList<>();
 	private boolean isComplete = false;
 
-	public Rack() {}
+	public Rack() {
+	}
 
 	public Rack(LocalLight localLight) {
 		this.id = localLight.id;
@@ -36,20 +43,71 @@ public class Rack extends RealmObject {
 		this.averageRating = localLight.average != null ? localLight.average : 0;
 	}
 
-	public void completeRack(LocalFull localFull) {
+	public void completeRack(LocalFull localFull, Context context) {
+
 		this.text = localFull.text;
-		this.structureType = localFull.structureType;
-		this.isPublic = localFull.isPublic;
 		this.photoUrl = localFull.photo;
 		this.description = localFull.description;
 		this.address = localFull.address;
 		this.checkInNumber = localFull.checkIns;
 		this.reviewNumber = localFull.reviews;
-		//this.reviewList
+
+		if (localFull.structureType != null) {
+			switch (localFull.structureType) {
+				case "uinvertido":
+					this.structureType = context.getString(R.string.uinvertido);
+					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_uinvertido").toString();
+					break;
+				case "deroda":
+					this.structureType = context.getString(R.string.deroda);
+					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_deroda").toString();
+					break;
+				case "trave":
+					this.structureType = context.getString(R.string.trave);
+					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_trave").toString();
+					break;
+				case "suspenso":
+					this.structureType = context.getString(R.string.suspenso);
+					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_suspenso").toString();
+					break;
+				case "grade":
+					this.structureType = context.getString(R.string.grade);
+					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_grade").toString();
+					break;
+				case "other":
+					this.structureType = context.getString(R.string.outro);
+					this.structureTypeImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/tipo_other").toString();
+					break;
+				default:
+					this.structureType = null;
+					this.structureTypeImage = null;
+					break;
+			}
+		}
+
+		if (localFull.isPublic != null) {
+			switch (localFull.isPublic) {
+				case "true":
+					this.ownership = context.getString(R.string.public_rack);
+					this.ownershipImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/icon_public").toString();
+					break;
+				case "false":
+					this.ownership = context.getString(R.string.private_rack);
+					this.ownershipImage = Uri.parse("android.resource://com.bdb.bikedeboa/drawable/icon_private").toString();
+					break;
+				default:
+					this.ownership = null;
+					this.ownershipImage = null;
+					break;
+			}
+		}
+
 		this.tagList.clear();
 		for (LocalFull.Tag tag : localFull.tags) {
 			this.tagList.add(new Tag(tag.name, tag.count));
 		}
+
+		//this.reviewList -- needs extra request
 		this.isComplete = true; // Doesn't consider if reviews were fetched -- second request needed
 	}
 
@@ -77,8 +135,16 @@ public class Rack extends RealmObject {
 		return structureType;
 	}
 
-	public String isPublic() {
-		return isPublic;
+	public String getStructureTypeImage() {
+		return structureTypeImage;
+	}
+
+	public String getOwnership() {
+		return ownership;
+	}
+
+	public String getOwnershipImage() {
+		return ownershipImage;
 	}
 
 	public String getPhotoUrl() {

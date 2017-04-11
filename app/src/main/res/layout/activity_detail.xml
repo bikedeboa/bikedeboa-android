@@ -245,9 +245,69 @@
                 chipcloud:gravity="center"
                 chipcloud:selectMode="none"
                 chipcloud:textSize="13sp"
-                chipcloud:typeface="font/Raleway-Regular.ttf"
+                chipcloud:typeface="font/Raleway-Medium.ttf"
                 chipcloud:verticalSpacing="10dp"/>
 
+            <include layout="@layout/divider_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:visible="@{viewModel.hasOwnershipAndType}">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:src="@{viewModel.ownershipImage}"
+                        tools:src="@drawable/icon_public"/>
+
+                    <TextView
+                        fontPath="font/Raleway-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{viewModel.ownership}"
+                        android:textColor="@color/mediumGray"
+                        tools:text="@string/public_rack"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:src="@{viewModel.structureTypeImage}"
+                        tools:src="@drawable/tipo_deroda"/>
+
+                    <TextView
+                        fontPath="font/Raleway-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{viewModel.structureType}"
+                        android:textColor="@color/mediumGray"
+                        tools:text="@string/deroda"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
+
 </layout>
