@@ -22,7 +22,6 @@ import java.util.List;
 
 public class MapViewModel extends BaseObservable implements RackManager.RackListCallback {
 
-	private Context context;
 	private Resources res;
 	private GoogleMap googleMap;
 	private RackManager rackManager;
@@ -31,7 +30,6 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 
 	public MapViewModel(GoogleMap googleMap, Context context) {
 		this.googleMap = googleMap;
-		this.context = context;
 		this.rackManager = RackManager.getInstance();
 		this.cameraZoom = googleMap.getCameraPosition().zoom;
 		this.markerList = new ArrayList<>();
