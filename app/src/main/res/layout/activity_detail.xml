@@ -31,18 +31,18 @@
                 app:visible="@{viewModel.hasImage}"
                 tools:src="@drawable/spinner"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -62,15 +62,15 @@
                         android:textAllCaps="true"
                         android:textSize="10sp"/>
 
-            </LinearLayout>
+                </LinearLayout>
 
                 <include layout="@layout/divider_vertical"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -91,15 +91,15 @@
                         android:textAllCaps="true"
                         android:textSize="10sp"/>
 
-            </LinearLayout>
+                </LinearLayout>
 
                 <include layout="@layout/divider_vertical"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -121,9 +121,9 @@
                         android:textAllCaps="true"
                         android:textSize="10sp"/>
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </LinearLayout>
+            </LinearLayout>
 
             <include layout="@layout/divider_horizontal"/>
 
@@ -137,7 +137,7 @@
                 android:paddingRight="12dp"
                 android:paddingTop="16dp"
                 android:text="@{viewModel.title}"
-                android:textColor="@color/dark_grey"
+                android:textColor="@color/darkerGray"
                 android:textSize="28sp"
                 tools:text="Redenção"/>
 
@@ -149,6 +149,7 @@
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:text="@{viewModel.address}"
+                android:textColor="@color/darkGray"
                 android:textSize="14sp"
                 tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
 
@@ -157,6 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginTop="16dp"
+                android:background="@color/lightGray"
                 map:cameraZoom="18"
                 map:liteMode="true"
                 map:mapType="normal"/>
@@ -255,6 +257,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:paddingBottom="0dp"
                 app:visible="@{viewModel.hasOwnershipAndType}">
 
                 <LinearLayout
@@ -307,13 +310,47 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/rounded_edges"
+                android:backgroundTint="@color/lightGray"
+                android:orientation="vertical"
+                android:padding="5dp"
+                app:visible="@{viewModel.hasDescription}">
+
+                <TextView
+                    fontPath="font/Raleway-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_info"
+                    android:textAlignment="center"
+                    android:textColor="@color/mediumGray"
+                    android:textSize="12dp"/>
+
+                <TextView
+                    fontPath="font/Raleway-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@{viewModel.description}"
+                    android:textColor="@color/darkGray"
+                    android:textSize="12dp"
+                    tools:text="Lugar bastante frequentado por ciclistas. É de boa deixa na frente mas se precisar eles permitem deixar dentro do café também."/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:background="@color/lighterGray"
                 android:orientation="vertical"
                 android:paddingBottom="12dp">
 
                 <TextView
+                    fontPath="font/Raleway-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"

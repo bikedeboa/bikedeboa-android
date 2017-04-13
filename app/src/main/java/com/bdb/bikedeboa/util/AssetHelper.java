@@ -15,8 +15,6 @@ import java.util.Map;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-import static android.R.attr.rating;
-
 public final class AssetHelper {
 
 	private static Resources resources;
@@ -74,14 +72,14 @@ public final class AssetHelper {
 
 	public static int getColorFromScore(float score) {
 
-		int color;
-		if (rating == 0) {
+		int color = ResourcesCompat.getColor(resources, R.color.mediumGray, null);
+		if (score == 0) {
 			color = ResourcesCompat.getColor(resources, R.color.mediumGray, null);
-		} else if (rating > 0 && rating <= 2) {
+		} else if (score > 0 && score <= 2) {
 			color = ResourcesCompat.getColor(resources, R.color.red, null);
-		} else if (rating > 2 && rating < 3.5) {
+		} else if (score > 2 && score < 3.5) {
 			color = ResourcesCompat.getColor(resources, R.color.yellow, null);
-		} else if (rating >= 3.5) {
+		} else if (score >= 3.5) {
 			color = ResourcesCompat.getColor(resources, R.color.green, null);
 		}
 		return color;

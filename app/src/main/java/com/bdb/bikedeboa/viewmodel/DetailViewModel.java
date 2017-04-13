@@ -79,6 +79,14 @@ public class DetailViewModel extends BaseObservable implements
 		}
 	}
 
+	public boolean hasDescription() {
+		return rack.getDescription() != null && !rack.getDescription().equals("");
+	}
+
+	public String getDescription() {
+		return rack.getDescription();
+	}
+
 	public String getReviewNumberString() {
 		return res.getQuantityString(R.plurals.n_ratings, rack.getReviewNumber(), rack.getReviewNumber());
 	}
