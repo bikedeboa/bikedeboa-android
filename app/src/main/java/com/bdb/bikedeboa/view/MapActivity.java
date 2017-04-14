@@ -4,8 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.viewmodel.MapViewModel;
@@ -31,11 +37,13 @@ import static com.bdb.bikedeboa.util.Constants.RACK_ID;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		GoogleMap.OnMarkerClickListener,
 		GoogleMap.OnCameraMoveListener,
-		PlaceSelectionListener {
+		PlaceSelectionListener,
+		NavigationView.OnNavigationItemSelectedListener {
 
 	private static final String TAG = MapActivity.class.getSimpleName();
 	private GoogleMap googleMap;
 	private MapViewModel mapViewModel;
+	private DrawerLayout drawer;
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -50,6 +58,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(map);
+		drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
 
 		mapFragment.getMapAsync(this);
 	}
@@ -62,6 +74,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(portoAlegre, 14));
 		customizeMap();
 		setUpAutoComplete();
+		setUpDrawer();
 
 		// Set listeners
 		googleMap.setOnMarkerClickListener(this);
@@ -85,23 +98,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		}
 	}
 
-	private void setUpAutoComplete() {
-
-		SupportPlaceAutocompleteFragment autocompleteFragment =
-				(SupportPlaceAutocompleteFragment) getSupportFragmentManager()
-						.findFragmentById(R.id.autocomplete_fragment);
-
-		AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-				.setCountry("BR")
-				.build();
-
-		autocompleteFragment.setFilter(typeFilter);
-		// Hint font is way too big -- let's just use the default hint for now
-		// In the future we can build a custom one
-		// autocompleteFragment.setHint(getResources().getString(R.string.autocomplete_hint));
-		autocompleteFragment.setOnPlaceSelectedListener(this);
-	}
-
 	@Override
 	public boolean onMarkerClick(Marker marker) {
 
@@ -123,6 +119,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		startActivity(intent);
 	}
 
+	// Autocomplete code
+	private void setUpAutoComplete() {
+
+		SupportPlaceAutocompleteFragment autocompleteFragment =
+				(SupportPlaceAutocompleteFragment) getSupportFragmentManager()
+						.findFragmentById(R.id.autocomplete_fragment);
+
+		AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+				.setCountry("BR")
+				.build();
+
+		autocompleteFragment.setFilter(typeFilter);
+		// Hint font is way too big -- let's just use the default hint for now
+		// In the future we can build a custom one
+		// autocompleteFragment.setHint(getResources().getString(R.string.autocomplete_hint));
+		autocompleteFragment.setOnPlaceSelectedListener(this);
+	}
+
 	@Override
 	public void onPlaceSelected(Place place) {
 		// Move camera to that place and add normal marker
@@ -133,5 +147,51 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	@Override
 	public void onError(Status status) {
 		Log.w(TAG, "Selecting place: An error occurred: " + status);
+	}
+
+	// Drawer code
+
+	View.OnClickListener drawerListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (drawer.isDrawerOpen(GravityCompat.START)) {
+				drawer.closeDrawer(GravityCompat.START);
+			} else {
+				drawer.openDrawer(GravityCompat.START);
+			}
+		}
+	};
+
+	private void setUpDrawer() {
+
+		ImageView drawerButton = (ImageView) findViewById(R.id.drawer_button);
+		drawerButton.setOnClickListener(drawerListener);
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (drawer.isDrawerOpen(GravityCompat.START)) {
+			drawer.closeDrawer(GravityCompat.START);
+		} else {
+			super.onBackPressed();
+		}
+	}
+
+	@SuppressWarnings("StatementWithEmptyBody")
+	@Override
+	public boolean onNavigationItemSelected(MenuItem item) {
+		// Handle navigation view item clicks here.
+		int id = item.getItemId();
+
+		if (id == R.id.about) {
+			// Handle the camera action
+		} else if (id == R.id.faq) {
+
+		} else if (id == R.id.login_collaborator) {
+
+		}
+
+		drawer.closeDrawer(GravityCompat.START);
+		return true;
 	}
 }
