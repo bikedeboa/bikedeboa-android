@@ -84,7 +84,7 @@
                         android:id="@+id/rate"
                         fontPath="font/Raleway-Medium.ttf"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/rate"
                         android:textAlignment="center"
@@ -114,7 +114,7 @@
                         android:id="@+id/suggest_change"
                         fontPath="font/Raleway-Medium.ttf"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/suggest_change"
                         android:textAlignment="center"
@@ -133,9 +133,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingTop="16dp"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:paddingTop="@dimen/default_margin"
                 android:text="@{viewModel.title}"
                 android:textColor="@color/darkerGray"
                 android:textSize="28sp"
@@ -146,8 +146,8 @@
                 fontPath="font/Raleway-SemiBold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
                 android:text="@{viewModel.address}"
                 android:textColor="@color/darkGray"
                 android:textSize="14sp"
@@ -157,7 +157,7 @@
                 android:id="@+id/map_lite"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:background="@color/lightGray"
                 map:cameraZoom="18"
                 map:liteMode="true"
@@ -167,7 +167,7 @@
                 android:id="@+id/stars"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:stars="@{viewModel.averageRating}"
@@ -176,7 +176,7 @@
                 <LinearLayout
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginRight="4dp">
+                    android:layout_marginStart="4dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -238,9 +238,9 @@
                 android:id="@+id/chip_cloud"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_margin"
                 app:tags="@{viewModel.tagList}"
                 chipcloud:deselectedColor="@color/lightGray"
                 chipcloud:deselectedFontColor="@color/darkGray"
@@ -254,7 +254,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/default_margin"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingBottom="0dp"
@@ -311,9 +311,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_padding"
                 android:background="@drawable/rounded_edges"
                 android:backgroundTint="@color/lightGray"
                 android:orientation="vertical"
@@ -327,7 +327,7 @@
                     android:text="@string/more_info"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:textSize="12dp"/>
+                    android:textSize="@dimen/default_padding"/>
 
                 <TextView
                     fontPath="font/Raleway-Regular.ttf"
@@ -336,7 +336,7 @@
                     android:padding="5dp"
                     android:text="@{viewModel.description}"
                     android:textColor="@color/darkGray"
-                    android:textSize="12dp"
+                    android:textSize="@dimen/default_padding"
                     tools:text="Lugar bastante frequentado por ciclistas. É de boa deixa na frente mas se precisar eles permitem deixar dentro do café também."/>
 
             </LinearLayout>
@@ -347,17 +347,17 @@
                 android:layout_marginTop="18dp"
                 android:background="@color/lighterGray"
                 android:orientation="vertical"
-                android:paddingBottom="12dp">
+                android:paddingBottom="@dimen/default_padding">
 
                 <TextView
                     fontPath="font/Raleway-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/rate_this_rack"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:textSize="12dp"/>
+                    android:textSize="@dimen/default_padding"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

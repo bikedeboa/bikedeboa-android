@@ -12,14 +12,16 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.viewmodel.MapViewModel;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,18 +34,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.bdb.bikedeboa.R.id.map;
+import static com.bdb.bikedeboa.util.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
 import static com.bdb.bikedeboa.util.Constants.RACK_ID;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		GoogleMap.OnMarkerClickListener,
 		GoogleMap.OnCameraMoveListener,
-		PlaceSelectionListener,
 		NavigationView.OnNavigationItemSelectedListener {
 
 	private static final String TAG = MapActivity.class.getSimpleName();
 	private GoogleMap googleMap;
 	private MapViewModel mapViewModel;
 	private DrawerLayout drawer;
+	private TextView placeSearch;
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -63,9 +66,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 
+		placeSearch = (TextView) findViewById(R.id.place_search);
+		placeSearch.setOnClickListener(placeSearchListener);
+
 		mapFragment.getMapAsync(this);
 	}
 
+	// Map code
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		this.googleMap = googleMap;
@@ -73,7 +80,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		LatLng portoAlegre = new LatLng(-30.039005, -51.224059);
 		this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(portoAlegre, 14));
 		customizeMap();
-		setUpAutoComplete();
 		setUpDrawer();
 
 		// Set listeners
@@ -119,38 +125,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		startActivity(intent);
 	}
 
-	// Autocomplete code
-	private void setUpAutoComplete() {
-
-		SupportPlaceAutocompleteFragment autocompleteFragment =
-				(SupportPlaceAutocompleteFragment) getSupportFragmentManager()
-						.findFragmentById(R.id.autocomplete_fragment);
-
-		AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-				.setCountry("BR")
-				.build();
-
-		autocompleteFragment.setFilter(typeFilter);
-		// Hint font is way too big -- let's just use the default hint for now
-		// In the future we can build a custom one
-		// autocompleteFragment.setHint(getResources().getString(R.string.autocomplete_hint));
-		autocompleteFragment.setOnPlaceSelectedListener(this);
-	}
-
-	@Override
-	public void onPlaceSelected(Place place) {
-		// Move camera to that place and add normal marker
-		this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 17), 1000, null);
-		this.googleMap.addMarker(new MarkerOptions().position(place.getLatLng()));
-	}
-
-	@Override
-	public void onError(Status status) {
-		Log.w(TAG, "Selecting place: An error occurred: " + status);
-	}
-
 	// Drawer code
-
 	View.OnClickListener drawerListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -193,5 +168,45 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
+	}
+
+	// Autocomplete code
+	private View.OnClickListener placeSearchListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			try {
+				Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+								.setFilter(new AutocompleteFilter.Builder()
+										.setCountry("BR")
+										.build())
+								.build(MapActivity.this);
+				startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+			} catch (GooglePlayServicesRepairableException e) {
+				// TODO: Handle the error.
+			} catch (GooglePlayServicesNotAvailableException e) {
+				// TODO: Handle the error.
+			}
+		}
+	};
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				// Move camera to that place and add normal marker
+				Place place = PlaceAutocomplete.getPlace(this, data);
+				this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 17), 1000, null);
+				this.googleMap.addMarker(new MarkerOptions().position(place.getLatLng()));
+				// Set text on "edit text"
+				placeSearch.setText(place.getName());
+			} else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+				Status status = PlaceAutocomplete.getStatus(this, data);
+				Log.w(TAG, status.getStatusMessage());
+			} else if (resultCode == RESULT_CANCELED) {
+				// The user canceled the operation -- clear text
+				placeSearch.setText("");
+			}
+		}
 	}
 }
