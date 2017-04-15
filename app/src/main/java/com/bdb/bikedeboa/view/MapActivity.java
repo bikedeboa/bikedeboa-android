@@ -3,18 +3,17 @@ package com.bdb.bikedeboa.view;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bdb.bikedeboa.R;
+import com.bdb.bikedeboa.databinding.ActivityMapsBinding;
 import com.bdb.bikedeboa.viewmodel.MapViewModel;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -44,9 +43,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 	private static final String TAG = MapActivity.class.getSimpleName();
 	private GoogleMap googleMap;
+	private ActivityMapsBinding binding;
 	private MapViewModel mapViewModel;
-	private DrawerLayout drawer;
-	private TextView placeSearch;
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -57,18 +55,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_maps);
+		binding = DataBindingUtil.setContentView(this, R.layout.activity_maps);
+
+		// Set listeners
+		binding.drawer.navigationView.setNavigationItemSelectedListener(this);
+		binding.placeSearch.setOnClickListener(placeSearchListener);
+		binding.drawerButton.setOnClickListener(drawerToggleListener);
+
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(map);
-		drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-		navigationView.setNavigationItemSelectedListener(this);
-
-		placeSearch = (TextView) findViewById(R.id.place_search);
-		placeSearch.setOnClickListener(placeSearchListener);
-
 		mapFragment.getMapAsync(this);
 	}
 
@@ -76,17 +72,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		this.googleMap = googleMap;
+
 		// Move camera to Porto Alegre
 		LatLng portoAlegre = new LatLng(-30.039005, -51.224059);
 		this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(portoAlegre, 14));
 		customizeMap();
-		setUpDrawer();
 
-		// Set listeners
+		// Set map specific listeners
 		googleMap.setOnMarkerClickListener(this);
 		googleMap.setOnCameraMoveListener(this);
 
 		mapViewModel = new MapViewModel(this.googleMap, this);
+		binding.setViewModel(mapViewModel); // We don't use data binding anywhere though
 	}
 
 	private void customizeMap() {
@@ -106,7 +103,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 	@Override
 	public boolean onMarkerClick(Marker marker) {
-
+		// TODO markers' hitboxes are not working properly, they are too big
 		int rackId = (int) marker.getTag();
 		launchDetailActivity(rackId);
 		// Return false if we want the camera to move to the marker and an info window to appear
@@ -126,27 +123,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	}
 
 	// Drawer code
-	View.OnClickListener drawerListener = new View.OnClickListener() {
+	View.OnClickListener drawerToggleListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (drawer.isDrawerOpen(GravityCompat.START)) {
-				drawer.closeDrawer(GravityCompat.START);
+			if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+				binding.drawerLayout.closeDrawer(GravityCompat.START);
 			} else {
-				drawer.openDrawer(GravityCompat.START);
+				binding.drawerLayout.openDrawer(GravityCompat.START);
 			}
 		}
 	};
 
-	private void setUpDrawer() {
-
-		ImageView drawerButton = (ImageView) findViewById(R.id.drawer_button);
-		drawerButton.setOnClickListener(drawerListener);
-	}
-
 	@Override
 	public void onBackPressed() {
-		if (drawer.isDrawerOpen(GravityCompat.START)) {
-			drawer.closeDrawer(GravityCompat.START);
+		if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+			binding.drawerLayout.closeDrawer(GravityCompat.START);
 		} else {
 			super.onBackPressed();
 		}
@@ -159,14 +150,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		int id = item.getItemId();
 
 		if (id == R.id.about) {
-			// Handle the camera action
+
 		} else if (id == R.id.faq) {
 
 		} else if (id == R.id.login_collaborator) {
 
 		}
 
-		drawer.closeDrawer(GravityCompat.START);
+		binding.drawerLayout.closeDrawer(GravityCompat.START);
 		return true;
 	}
 
@@ -175,6 +166,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		@Override
 		public void onClick(View v) {
 			try {
+				// Launch autocomplete activity
 				Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
 								.setFilter(new AutocompleteFilter.Builder()
 										.setCountry("BR")
@@ -199,13 +191,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 				this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 17), 1000, null);
 				this.googleMap.addMarker(new MarkerOptions().position(place.getLatLng()));
 				// Set text on "edit text"
-				placeSearch.setText(place.getName());
+				binding.placeSearch.setText(place.getName());
 			} else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
 				Status status = PlaceAutocomplete.getStatus(this, data);
 				Log.w(TAG, status.getStatusMessage());
 			} else if (resultCode == RESULT_CANCELED) {
 				// The user canceled the operation -- clear text
-				placeSearch.setText("");
+				binding.placeSearch.setText("");
 			}
 		}
 	}
