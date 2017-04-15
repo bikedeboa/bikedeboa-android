@@ -104,8 +104,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	@Override
 	public boolean onMarkerClick(Marker marker) {
 		// TODO markers' hitboxes are not working properly, they are too big
-		int rackId = (int) marker.getTag();
-		launchDetailActivity(rackId);
+		// If user has added a marker through place search, it's tag should be null
+		if (marker.getTag() != null) {
+			int rackId = (int) marker.getTag();
+			launchDetailActivity(rackId);
+		}
 		// Return false if we want the camera to move to the marker and an info window to appear
 		return true;
 	}
@@ -173,9 +176,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 										.build())
 								.build(MapActivity.this);
 				startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-			} catch (GooglePlayServicesRepairableException e) {
-				// TODO: Handle the error.
-			} catch (GooglePlayServicesNotAvailableException e) {
+			} catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
 				// TODO: Handle the error.
 			}
 		}
