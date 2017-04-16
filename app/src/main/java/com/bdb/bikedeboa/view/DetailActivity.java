@@ -1,11 +1,14 @@
 package com.bdb.bikedeboa.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.databinding.ActivityDetailBinding;
@@ -14,6 +17,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MapStyleOptions;
+
+import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -44,6 +49,10 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 			this.finish();
 		}
 
+		// Set click listeners
+		binding.howToGetThere.setOnClickListener(getMeThere);
+		binding.rackPhoto.setOnClickListener(expandImage);
+
 		// Fire up map lite
 		binding.mapLite.onCreate(null);
 		binding.mapLite.getMapAsync(this);
@@ -60,7 +69,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 	}
 
 	private void customizeMap(GoogleMap googleMap) {
-		// Disable rotation
+		// Disable little map icons
 		googleMap.getUiSettings().setMapToolbarEnabled(false);
 		// Customise the styling of the base map using a JSON object defined in a raw resource file.
 		try {
@@ -74,4 +83,25 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 			Log.e(TAG, "Can't find style. Error: ", e);
 		}
 	}
+
+	private View.OnClickListener getMeThere = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// <?q=%f,%f> necessary for pin positioning
+			String uri = String.format(Locale.ENGLISH, "geo:%f,%f?q=%f,%f",
+					detailViewModel.getLatitude(), detailViewModel.getLongitude(),
+					detailViewModel.getLatitude(), detailViewModel.getLongitude());
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+			startActivity(intent);
+		}
+	};
+
+	private View.OnClickListener expandImage = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(DetailActivity.this, ExpandImageActivity.class);
+			intent.putExtra(RACK_ID, rackId);
+			startActivity(intent);
+		}
+	};
 }

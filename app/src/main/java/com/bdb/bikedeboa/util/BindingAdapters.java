@@ -28,7 +28,7 @@ public class BindingAdapters {
 				.thumbnail(Glide.with(imageView.getContext())
 						.load(R.drawable.wheel_loading))
 				.crossFade()
-				.diskCacheStrategy(DiskCacheStrategy.RESULT)
+				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
 				.into(imageView);
 	}
 
