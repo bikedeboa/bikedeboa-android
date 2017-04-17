@@ -80,9 +80,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_maps);
 
 		// Set listeners
-		binding.drawer.navigationView.setNavigationItemSelectedListener(this);
+		binding.menuDrawer.menuNavigationView.setNavigationItemSelectedListener(this);
 		binding.placeSearch.setOnClickListener(placeSearchListener);
-		binding.drawerButton.setOnClickListener(drawerToggleListener);
+		binding.drawerButton.setOnClickListener(menuDrawerToggleListener);
+		binding.filterBotton.setOnClickListener(filterDrawerToggleListener);
 		binding.myLocation.setOnClickListener(myLocationListener);
 
 		// Create the location client to start receiving updates
@@ -172,13 +173,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	}
 
 	// Drawer code
-	View.OnClickListener drawerToggleListener = new View.OnClickListener() {
+	View.OnClickListener menuDrawerToggleListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
 				binding.drawerLayout.closeDrawer(GravityCompat.START);
 			} else {
 				binding.drawerLayout.openDrawer(GravityCompat.START);
+			}
+		}
+	};
+
+	View.OnClickListener filterDrawerToggleListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
+				binding.drawerLayout.closeDrawer(GravityCompat.END);
+			} else {
+				binding.drawerLayout.openDrawer(GravityCompat.END);
 			}
 		}
 	};
