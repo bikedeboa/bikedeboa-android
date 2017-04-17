@@ -153,6 +153,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	public void onBackPressed() {
 		if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
 			binding.drawerLayout.closeDrawer(GravityCompat.START);
+		} else if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
+			binding.drawerLayout.closeDrawer(GravityCompat.END);
 		} else {
 			super.onBackPressed();
 		}
@@ -183,10 +185,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 			try {
 				// Launch autocomplete activity
 				Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-								.setFilter(new AutocompleteFilter.Builder()
-										.setCountry("BR")
-										.build())
-								.build(MapActivity.this);
+						.setFilter(new AutocompleteFilter.Builder()
+								.setCountry("BR")
+								.build())
+						.build(MapActivity.this);
 				startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
 			} catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
 				// TODO: Handle the error.

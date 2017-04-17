@@ -23,4 +23,5 @@
     <color name="darkBlue">#106086</color>
     <color name="lightBlue">#63BCE7</color>
     <color name="lightestBlue">#86C7E7</color>
+    <color name="black">#000</color>
 </resources>

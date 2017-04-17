@@ -46,9 +46,10 @@
 
                 <TextView
                     android:id="@+id/place_search"
+                    fontPath="font/Raleway-Medium.ttf"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@color/white"
                     android:clickable="true"
                     android:gravity="center_vertical"
@@ -58,11 +59,11 @@
 
                 <ImageView
                     android:id="@+id/filter_botton"
-                    android:padding="11dp"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:background="@color/white"
                     android:layout_gravity="right"
+                    android:background="@color/white"
+                    android:padding="13dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/icon_filter"
                     android:tint="@color/mediumGray"/>
