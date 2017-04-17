@@ -46,7 +46,8 @@
 
                 <TextView
                     android:id="@+id/place_search"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     android:clickable="true"
@@ -55,13 +56,28 @@
                     android:paddingLeft="@dimen/default_padding"
                     android:textSize="14sp"/>
 
+                <ImageView
+                    android:id="@+id/filter_botton"
+                    android:padding="11dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    android:layout_gravity="right"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_filter"
+                    android:tint="@color/mediumGray"/>
+
             </LinearLayout>
 
         </FrameLayout>
 
         <include
-            android:id="@+id/drawer"
-            layout="@layout/drawer"/>
+            android:id="@+id/menu_drawer"
+            layout="@layout/menu_drawer"/>
+
+        <include
+            android:id="@+id/filter_drawer"
+            layout="@layout/filter_drawer"/>
 
     </android.support.v4.widget.DrawerLayout>
 

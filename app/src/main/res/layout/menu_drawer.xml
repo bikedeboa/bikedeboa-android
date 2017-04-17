@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_view"
+        android:id="@+id/menu_navigation_view"
         fontPath="font/Raleway-Medium.ttf"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -14,7 +14,7 @@
         app:headerLayout="@layout/nav_header_main"
         app:itemIconTint="@color/mediumGray"
         app:itemTextColor="@color/darkGray"
-        app:menu="@menu/activity_main_drawer">
+        app:menu="@menu/menu_drawer_items">
 
         <LinearLayout
             android:layout_width="match_parent"
