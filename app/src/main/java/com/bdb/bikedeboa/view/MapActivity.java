@@ -199,6 +199,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	public void onBackPressed() {
 		if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
 			binding.drawerLayout.closeDrawer(GravityCompat.START);
+		} else if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
+			binding.drawerLayout.closeDrawer(GravityCompat.END);
 		} else {
 			super.onBackPressed();
 		}
