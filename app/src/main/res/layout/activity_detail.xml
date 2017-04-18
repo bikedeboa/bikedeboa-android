@@ -39,6 +39,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/how_to_get_there"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -53,7 +54,6 @@
                         android:tint="@color/darkGray"/>
 
                     <TextView
-                        android:id="@+id/how_to_get_there"
                         fontPath="font/Raleway-Medium.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -23,7 +23,7 @@ public class DetailViewModel extends BaseObservable implements
 
 	private final RackManager rackManager;
 	private GoogleMap googleMap;
-	private final Resources res;
+	private Resources res = null;
 	private Rack rack;
 
 	public DetailViewModel(int rackId, GoogleMap googleMap, Context context) {
@@ -35,6 +35,13 @@ public class DetailViewModel extends BaseObservable implements
 
 		fetchRackDetails();
 		setUpMap();
+	}
+
+	// Constructor for ExpandImageActivity
+	public DetailViewModel(int rackId) {
+		this.rackManager = RackManager.getInstance();
+		this.rackManager.setSingleRackCallback(this);
+		this.rack = this.rackManager.getRack(rackId);
 	}
 
 	public void fetchRackDetails() {
@@ -68,6 +75,14 @@ public class DetailViewModel extends BaseObservable implements
 
 	public float getAverageRating() {
 		return rack.getAverageRating();
+	}
+
+	public Double getLatitude() {
+		return rack.getLatitude();
+	}
+
+	public Double getLongitude() {
+		return rack.getLongitude();
 	}
 
 	public String getAverageRatingString() {
