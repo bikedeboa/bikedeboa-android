@@ -3,6 +3,7 @@ package com.bdb.bikedeboa.viewmodel;
 import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
+import android.location.Location;
 
 import com.bdb.bikedeboa.model.manager.RackManager;
 import com.bdb.bikedeboa.model.model.Rack;
@@ -22,6 +23,7 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 	private RackManager rackManager;
 	private List<Marker> markerList;
 	private float cameraZoom;
+	private Location lastLocation;
 
 	public MapViewModel(GoogleMap googleMap, Context context) {
 		this.googleMap = googleMap;
@@ -82,5 +84,13 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 			updatePinIcons(true);
 		}
 		this.cameraZoom = currentZoom;
+	}
+
+	public Location getLastLocation() {
+		return lastLocation;
+	}
+
+	public void setLastLocation(Location lastLocation) {
+		this.lastLocation = lastLocation;
 	}
 }

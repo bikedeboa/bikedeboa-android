@@ -231,27 +231,25 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	private View.OnClickListener myLocationListener = new View.OnClickListener() {
 		@SuppressWarnings("MissingPermission")
 		@Override
-		@AfterPermissionGranted(LOCATION_REQUEST_CODE)
 		public void onClick(View v) {
-
-			String perm = Manifest.permission.ACCESS_FINE_LOCATION;
-			if (EasyPermissions.hasPermissions(getBaseContext(), perm)) {
+			String permission = Manifest.permission.ACCESS_FINE_LOCATION;
+			if (EasyPermissions.hasPermissions(getBaseContext(), permission)) {
 				googleMap.setMyLocationEnabled(true);
 				googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-				Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-				if (currentLocation != null) {
-					LatLng latLngLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-					cameraUpdate(latLngLocation);
+				mapViewModel.setLastLocation(LocationServices.FusedLocationApi.getLastLocation(googleApiClient));
+				if (mapViewModel.getLastLocation() != null) {
+					Location lastLocation = mapViewModel.getLastLocation();
+					cameraUpdate(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
 				}
 			} else {
 				EasyPermissions.requestPermissions(MapActivity.this,
-						getString(R.string.location_rationale), LOCATION_REQUEST_CODE, perm);
+						getString(R.string.location_rationale), LOCATION_REQUEST_CODE, permission);
 			}
 		}
 	};
 
-	private void cameraUpdate(LatLng pos) {
-		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(pos, 17);
+	private void cameraUpdate(LatLng position) {
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, 17);
 		googleMap.animateCamera(cameraUpdate);
 	}
 
@@ -277,8 +275,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	}
 
 	@Override
-	public void onPermissionsGranted(int requestCode, List<String> perms) {
-
+	public void onPermissionsGranted(int requestCode, List<String> permissions) {
+		if (requestCode == LOCATION_REQUEST_CODE && permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
+			binding.myLocation.callOnClick();
+		}
 	}
 
 	@Override
@@ -288,8 +288,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	}
 
 	@Override
-	public void onPermissionsDenied(int requestCode, List<String> perms) {
-		if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+	public void onPermissionsDenied(int requestCode, List<String> permissions) {
+		if (EasyPermissions.somePermissionPermanentlyDenied(this, permissions)) {
 			new AppSettingsDialog.Builder(this)
 					.setRationale(R.string.rationale)
 					.setTitle(R.string.title_rationale)
