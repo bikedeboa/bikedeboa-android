@@ -1,10 +1,12 @@
 package com.bdb.bikedeboa.view;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
@@ -30,16 +32,24 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.bdb.bikedeboa.R.id.map;
+import static com.bdb.bikedeboa.util.Constants.LOCATION_REQUEST_CODE;
 import static com.bdb.bikedeboa.util.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
 import static com.bdb.bikedeboa.util.Constants.RACK_ID;
+import static com.bdb.bikedeboa.util.Constants.SETTINGS_REQUEST_CODE;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		GoogleMap.OnMarkerClickListener,
 		GoogleMap.OnCameraMoveListener,
-		NavigationView.OnNavigationItemSelectedListener {
+		NavigationView.OnNavigationItemSelectedListener,
+		EasyPermissions.PermissionCallbacks {
 
 	private static final String TAG = MapActivity.class.getSimpleName();
 	private GoogleMap googleMap;
@@ -61,6 +71,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		binding.drawer.navigationView.setNavigationItemSelectedListener(this);
 		binding.placeSearch.setOnClickListener(placeSearchListener);
 		binding.drawerButton.setOnClickListener(drawerToggleListener);
+		binding.myLocation.setOnClickListener(myLocationListener);
 
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -148,7 +159,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
-	public boolean onNavigationItemSelected(MenuItem item) {
+	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
 
@@ -171,13 +182,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 			try {
 				// Launch autocomplete activity
 				Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-								.setFilter(new AutocompleteFilter.Builder()
-										.setCountry("BR")
-										.build())
-								.build(MapActivity.this);
+						.setFilter(new AutocompleteFilter.Builder()
+								.setCountry("BR")
+								.build())
+						.build(MapActivity.this);
 				startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
 			} catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
 				// TODO: Handle the error.
+			}
+		}
+	};
+
+	private View.OnClickListener myLocationListener = new View.OnClickListener() {
+		@SuppressWarnings("MissingPermission")
+		@Override
+		@AfterPermissionGranted(LOCATION_REQUEST_CODE)
+		public void onClick(View v) {
+
+			String perm = Manifest.permission.ACCESS_FINE_LOCATION;
+			if (EasyPermissions.hasPermissions(getBaseContext(), perm)) {
+				googleMap.setMyLocationEnabled(true);
+				googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+			} else {
+				EasyPermissions.requestPermissions(MapActivity.this,
+						getString(R.string.location_rationale), LOCATION_REQUEST_CODE, perm);
 			}
 		}
 	};
@@ -200,6 +228,31 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 				// The user canceled the operation -- clear text
 				binding.placeSearch.setText("");
 			}
+		}
+	}
+
+	@Override
+	public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+	}
+
+	@Override
+	public void onPermissionsDenied(int requestCode, List<String> perms) {
+		if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+			new AppSettingsDialog.Builder(this)
+					.setRationale(R.string.rationale)
+					.setTitle(R.string.title_rationale)
+					.setPositiveButton(R.string.app_settings)
+					.setNegativeButton(R.string.cancel)
+					.setRequestCode(SETTINGS_REQUEST_CODE)
+					.build()
+					.show();
 		}
 	}
 }
