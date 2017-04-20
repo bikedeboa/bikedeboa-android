@@ -106,21 +106,21 @@ public class DetailViewModel extends BaseObservable implements
 		return res.getQuantityString(R.plurals.n_ratings, rack.getReviewNumber(), rack.getReviewNumber());
 	}
 
-	public boolean hasRestrictionAndType() {
+	public boolean hasAccessAndType() {
 		return rack.isPublic() != null && !rack.isPublic().equals("null") &&
 				rack.getStructureType() != null && !rack.getStructureType().equals("null");
 	}
 
-	public String getRestriction() {
-		return AssetHelper.getRestrictionString(rack.isPublic());
+	public String getAccess() {
+		return AssetHelper.getAccessString(rack.isPublic());
 	}
 
 	public String getStructureType() {
 		return AssetHelper.getStructureTypeString(rack.getStructureType());
 	}
 
-	public Drawable getRestrictionImage() {
-		return AssetHelper.getRestrictionImage(rack.isPublic());
+	public Drawable getAccessImage() {
+		return AssetHelper.getAccessImage(rack.isPublic());
 	}
 
 	public Drawable getStructureTypeImage() {

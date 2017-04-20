@@ -2,6 +2,7 @@ package com.bdb.bikedeboa.model.manager;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 
 import com.bdb.bikedeboa.model.model.Rack;
 import com.bdb.bikedeboa.model.network.response.LocalFull;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,11 +26,22 @@ public class RackManager {
 	private Realm realm;
 	private Context context;
 	private List<Rack> rackList;
+	// Filters
+	List<Pair<Float, Float>> ratingRangeFilter;
+	String accessFilter = "";
+	List<String> structureTypeFilter;
 
 	private RackManager(Context context) {
 
 		this.context = context;
 		rackList = new ArrayList<>();
+		ratingRangeFilter = new ArrayList<>();
+		structureTypeFilter = new ArrayList<>();
+		// Just for testing
+//		accessFilter = "true";
+//		structureTypeFilter.add("uinvertido");
+//		ratingRangeFilter.add(new Pair<Float, Float>(3.5f, 5f));
+
 		realm = Realm.getDefaultInstance();
 		// Update rack list to match db on instantiation
 		updateRackList();
@@ -67,7 +80,28 @@ public class RackManager {
 	private void updateRackList() {
 
 		rackList.clear();
-		rackList.addAll(realm.where(Rack.class).findAll());
+
+		// Build lazy query
+		RealmQuery<Rack> query = realm.where(Rack.class);
+
+		if (!accessFilter.equals("")) {
+			// isPublic values can be "true", "false", or "" (info not available)
+			// Default behaviour will be always bring "" if filtering -- we can change it later
+			query.beginGroup().equalTo("isPublic", accessFilter).or().equalTo("isPublic", "").endGroup();
+		}
+
+		if (!structureTypeFilter.isEmpty()) {
+			query.in("structureType", structureTypeFilter.toArray(new String[structureTypeFilter.size()]));
+		}
+
+		if (!ratingRangeFilter.isEmpty()) {
+			for (Pair<Float, Float> range : ratingRangeFilter) {
+				query.between("averageRating", range.first, range.second);
+			}
+		}
+
+		rackList.addAll(query.findAll());
+
 		if (rackListCallback != null) {
 			rackListCallback.onRackListUpdate(rackList);
 		}
@@ -132,7 +166,6 @@ public class RackManager {
 						RackManager.this.singleRackCallback.onRackUpdate(rack);
 					}
 				}
-
 			}
 		}
 

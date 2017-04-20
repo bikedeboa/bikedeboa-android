@@ -20,8 +20,8 @@ public final class AssetHelper {
 	private static Resources resources;
 	private static Map<String, Drawable> structureTypeImageMap;
 	private static Map<String, String> structureTypeStringMap;
-	private static Map<String, Drawable> restrictionImageMap;
-	private static Map<String, String> restrictionStringMap;
+	private static Map<String, Drawable> accessImageMap;
+	private static Map<String, String> accessStringMap;
 
 	public static void init(Resources resources) {
 		AssetHelper.resources = resources;
@@ -59,15 +59,15 @@ public final class AssetHelper {
 		structureTypeStringMap.put("grade", resources.getString(R.string.grade));
 		structureTypeStringMap.put("other", resources.getString(R.string.outro));
 
-		restrictionImageMap = new Hashtable<>();
-		restrictionImageMap.put("true",
+		accessImageMap = new Hashtable<>();
+		accessImageMap.put("true",
 				ResourcesCompat.getDrawable(resources, R.drawable.icon_public, null));
-		restrictionImageMap.put("false",
+		accessImageMap.put("false",
 				ResourcesCompat.getDrawable(resources, R.drawable.icon_private, null));
 
-		restrictionStringMap = new Hashtable<>();
-		restrictionStringMap.put("true", resources.getString(R.string.public_rack));
-		restrictionStringMap.put("false", resources.getString(R.string.private_rack));
+		accessStringMap = new Hashtable<>();
+		accessStringMap.put("true", resources.getString(R.string.public_rack));
+		accessStringMap.put("false", resources.getString(R.string.private_rack));
 	}
 
 	public static int getColorFromScore(float score) {
@@ -144,12 +144,12 @@ public final class AssetHelper {
 		return BitmapDescriptorFactory.fromBitmap(bitmap);
 	}
 
-	public static String getRestrictionString(String isPublic) {
-		return isPublic != null ? restrictionStringMap.get(isPublic) : null;
+	public static String getAccessString(String isPublic) {
+		return isPublic != null ? accessStringMap.get(isPublic) : null;
 	}
 
-	public static Drawable getRestrictionImage(String isPublic) {
-		return isPublic != null ? restrictionImageMap.get(isPublic) : null;
+	public static Drawable getAccessImage(String isPublic) {
+		return isPublic != null ? accessImageMap.get(isPublic) : null;
 	}
 
 	public static String getStructureTypeString(String structureType) {
