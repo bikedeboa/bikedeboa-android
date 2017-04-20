@@ -16,10 +16,10 @@ public class Rack extends RealmObject {
 	private int id;
 	private double latitude, longitude;
 	private float averageRating;
-	// Complete description
-	private String text;
 	private String structureType;
 	private String isPublic; // Public, private or unknown (i.e., null)
+	// Complete description
+	private String text;
 	private String photoUrl;
 	private String description;
 	private String address;
@@ -37,6 +37,8 @@ public class Rack extends RealmObject {
 		this.latitude = localLight.lat;
 		this.longitude = localLight.lng;
 		this.averageRating = localLight.average != null ? localLight.average : 0;
+		this.structureType = localLight.structureType;
+		this.isPublic = localLight.isPublic;
 	}
 
 	public void completeRack(LocalFull localFull, Context context) {
@@ -47,8 +49,6 @@ public class Rack extends RealmObject {
 		this.address = localFull.address;
 		this.checkInNumber = localFull.checkIns;
 		this.reviewNumber = localFull.reviews;
-		this.structureType = localFull.structureType;
-		this.isPublic = localFull.isPublic;
 
 		this.tagList.clear();
 		for (LocalFull.Tag tag : localFull.tags) {

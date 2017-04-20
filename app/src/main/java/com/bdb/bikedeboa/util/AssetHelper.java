@@ -20,8 +20,8 @@ public final class AssetHelper {
 	private static Resources resources;
 	private static Map<String, Drawable> structureTypeImageMap;
 	private static Map<String, String> structureTypeStringMap;
-	private static Map<String, Drawable> ownershipImageMap;
-	private static Map<String, String> ownershipStringMap;
+	private static Map<String, Drawable> restrictionImageMap;
+	private static Map<String, String> restrictionStringMap;
 
 	public static void init(Resources resources) {
 		AssetHelper.resources = resources;
@@ -59,15 +59,15 @@ public final class AssetHelper {
 		structureTypeStringMap.put("grade", resources.getString(R.string.grade));
 		structureTypeStringMap.put("other", resources.getString(R.string.outro));
 
-		ownershipImageMap = new Hashtable<>();
-		ownershipImageMap.put("true",
+		restrictionImageMap = new Hashtable<>();
+		restrictionImageMap.put("true",
 				ResourcesCompat.getDrawable(resources, R.drawable.icon_public, null));
-		ownershipImageMap.put("false",
+		restrictionImageMap.put("false",
 				ResourcesCompat.getDrawable(resources, R.drawable.icon_private, null));
 
-		ownershipStringMap = new Hashtable<>();
-		ownershipStringMap.put("true", resources.getString(R.string.public_rack));
-		ownershipStringMap.put("false", resources.getString(R.string.private_rack));
+		restrictionStringMap = new Hashtable<>();
+		restrictionStringMap.put("true", resources.getString(R.string.public_rack));
+		restrictionStringMap.put("false", resources.getString(R.string.private_rack));
 	}
 
 	public static int getColorFromScore(float score) {
@@ -144,12 +144,12 @@ public final class AssetHelper {
 		return BitmapDescriptorFactory.fromBitmap(bitmap);
 	}
 
-	public static String getOwnershipString(String isPublic) {
-		return isPublic != null ? ownershipStringMap.get(isPublic) : null;
+	public static String getRestrictionString(String isPublic) {
+		return isPublic != null ? restrictionStringMap.get(isPublic) : null;
 	}
 
-	public static Drawable getOwnershipImage(String isPublic) {
-		return isPublic != null ? ownershipImageMap.get(isPublic) : null;
+	public static Drawable getRestrictionImage(String isPublic) {
+		return isPublic != null ? restrictionImageMap.get(isPublic) : null;
 	}
 
 	public static String getStructureTypeString(String structureType) {

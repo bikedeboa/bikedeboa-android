@@ -12,4 +12,8 @@ public class LocalLight {
 	public Double lng;
 	@SerializedName("average")
 	public Float average;
+	@SerializedName("structureType")
+	public String structureType;
+	@SerializedName("isPublic")
+	public String isPublic;
 }

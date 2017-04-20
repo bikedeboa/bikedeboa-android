@@ -57,8 +57,10 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:clickable="true"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="@string/autocomplete_hint"
+                    android:maxLines="1"
                     android:paddingLeft="@dimen/default_padding"
                     android:textSize="14sp"/>
 

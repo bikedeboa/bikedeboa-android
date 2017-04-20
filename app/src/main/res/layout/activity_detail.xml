@@ -258,7 +258,7 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingBottom="0dp"
-                app:visible="@{viewModel.hasOwnershipAndType}">
+                app:visible="@{viewModel.hasRestrictionAndType}">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -269,7 +269,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="90dp"
-                        android:src="@{viewModel.ownershipImage}"
+                        android:src="@{viewModel.restrictionImage}"
                         tools:src="@drawable/icon_public"/>
 
                     <TextView
@@ -277,7 +277,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{viewModel.ownership}"
+                        android:text="@{viewModel.restriction}"
                         android:textColor="@color/mediumGray"
                         tools:text="@string/public_rack"/>
 
