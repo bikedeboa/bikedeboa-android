@@ -1,10 +1,14 @@
 package com.bdb.bikedeboa.view;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
@@ -15,12 +19,18 @@ import android.view.View;
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.databinding.ActivityMapsBinding;
 import com.bdb.bikedeboa.viewmodel.MapViewModel;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,19 +40,31 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.bdb.bikedeboa.R.id.map;
+import static com.bdb.bikedeboa.util.Constants.LOCATION_REQUEST_CODE;
 import static com.bdb.bikedeboa.util.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
 import static com.bdb.bikedeboa.util.Constants.RACK_ID;
+import static com.bdb.bikedeboa.util.Constants.SETTINGS_REQUEST_CODE;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		GoogleMap.OnMarkerClickListener,
 		GoogleMap.OnCameraMoveListener,
-		NavigationView.OnNavigationItemSelectedListener {
+		NavigationView.OnNavigationItemSelectedListener,
+		EasyPermissions.PermissionCallbacks,
+		LocationListener,
+		GoogleApiClient.ConnectionCallbacks,
+		GoogleApiClient.OnConnectionFailedListener {
 
 	private static final String TAG = MapActivity.class.getSimpleName();
 	private GoogleMap googleMap;
+	private GoogleApiClient googleApiClient;
 	private ActivityMapsBinding binding;
 	private MapViewModel mapViewModel;
 
@@ -61,11 +83,35 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		binding.drawer.navigationView.setNavigationItemSelectedListener(this);
 		binding.placeSearch.setOnClickListener(placeSearchListener);
 		binding.drawerButton.setOnClickListener(drawerToggleListener);
+		binding.myLocation.setOnClickListener(myLocationListener);
+
+		// Create the location client to start receiving updates
+		googleApiClient = new GoogleApiClient.Builder(getBaseContext())
+				.addApi(LocationServices.API)
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this)
+				.build();
 
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(map);
 		mapFragment.getMapAsync(this);
+	}
+
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		googleApiClient.connect();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		if (googleApiClient != null && googleApiClient.isConnected()) {
+			LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+			googleApiClient.disconnect();
+		}
 	}
 
 	// Map code
@@ -148,7 +194,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
-	public boolean onNavigationItemSelected(MenuItem item) {
+	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
 
@@ -171,16 +217,41 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 			try {
 				// Launch autocomplete activity
 				Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-								.setFilter(new AutocompleteFilter.Builder()
-										.setCountry("BR")
-										.build())
-								.build(MapActivity.this);
+						.setFilter(new AutocompleteFilter.Builder()
+								.setCountry("BR")
+								.build())
+						.build(MapActivity.this);
 				startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
 			} catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
 				// TODO: Handle the error.
 			}
 		}
 	};
+
+	private View.OnClickListener myLocationListener = new View.OnClickListener() {
+		@SuppressWarnings("MissingPermission")
+		@Override
+		public void onClick(View v) {
+			String permission = Manifest.permission.ACCESS_FINE_LOCATION;
+			if (EasyPermissions.hasPermissions(getBaseContext(), permission)) {
+				googleMap.setMyLocationEnabled(true);
+				googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+				mapViewModel.setLastLocation(LocationServices.FusedLocationApi.getLastLocation(googleApiClient));
+				if (mapViewModel.getLastLocation() != null) {
+					Location lastLocation = mapViewModel.getLastLocation();
+					cameraUpdate(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
+				}
+			} else {
+				EasyPermissions.requestPermissions(MapActivity.this,
+						getString(R.string.location_rationale), LOCATION_REQUEST_CODE, permission);
+			}
+		}
+	};
+
+	private void cameraUpdate(LatLng position) {
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, 17);
+		googleMap.animateCamera(cameraUpdate);
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -201,5 +272,60 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 				binding.placeSearch.setText("");
 			}
 		}
+	}
+
+	@Override
+	public void onPermissionsGranted(int requestCode, List<String> permissions) {
+		if (requestCode == LOCATION_REQUEST_CODE && permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
+			binding.myLocation.callOnClick();
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+	}
+
+	@Override
+	public void onPermissionsDenied(int requestCode, List<String> permissions) {
+		if (EasyPermissions.somePermissionPermanentlyDenied(this, permissions)) {
+			new AppSettingsDialog.Builder(this)
+					.setRationale(R.string.rationale)
+					.setTitle(R.string.title_rationale)
+					.setPositiveButton(R.string.app_settings)
+					.setNegativeButton(R.string.cancel)
+					.setRequestCode(SETTINGS_REQUEST_CODE)
+					.build()
+					.show();
+		}
+	}
+
+	@SuppressWarnings("MissingPermission")
+	@Override
+	public void onConnected(@Nullable Bundle bundle) {
+		if (EasyPermissions.hasPermissions(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+			LocationRequest locationRequest = LocationRequest.create()
+					.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+					.setInterval(10 * 1000) /* 10 secs */
+					.setFastestInterval(2000); /* 2 secs */
+			// Request location updates
+			LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+		}
+	}
+
+	@Override
+	public void onConnectionSuspended(int i) {
+		/* At the current moment problems with the connection are not important */
+	}
+
+	@Override
+	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+		/* At the current moment problems with the connection are not important */
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		/* Visual location changes are already dealt by google maps blue dot */
 	}
 }

@@ -14,10 +14,15 @@
     <string name="outro">Outro</string>
     <string name="rate_this_rack">Dê sua nota</string>
     <string name="more_info">Mais informações</string>
-    <string name="autocomplete_hint">Buscar endereço, estabelecimento, ...</string>
+    <string name="autocomplete_hint">Buscar endereço, estabelecimento, …</string>
     <string name="about">Sobre o projeto</string>
     <string name="faq">Perguntas frequentes</string>
     <string name="login_collaborator">Login colaborador</string>
+    <string name="app_settings">Configurações</string>
+    <string name="cancel">Cancelar</string>
+    <string name="rationale">O Bike de Boa não vai funcionar corretamente sem as permissões necessárias. Vai nas configurações do aplicativo pra mudar isso</string>
+    <string name="title_rationale">Permissões necessárias</string>
+    <string name="location_rationale">O Bike de Boa precisa da sua permissão para acessar a localização do celular</string>
     <plurals name="n_ratings">
         <item quantity="one">%d avaliação </item>
         <item quantity="other">%d avaliações</item>
