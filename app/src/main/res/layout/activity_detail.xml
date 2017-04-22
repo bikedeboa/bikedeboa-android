@@ -270,7 +270,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="90dp"
                         android:src="@{viewModel.accessImage}"
-                        android:src="@{viewModel.accessImage}"
                         tools:src="@drawable/icon_public"/>
 
                     <TextView

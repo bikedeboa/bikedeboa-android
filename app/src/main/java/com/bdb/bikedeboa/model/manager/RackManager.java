@@ -87,7 +87,11 @@ public class RackManager {
 		if (!accessFilter.equals("")) {
 			// isPublic values can be "true", "false", or "" (info not available)
 			// Default behaviour will be always bring "" if filtering -- we can change it later
-			query.beginGroup().equalTo("isPublic", accessFilter).or().equalTo("isPublic", "").endGroup();
+			query.beginGroup()
+					.equalTo("isPublic", accessFilter)
+					.or()
+					.equalTo("isPublic", "")
+					.endGroup();
 		}
 
 		if (!structureTypeFilter.isEmpty()) {
@@ -95,9 +99,15 @@ public class RackManager {
 		}
 
 		if (!ratingRangeFilter.isEmpty()) {
-			for (Pair<Float, Float> range : ratingRangeFilter) {
+			query.beginGroup();
+			for (int i = 0; i < ratingRangeFilter.size(); ++i) {
+				Pair<Float, Float> range = ratingRangeFilter.get(i);
 				query.between("averageRating", range.first, range.second);
+				if (i + 1 < ratingRangeFilter.size()) {
+					query.or();
+				}
 			}
+			query.endGroup();
 		}
 
 		rackList.addAll(query.findAll());
@@ -174,6 +184,13 @@ public class RackManager {
 			Log.w(TAG, "Failure fetching /local/:id.");
 		}
 	};
+
+	public void updateFilters(List<Pair<Float, Float>> ratingFilter, List<String> structureFilter, String accessFilter) {
+		this.ratingRangeFilter = ratingFilter;
+		this.structureTypeFilter = structureFilter;
+		this.accessFilter = accessFilter;
+		updateRackList();
+	}
 
 	public interface RackListCallback {
 		void onRackListUpdate(List<Rack> rackList);

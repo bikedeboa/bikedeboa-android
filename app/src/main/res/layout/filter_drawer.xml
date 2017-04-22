@@ -23,6 +23,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/checkbox_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -56,6 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/darkGray"
+                        android:onClick="onCheckboxClick"
                         android:text="Excelentes"
                         android:textColor="@color/darkerGray"/>
 
@@ -80,6 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/darkGray"
+                        android:onClick="onCheckboxClick"
                         android:text="Médios"
                         android:textColor="@color/darkerGray"/>
 
@@ -104,6 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/darkGray"
+                        android:onClick="onCheckboxClick"
                         android:text="Ruins"
                         android:textColor="@color/darkerGray"/>
 
@@ -128,6 +132,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/darkGray"
+                        android:onClick="onCheckboxClick"
                         android:text="Sem avaliação"
                         android:textColor="@color/darkerGray"/>
 
@@ -156,6 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
                     android:text="@string/public_rack"
                     android:textColor="@color/darkerGray"/>
 
@@ -165,6 +171,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
                     android:text="@string/private_rack"
                     android:textColor="@color/darkerGray"/>
 
@@ -183,6 +190,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
                     android:text="@string/deroda"
                     android:textColor="@color/darkerGray"/>
 
@@ -192,6 +200,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
                     android:text="@string/uinvertido"
                     android:textColor="@color/darkerGray"/>
 
@@ -201,6 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
                     android:text="@string/grade"
                     android:textColor="@color/darkerGray"/>
 
@@ -210,7 +220,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
                     android:text="@string/trave"
+                    android:textColor="@color/darkerGray"/>
+
+                <CheckBox
+                    android:id="@+id/suspenso_filter"
+                    fontPath="font/Raleway-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
+                    android:text="@string/suspenso"
                     android:textColor="@color/darkerGray"/>
 
                 <CheckBox
@@ -219,6 +240,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
                     android:text="@string/outro"
                     android:textColor="@color/darkerGray"/>
 

@@ -65,7 +65,7 @@
                         android:textSize="14sp"/>
 
                     <ImageView
-                        android:id="@+id/filter_botton"
+                        android:id="@+id/filter_button"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_gravity="right"

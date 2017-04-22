@@ -1,9 +1,9 @@
 package com.bdb.bikedeboa.viewmodel;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.location.Location;
+import android.util.Pair;
 
 import com.bdb.bikedeboa.model.manager.RackManager;
 import com.bdb.bikedeboa.model.model.Rack;
@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MapViewModel extends BaseObservable implements RackManager.RackListCallback {
 
-	private Resources res;
 	private GoogleMap googleMap;
 	private RackManager rackManager;
 	private List<Marker> markerList;
@@ -30,7 +29,6 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 		this.rackManager = RackManager.getInstance();
 		this.cameraZoom = googleMap.getCameraPosition().zoom;
 		this.markerList = new ArrayList<>();
-		this.res = context.getResources();
 
 		// Set listeners
 		rackManager.setRackListCallback(this);
@@ -40,7 +38,6 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 	}
 
 	private void placeMarkers(List<Rack> rackList) {
-
 		// Clean previous markers
 		for (Marker marker : markerList) {
 			marker.remove();
@@ -76,7 +73,7 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 	public void onCameraMove() {
 
 		float currentZoom = googleMap.getCameraPosition().zoom;
-		if(currentZoom > 13.0 && this.cameraZoom <= 13.0) {
+		if (currentZoom > 13.0 && this.cameraZoom <= 13.0) {
 			// Normal pins
 			updatePinIcons(false);
 		} else if (currentZoom < 13.0 && this.cameraZoom >= 13.0) {
@@ -92,5 +89,9 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 
 	public void setLastLocation(Location lastLocation) {
 		this.lastLocation = lastLocation;
+	}
+
+	public void updateFilters(List<Pair<Float, Float>> ratingFilter, List<String> structureFilter, String accessFilter) {
+		rackManager.updateFilters(ratingFilter, structureFilter, accessFilter);
 	}
 }

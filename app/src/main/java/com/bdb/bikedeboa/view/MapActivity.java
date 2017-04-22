@@ -13,6 +13,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.util.Log;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -40,9 +41,9 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -83,7 +84,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		binding.menuDrawer.menuNavigationView.setNavigationItemSelectedListener(this);
 		binding.placeSearch.setOnClickListener(placeSearchListener);
 		binding.drawerButton.setOnClickListener(menuDrawerToggleListener);
-		binding.filterBotton.setOnClickListener(filterDrawerToggleListener);
+		binding.filterButton.setOnClickListener(filterDrawerToggleListener);
 		binding.myLocation.setOnClickListener(myLocationListener);
 
 		// Create the location client to start receiving updates
@@ -288,6 +289,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		}
 	}
 
+	// Permissions code
 	@Override
 	public void onPermissionsGranted(int requestCode, List<String> permissions) {
 		if (requestCode == LOCATION_REQUEST_CODE && permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -342,4 +344,63 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	public void onLocationChanged(Location location) {
 		/* Visual location changes are already dealt by google maps blue dot */
 	}
+
+	// Filter code
+	public void onCheckboxClick(View v) {
+		// Couldn't think of a better way
+		List<Pair<Float, Float>> ratingFilter = new ArrayList<>();
+		List<String> structureFilter = new ArrayList<>();
+		String accessFilter = "";
+
+		// Rating
+		if (binding.filterDrawer.excellentFilter.isChecked()) {
+			ratingFilter.add(new Pair<Float, Float>(3.5f, 5f));
+		}
+		if (binding.filterDrawer.mediumFilter.isChecked()) {
+			ratingFilter.add(new Pair<Float, Float>(2.0001f, 3.4999f));
+		}
+		if (binding.filterDrawer.badFilter.isChecked()) {
+			ratingFilter.add(new Pair<Float, Float>(1f, 2f));
+		}
+		if (binding.filterDrawer.unknownFilter.isChecked()) {
+			ratingFilter.add(new Pair<Float, Float>(0f, .9999f));
+		}
+
+		// Access
+		if (binding.filterDrawer.publicFilter.isChecked() &&
+				binding.filterDrawer.restrictedFilter.isChecked()) {
+			accessFilter = "";
+		} else {
+			if (binding.filterDrawer.publicFilter.isChecked()) {
+				accessFilter = "true";
+			}
+			if (binding.filterDrawer.restrictedFilter.isChecked()) {
+				accessFilter = "false";
+			}
+		}
+
+		// Structure
+		if (binding.filterDrawer.derodaFilter.isChecked()) {
+			structureFilter.add("deroda");
+		}
+		if (binding.filterDrawer.uinvetidoFilter.isChecked()) {
+			structureFilter.add("uinvertido");
+		}
+		if (binding.filterDrawer.gradeFilter.isChecked()) {
+			structureFilter.add("grade");
+		}
+		if (binding.filterDrawer.traveFilter.isChecked()) {
+			structureFilter.add("trave");
+		}
+		if (binding.filterDrawer.suspensoFilter.isChecked()) {
+			structureFilter.add("suspenso");
+		}
+		if (binding.filterDrawer.otherTypeFilter.isChecked()) {
+			structureFilter.add("other");
+		}
+
+		mapViewModel.updateFilters(ratingFilter, structureFilter, accessFilter);
+	}
+
+
 }
