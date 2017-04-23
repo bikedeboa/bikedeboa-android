@@ -162,6 +162,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
                     android:onClick="onCheckboxClick"
+                    android:tag="true"
                     android:text="@string/public_rack"
                     android:textColor="@color/darkerGray"/>
 
@@ -172,6 +173,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
                     android:onClick="onCheckboxClick"
+                    android:tag="false"
                     android:text="@string/private_rack"
                     android:textColor="@color/darkerGray"/>
 
@@ -191,6 +193,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
                     android:onClick="onCheckboxClick"
+                    android:tag="deroda"
                     android:text="@string/deroda"
                     android:textColor="@color/darkerGray"/>
 
@@ -201,6 +204,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
                     android:onClick="onCheckboxClick"
+                    android:tag="uinvertido"
                     android:text="@string/uinvertido"
                     android:textColor="@color/darkerGray"/>
 
@@ -211,6 +215,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
                     android:onClick="onCheckboxClick"
+                    android:tag="grade"
                     android:text="@string/grade"
                     android:textColor="@color/darkerGray"/>
 
@@ -221,6 +226,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
                     android:onClick="onCheckboxClick"
+                    android:tag="trave"
                     android:text="@string/trave"
                     android:textColor="@color/darkerGray"/>
 
@@ -231,6 +237,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
                     android:onClick="onCheckboxClick"
+                    android:tag="suspenso"
                     android:text="@string/suspenso"
                     android:textColor="@color/darkerGray"/>
 
@@ -241,6 +248,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/darkGray"
                     android:onClick="onCheckboxClick"
+                    android:tag="other"
                     android:text="@string/outro"
                     android:textColor="@color/darkerGray"/>
 

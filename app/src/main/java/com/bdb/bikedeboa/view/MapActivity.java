@@ -372,31 +372,31 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 			accessFilter = "";
 		} else {
 			if (binding.filterDrawer.publicFilter.isChecked()) {
-				accessFilter = "true";
+				accessFilter = (String) binding.filterDrawer.publicFilter.getTag();
 			}
 			if (binding.filterDrawer.restrictedFilter.isChecked()) {
-				accessFilter = "false";
+				accessFilter = (String) binding.filterDrawer.restrictedFilter.getTag();
 			}
 		}
 
 		// Structure
 		if (binding.filterDrawer.derodaFilter.isChecked()) {
-			structureFilter.add("deroda");
+			structureFilter.add((String) binding.filterDrawer.derodaFilter.getTag());
 		}
 		if (binding.filterDrawer.uinvetidoFilter.isChecked()) {
-			structureFilter.add("uinvertido");
+			structureFilter.add((String) binding.filterDrawer.uinvetidoFilter.getTag());
 		}
 		if (binding.filterDrawer.gradeFilter.isChecked()) {
-			structureFilter.add("grade");
+			structureFilter.add((String) binding.filterDrawer.gradeFilter.getTag());
 		}
 		if (binding.filterDrawer.traveFilter.isChecked()) {
-			structureFilter.add("trave");
+			structureFilter.add((String) binding.filterDrawer.traveFilter.getTag());
 		}
 		if (binding.filterDrawer.suspensoFilter.isChecked()) {
-			structureFilter.add("suspenso");
+			structureFilter.add((String) binding.filterDrawer.suspensoFilter.getTag());
 		}
 		if (binding.filterDrawer.otherTypeFilter.isChecked()) {
-			structureFilter.add("other");
+			structureFilter.add((String) binding.filterDrawer.otherTypeFilter.getTag());
 		}
 
 		mapViewModel.updateFilters(ratingFilter, structureFilter, accessFilter);

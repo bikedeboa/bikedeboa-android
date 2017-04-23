@@ -327,7 +327,8 @@
                     android:text="@string/more_info"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:textSize="@dimen/default_padding"/>
+                    android:paddingTop="7dp"
+                    android:textSize="12sp"/>
 
                 <TextView
                     fontPath="font/Raleway-Regular.ttf"
@@ -336,7 +337,8 @@
                     android:padding="5dp"
                     android:text="@{viewModel.description}"
                     android:textColor="@color/darkGray"
-                    android:textSize="@dimen/default_padding"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
                     tools:text="Lugar bastante frequentado por ciclistas. É de boa deixa na frente mas se precisar eles permitem deixar dentro do café também."/>
 
             </LinearLayout>
@@ -357,7 +359,7 @@
                     android:text="@string/rate_this_rack"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:textSize="@dimen/default_padding"/>
+                    android:textSize="12sp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
