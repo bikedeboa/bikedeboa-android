@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -151,6 +152,8 @@ public class MergedAppBarLayoutBehavior extends AppBarLayout.ScrollingViewBehavi
 		}
 
 		mToolbar = (Toolbar) appBarLayout.findViewById(R.id.expanded_toolbar);
+		//		mToolbar.getLayoutParams().height = getStatusBarHeight() + getToolBarHeight();
+
 		mBackground = appBarLayout.findViewById(R.id.background);
 		mBackGroundLayoutParams = (FrameLayout.LayoutParams) mBackground.getLayoutParams();
 		getBottomSheetBehavior(parent);
@@ -162,7 +165,8 @@ public class MergedAppBarLayoutBehavior extends AppBarLayout.ScrollingViewBehavi
 		mInitialY = child.getY();
 
 		child.setVisibility(mVisible ? View.VISIBLE : View.INVISIBLE);
-//        setStatusBarBackgroundVisible(mVisible);
+        setStatusBarBackgroundVisible(mVisible);
+//		setStatusBarBackgroundVisible(false);
 
 		setFullBackGroundColor(mVisible && mCurrentTitleAlpha == 1 ? R.color.colorPrimary: android.R.color.transparent);
 		setPartialBackGroundHeight(0);
@@ -229,6 +233,14 @@ public class MergedAppBarLayoutBehavior extends AppBarLayout.ScrollingViewBehavi
 			result = mContext.getResources().getDimensionPixelSize(resourceId);
 		}
 		return result;
+	}
+
+	public int getToolBarHeight() {
+		int[] attrs = new int[] {R.attr.actionBarSize};
+		TypedArray ta = mContext.obtainStyledAttributes(attrs);
+		int toolBarHeight = ta.getDimensionPixelSize(0, -1);
+		ta.recycle();
+		return toolBarHeight;
 	}
 
 	private void setPartialBackGroundHeight(int height) {
@@ -336,7 +348,7 @@ public class MergedAppBarLayoutBehavior extends AppBarLayout.ScrollingViewBehavi
 		return true;
 	}
 
-	private void setStatusBarBackgroundVisible(boolean visible){
+	public void setStatusBarBackgroundVisible(boolean visible){
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
 			if(visible){
 				Window window = ((Activity)mContext).getWindow();

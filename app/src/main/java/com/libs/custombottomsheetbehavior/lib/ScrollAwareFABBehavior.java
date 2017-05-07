@@ -97,7 +97,7 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
                 getBottomSheetBehavior(parent);
             int collapsedY = dependency.getHeight() - mBottomSheetBehaviorRef.get().getPeekHeight();
 
-            if ((child.getY() + DyFix) > collapsedY)
+            if ((child.getY() - 200) > collapsedY) // MAGIC NUMBER - BEWARE
                 child.hide();
             else
                 child.show();

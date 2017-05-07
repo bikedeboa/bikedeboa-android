@@ -92,6 +92,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 		behavior = BottomSheetBehaviorGoogleMapsLike.from(binding.bottomSheet);
 
 		MergedAppBarLayoutBehavior mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(binding.mergedAppbarlayout);
+		mergedAppBarLayoutBehavior.setStatusBarBackgroundVisible(false);
 		mergedAppBarLayoutBehavior.setNavigationOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -115,6 +116,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(map);
 		mapFragment.getMapAsync(this);
+
 	}
 
 

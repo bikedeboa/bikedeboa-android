@@ -24,50 +24,100 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="80dp"
+                android:orientation="vertical">
 
 
-                <!--<android.support.v7.widget.Toolbar-->
-                <!--android:id="@+id/expanded_toolbar"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="80dp"-->
-                <!--app:navigationIcon="@drawable/icon_arrow_back"-->
-                <!--app:title="something"-->
-                <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
-            </FrameLayout>
+                <TextView
+                    android:id="@+id/name"
+                    fontPath="font/Raleway-SemiBold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:paddingTop="@dimen/default_padding"
+                    android:text="@{viewModel.title}"
+                    android:textColor="@color/darkerGray"
+                    android:textSize="20sp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="Redenção"/>
 
-            <include layout="@layout/divider_horizontal"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/default_padding"
+                    tools:text="Público - U invertido"
+                    android:text="Público - U invertido"
+                    android:textSize="11sp"/>
 
-            <TextView
-                android:id="@+id/name"
-                fontPath="font/Raleway-SemiBold.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="4dp"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:paddingTop="@dimen/default_padding"
-                android:text="@{viewModel.title}"
-                android:textColor="@color/darkerGray"
-                android:textSize="28sp"
-                tools:text="Redenção"/>
-
-            <TextView
-                android:id="@+id/address"
-                fontPath="font/Raleway-SemiBold.ttf"
+            <LinearLayout
+                android:id="@+id/mini_stars"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="4dp"
                 android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:paddingBottom="16dp"
-                android:text="@{viewModel.address}"
-                android:textColor="@color/darkGray"
-                android:textSize="14sp"
-                tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
+                android:gravity="start"
+                android:orientation="horizontal"
+                app:stars="@{viewModel.averageRating}"
+                app:visible="@{viewModel.averageRating > 0}">
 
-            <include layout="@layout/divider_horizontal"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="@{viewModel.averageRatingString}"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        tools:text="4.3"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/lightGray"/>
+
+            </LinearLayout>
+
+
+
+            </LinearLayout>
+
 
 
             <LinearLayout
@@ -173,6 +223,17 @@
                 map:cameraZoom="18"
                 map:liteMode="true"
                 map:mapType="normal"/>
+
+            <TextView
+                android:id="@+id/address"
+                fontPath="font/Raleway-SemiBold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
+                android:text="@{viewModel.address}"
+                android:textColor="@color/darkGray"
+                android:textSize="14sp"
+                tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
 
             <LinearLayout
                 android:id="@+id/stars"

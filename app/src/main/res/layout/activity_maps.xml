@@ -12,6 +12,7 @@
     </data>
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -167,7 +168,7 @@
             android:layout_margin="@dimen/default_margin"
             android:clickable="true"
             android:src="@drawable/star"
-            app:layout_anchor="@id/bottom_sheet"
+            app:layout_anchor="@id/detail_view"
             app:layout_anchorGravity="top|right|end"
             app:layout_behavior="@string/ScrollAwareFABBehavior" />
 
