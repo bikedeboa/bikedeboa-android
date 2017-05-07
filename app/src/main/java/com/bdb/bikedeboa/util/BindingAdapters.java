@@ -71,9 +71,13 @@ public class BindingAdapters {
 		linearLayout.getChildAt(0).setBackground(roundedBackground);
 
 		int nStars = Math.round(rating);
-		for (int i = 1; i <= nStars; ++i) {
+		for (int i = 1; i <= 5; ++i) {
 			ImageView imageView = (ImageView) linearLayout.getChildAt(i);
-			imageView.setColorFilter(color);
+			if (i <= nStars) {
+				imageView.setColorFilter(color);
+			} else {
+				imageView.setColorFilter(AssetHelper.getColorFromScore(-1)); // Set it to light gray
+			}
 		}
 	}
 }

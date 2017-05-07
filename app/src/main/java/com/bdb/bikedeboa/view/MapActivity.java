@@ -71,6 +71,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 	private ActivityMapsBinding binding;
 	private MapViewModel mapViewModel;
 	private BottomSheetBehaviorGoogleMapsLike behavior;
+	private MergedAppBarLayoutBehavior mergedAppBarLayoutBehavior;
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -91,12 +92,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //		binding.myLocation.setOnClickListener(myLocationListener);
 		behavior = BottomSheetBehaviorGoogleMapsLike.from(binding.bottomSheet);
 
-		MergedAppBarLayoutBehavior mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(binding.mergedAppbarlayout);
+		mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(binding.mergedAppbarlayout);
 		mergedAppBarLayoutBehavior.setStatusBarBackgroundVisible(false);
-		mergedAppBarLayoutBehavior.setNavigationOnClickListener(new View.OnClickListener() {
+		binding.detailView.summary.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_COLLAPSED);
+				behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_ANCHOR_POINT);
 			}
 		});
 		behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_HIDDEN);
@@ -145,6 +146,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 		this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(portoAlegre, 14));
 		customizeMap();
 
+		googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+			@Override
+			public void onMapClick(LatLng latLng) {
+				behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_HIDDEN);
+			}
+		});
+
 		// Set map specific listeners
 		googleMap.setOnMarkerClickListener(this);
 		googleMap.setOnCameraMoveListener(this);
@@ -180,9 +188,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 			mapViewModel.setDetailViewModel(detailViewModel);
 			ItemPagerAdapter adapter = new ItemPagerAdapter(this, detailViewModel.getImage());
 			binding.pager.setAdapter(adapter);
+			mergedAppBarLayoutBehavior.setToolbarTitle(detailViewModel.getTitle());
+			behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_COLLAPSED);
 		}
-
-		behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_COLLAPSED);
 		// Return false if we want the camera to move to the marker and an info window to appear
 		return true;
 	}

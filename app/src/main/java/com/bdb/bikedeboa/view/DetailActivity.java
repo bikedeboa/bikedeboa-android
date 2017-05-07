@@ -50,7 +50,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 		}
 
 		// Set click listeners
-		binding.howToGetThere.setOnClickListener(getMeThere);
+		// binding.howToGetThere.setOnClickListener(getMeThere);
 		// TODO: put back - binding.rackPhoto.setOnClickListener(expandImage);
 
 		// Fire up map lite

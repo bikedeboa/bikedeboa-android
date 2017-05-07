@@ -35,8 +35,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="50dp"
                     android:focusable="false"
                     android:focusableInTouchMode="true"
                     android:orientation="horizontal">
@@ -103,21 +104,6 @@
             <!--app:backgroundTint="@color/colorPrimary"-->
             <!--app:fabSize="normal" />-->
 
-        <!--<android.support.design.widget.FloatingActionButton-->
-            <!--android:id="@+id/my_location"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="end"-->
-            <!--android:layout_marginBottom="88dp"-->
-            <!--android:layout_marginEnd="@dimen/default_margin"-->
-            <!--android:clickable="true"-->
-            <!--android:src="@drawable/ic_my_location_white_24dp"-->
-            <!--android:tint="@color/colorPrimary"-->
-            <!--app:backgroundTint="@color/white"-->
-            <!--app:fabSize="normal"-->
-            <!--app:layout_anchor="@id/add_rack"-->
-            <!--app:layout_anchorGravity="top" />-->
-
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbarlayout"
             android:layout_width="match_parent"
@@ -163,14 +149,45 @@
         </android.support.v4.widget.NestedScrollView>
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/morphing_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
             android:clickable="true"
-            android:src="@drawable/star"
+            android:src="@drawable/icon_directions"
+            android:tint="@color/white"
             app:layout_anchor="@id/detail_view"
             app:layout_anchorGravity="top|right|end"
             app:layout_behavior="@string/ScrollAwareFABBehavior" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:src="@drawable/ic_my_location_white_24dp"
+            android:visibility="invisible"
+            android:tint="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:fabSize="mini"
+            app:layout_anchor="@id/morphing_fab"
+            app:layout_anchorGravity="top|right|end"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/my_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:clickable="true"
+            android:src="@drawable/ic_my_location_white_24dp"
+            android:tint="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:fabSize="normal"
+            app:layout_anchor="@id/invisible"
+            app:layout_anchorGravity="top|right|end"
+            app:layout_behavior="@string/ScrollAwareFABBehavior"/>
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/merged_appbarlayout"
@@ -198,7 +215,7 @@
                     android:layout_height="80dp"
                     app:navigationIcon="@drawable/icon_arrow_back"
                     android:paddingTop="25dp"
-                    app:title="something"
+                    app:title="-"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
             </FrameLayout>
         </android.support.design.widget.AppBarLayout>

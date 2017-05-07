@@ -72,7 +72,7 @@ public final class AssetHelper {
 
 	public static int getColorFromScore(float score) {
 
-		int color = ResourcesCompat.getColor(resources, R.color.mediumGray, null);
+		int color = ResourcesCompat.getColor(resources, R.color.lightGray, null);
 		if (score == 0) {
 			color = ResourcesCompat.getColor(resources, R.color.mediumGray, null);
 		} else if (score > 0 && score <= 2) {

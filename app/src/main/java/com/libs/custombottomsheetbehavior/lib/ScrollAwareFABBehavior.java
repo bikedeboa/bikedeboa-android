@@ -93,14 +93,8 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
              * We are calculating every time point in Y where BottomSheet get {@link BottomSheetBehaviorGoogleMapsLike#STATE_COLLAPSED}.
              * If PeekHeight change dynamically we can reflect the behavior asap.
              */
-            if (mBottomSheetBehaviorRef == null || mBottomSheetBehaviorRef.get() == null)
-                getBottomSheetBehavior(parent);
-            int collapsedY = dependency.getHeight() - mBottomSheetBehaviorRef.get().getPeekHeight();
 
-            if ((child.getY() - 200) > collapsedY) // MAGIC NUMBER - BEWARE
-                child.hide();
-            else
-                child.show();
+            child.show();
         }
 
         return false;

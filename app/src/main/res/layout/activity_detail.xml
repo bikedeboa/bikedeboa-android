@@ -5,11 +5,12 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
-            type="com.bdb.bikedeboa.viewmodel.DetailViewModel"/>
+            type="com.bdb.bikedeboa.viewmodel.DetailViewModel" />
     </data>
 
     <ScrollView
@@ -18,211 +19,216 @@
         android:background="@color/white">
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/summary"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="vertical">
-
 
                 <TextView
                     android:id="@+id/name"
                     fontPath="font/Raleway-SemiBold.ttf"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="70dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:paddingLeft="@dimen/default_padding"
                     android:paddingRight="@dimen/default_padding"
                     android:paddingTop="@dimen/default_padding"
                     android:text="@{viewModel.title}"
                     android:textColor="@color/darkerGray"
                     android:textSize="20sp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    tools:text="Redenção"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/default_padding"
-                    tools:text="Público - U invertido"
-                    android:text="Público - U invertido"
-                    android:textSize="11sp"/>
-
-            <LinearLayout
-                android:id="@+id/mini_stars"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                android:paddingLeft="@dimen/default_padding"
-                android:gravity="start"
-                android:orientation="horizontal"
-                app:stars="@{viewModel.averageRating}"
-                app:visible="@{viewModel.averageRating > 0}">
+                    tools:text="Redenção"
+                    android:layout_height="0dp" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:text="@{viewModel.averageRatingString}"
-                        android:textColor="@color/white"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        tools:text="4.3"/>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
-
-            </LinearLayout>
-
-
-
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/how_to_get_there"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:layout_width="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="0dp">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:src="@drawable/route"
-                        android:tint="@color/darkGray"/>
 
                     <TextView
-                        fontPath="font/Raleway-Medium.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/default_padding"
+                        android:text="Público - U invertido"
+                        android:textSize="14sp"
+                        tools:text="Público - U invertido" />
+
+                    <LinearLayout
+                        android:id="@+id/mini_stars"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/how_to_get_there"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:textSize="10sp"/>
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/default_padding"
+                        app:stars="@{viewModel.averageRating}"
+                        app:visible="@{viewModel.averageRating > 0}">
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:gravity="center_horizontal"
+                                android:padding="2dp"
+                                android:text="@{viewModel.averageRatingString}"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                tools:text="4.3" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/star"
+                            android:tint="@color/lightGray" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/star"
+                            android:tint="@color/lightGray" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/star"
+                            android:tint="@color/lightGray" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/star"
+                            android:tint="@color/lightGray" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/star"
+                            android:tint="@color/lightGray" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
-                <include layout="@layout/divider_vertical"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:src="@drawable/review"
-                        android:tint="@color/darkGray"/>
-
-                    <TextView
-                        android:id="@+id/rate"
-                        fontPath="font/Raleway-Medium.ttf"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/rate"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:textSize="10sp"/>
-
-                </LinearLayout>
-
-                <include layout="@layout/divider_vertical"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:padding="3dp"
-                        android:src="@drawable/pencil_edit_button"
-                        android:tint="@color/darkGray"/>
-
-                    <TextView
-                        android:id="@+id/suggest_change"
-                        fontPath="font/Raleway-Medium.ttf"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/suggest_change"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:textSize="10sp"/>
-
-                </LinearLayout>
 
             </LinearLayout>
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/how_to_get_there"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:layout_gravity="center"-->
+                        <!--android:layout_marginBottom="5dp"-->
+                        <!--android:src="@drawable/route"-->
+                        <!--android:tint="@color/darkGray" />-->
+
+                    <!--<TextView-->
+                        <!--fontPath="font/Raleway-Medium.ttf"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/how_to_get_there"-->
+                        <!--android:textAlignment="center"-->
+                        <!--android:textAllCaps="true"-->
+                        <!--android:textSize="10sp" />-->
+
+                <!--</LinearLayout>-->
+
+                <!--<include layout="@layout/divider_vertical" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:layout_gravity="center"-->
+                        <!--android:layout_marginBottom="5dp"-->
+                        <!--android:src="@drawable/review"-->
+                        <!--android:tint="@color/darkGray" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/rate"-->
+                        <!--fontPath="font/Raleway-Medium.ttf"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:text="@string/rate"-->
+                        <!--android:textAlignment="center"-->
+                        <!--android:textAllCaps="true"-->
+                        <!--android:textSize="10sp" />-->
+
+                <!--</LinearLayout>-->
+
+                <!--<include layout="@layout/divider_vertical" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:layout_gravity="center"-->
+                        <!--android:layout_marginBottom="5dp"-->
+                        <!--android:padding="3dp"-->
+                        <!--android:src="@drawable/pencil_edit_button"-->
+                        <!--android:tint="@color/darkGray" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/suggest_change"-->
+                        <!--fontPath="font/Raleway-Medium.ttf"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:text="@string/suggest_change"-->
+                        <!--android:textAlignment="center"-->
+                        <!--android:textAllCaps="true"-->
+                        <!--android:textSize="10sp" />-->
+
+                <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/map_lite"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_marginTop="@dimen/default_margin"
                 android:background="@color/lightGray"
                 map:cameraZoom="18"
                 map:liteMode="true"
-                map:mapType="normal"/>
+                map:mapType="normal" />
 
             <TextView
                 android:id="@+id/address"
@@ -232,8 +238,8 @@
                 android:padding="@dimen/default_padding"
                 android:text="@{viewModel.address}"
                 android:textColor="@color/darkGray"
-                android:textSize="14sp"
-                tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
+                android:textSize="12sp"
+                tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS" />
 
             <LinearLayout
                 android:id="@+id/stars"
@@ -260,7 +266,7 @@
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        tools:text="4.3"/>
+                        tools:text="4.3" />
 
                 </LinearLayout>
 
@@ -268,31 +274,31 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
             </LinearLayout>
 
@@ -303,7 +309,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/mediumGray"
                 app:visible="@{viewModel.averageRating > 0}"
-                tools:text="4 avaliações"/>
+                tools:text="4 avaliações" />
 
             <com.adroitandroid.chipcloud.ChipCloud
                 xmlns:chipcloud="http://schemas.android.com/apk/res-auto"
@@ -319,9 +325,9 @@
                 chipcloud:gravity="center"
                 chipcloud:selectMode="none"
                 chipcloud:textSize="13sp"
-                chipcloud:verticalSpacing="10dp"/>
+                chipcloud:verticalSpacing="10dp" />
 
-            <include layout="@layout/divider_horizontal"/>
+            <include layout="@layout/divider_horizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -342,7 +348,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="90dp"
                         android:src="@{viewModel.accessImage}"
-                        tools:src="@drawable/icon_public"/>
+                        tools:src="@drawable/icon_public" />
 
                     <TextView
                         fontPath="font/Raleway-Bold.ttf"
@@ -351,7 +357,7 @@
                         android:layout_gravity="center"
                         android:text="@{viewModel.access}"
                         android:textColor="@color/mediumGray"
-                        tools:text="@string/public_rack"/>
+                        tools:text="@string/public_rack" />
 
                 </LinearLayout>
 
@@ -365,7 +371,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="90dp"
                         android:src="@{viewModel.structureTypeImage}"
-                        tools:src="@drawable/tipo_deroda"/>
+                        tools:src="@drawable/tipo_deroda" />
 
                     <TextView
                         fontPath="font/Raleway-Bold.ttf"
@@ -374,7 +380,7 @@
                         android:layout_gravity="center"
                         android:text="@{viewModel.structureType}"
                         android:textColor="@color/mediumGray"
-                        tools:text="@string/deroda"/>
+                        tools:text="@string/deroda" />
 
                 </LinearLayout>
 
@@ -396,11 +402,11 @@
                     fontPath="font/Raleway-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
                     android:text="@string/more_info"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:paddingTop="7dp"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
 
                 <TextView
                     fontPath="font/Raleway-Regular.ttf"
@@ -408,16 +414,16 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="@{viewModel.description}"
-                    android:textColor="@color/darkGray"
                     android:textAlignment="center"
+                    android:textColor="@color/darkGray"
                     android:textSize="14sp"
-                    tools:text="Lugar bastante frequentado por ciclistas. É de boa deixa na frente mas se precisar eles permitem deixar dentro do café também."/>
+                    tools:text="Lugar bastante frequentado por ciclistas. É de boa deixa na frente mas se precisar eles permitem deixar dentro do café também." />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:background="@color/lighterGray"
                 android:orientation="vertical"
@@ -431,7 +437,7 @@
                     android:text="@string/rate_this_rack"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -445,35 +451,35 @@
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tint="@color/lightMediumGray" />
 
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tint="@color/lightMediumGray" />
 
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tint="@color/lightMediumGray" />
 
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tint="@color/lightMediumGray" />
 
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tint="@color/lightMediumGray" />
 
                 </LinearLayout>
 
