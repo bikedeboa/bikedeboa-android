@@ -24,4 +24,5 @@
     <color name="lightBlue">#63BCE7</color>
     <color name="lightestBlue">#86C7E7</color>
     <color name="black">#000</color>
+    <color name="statusbar_special_transparent">#b9000000</color>
 </resources>

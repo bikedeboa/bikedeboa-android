@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
@@ -56,7 +56,7 @@ import static com.bdb.bikedeboa.util.Constants.LOCATION_REQUEST_CODE;
 import static com.bdb.bikedeboa.util.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
 import static com.bdb.bikedeboa.util.Constants.SETTINGS_REQUEST_CODE;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback,
 		GoogleMap.OnMarkerClickListener,
 		GoogleMap.OnCameraMoveListener,
 		NavigationView.OnNavigationItemSelectedListener,
@@ -425,6 +425,4 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 		mapViewModel.updateFilters(ratingFilter, structureFilter, accessFilter);
 	}
-
-
 }
