@@ -19,6 +19,7 @@ import android.view.View;
 
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.databinding.ActivityMapsBinding;
+import com.bdb.bikedeboa.viewmodel.DetailViewModel;
 import com.bdb.bikedeboa.viewmodel.MapViewModel;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -40,6 +41,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.libs.custombottomsheetbehavior.lib.BottomSheetBehaviorGoogleMapsLike;
+import com.libs.custombottomsheetbehavior.lib.MergedAppBarLayoutBehavior;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +54,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.bdb.bikedeboa.R.id.map;
 import static com.bdb.bikedeboa.util.Constants.LOCATION_REQUEST_CODE;
 import static com.bdb.bikedeboa.util.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
-import static com.bdb.bikedeboa.util.Constants.RACK_ID;
 import static com.bdb.bikedeboa.util.Constants.SETTINGS_REQUEST_CODE;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -68,6 +70,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	private GoogleApiClient googleApiClient;
 	private ActivityMapsBinding binding;
 	private MapViewModel mapViewModel;
+	private BottomSheetBehaviorGoogleMapsLike behavior;
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -85,7 +88,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		binding.placeSearch.setOnClickListener(placeSearchListener);
 		binding.drawerButton.setOnClickListener(menuDrawerToggleListener);
 		binding.filterButton.setOnClickListener(filterDrawerToggleListener);
-		binding.myLocation.setOnClickListener(myLocationListener);
+//		binding.myLocation.setOnClickListener(myLocationListener);
+		behavior = BottomSheetBehaviorGoogleMapsLike.from(binding.bottomSheet);
+
+		MergedAppBarLayoutBehavior mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(binding.mergedAppbarlayout);
+		mergedAppBarLayoutBehavior.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_COLLAPSED);
+			}
+		});
+		behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_HIDDEN);
+
+		// binding.bottomSheetTextView = (TextView) bottomSheet.findViewById(R.id.bottom_sheet_title);
+		ItemPagerAdapter adapter = new ItemPagerAdapter(this, "");
+		binding.pager.setAdapter(adapter);
 
 		// Create the location client to start receiving updates
 		googleApiClient = new GoogleApiClient.Builder(getBaseContext())
@@ -155,8 +172,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		// If user has added a marker through place search, it's tag should be null
 		if (marker.getTag() != null) {
 			int rackId = (int) marker.getTag();
-			launchDetailActivity(rackId);
+			// launchDetailActivity(rackId);
+			// Because it
+			DetailViewModel detailViewModel = new DetailViewModel(rackId, googleMap, this);
+			mapViewModel.setDetailViewModel(detailViewModel);
+			ItemPagerAdapter adapter = new ItemPagerAdapter(this, detailViewModel.getImage());
+			binding.pager.setAdapter(adapter);
 		}
+
+		behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_COLLAPSED);
 		// Return false if we want the camera to move to the marker and an info window to appear
 		return true;
 	}
@@ -167,10 +191,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	}
 
 	public void launchDetailActivity(int rackId) {
-
-		Intent intent = new Intent(this, DetailActivity.class);
-		intent.putExtra(RACK_ID, rackId);
-		startActivity(intent);
+//
+//		Intent intent = new Intent(this, DetailActivity.class);
+//		intent.putExtra(RACK_ID, rackId);
+//		startActivity(intent);
 	}
 
 	// Drawer code
@@ -293,7 +317,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	@Override
 	public void onPermissionsGranted(int requestCode, List<String> permissions) {
 		if (requestCode == LOCATION_REQUEST_CODE && permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
-			binding.myLocation.callOnClick();
+//			binding.myLocation.callOnClick();
 		}
 	}
 

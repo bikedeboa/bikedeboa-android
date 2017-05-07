@@ -30,11 +30,13 @@ public class DetailViewModel extends BaseObservable implements
 		this.googleMap = googleMap;
 		this.res = context.getResources();
 		this.rackManager = RackManager.getInstance();
-		this.rackManager.setSingleRackCallback(this);
 		this.rack = this.rackManager.getRack(rackId);
 
+		this.rackManager.setSingleRackCallback(this);
+
 		fetchRackDetails();
-		setUpMap();
+		notifyPropertyChanged(BR._all);
+		// setUpMap();
 	}
 
 	// Constructor for ExpandImageActivity

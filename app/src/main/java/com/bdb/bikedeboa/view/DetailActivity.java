@@ -51,7 +51,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
 		// Set click listeners
 		binding.howToGetThere.setOnClickListener(getMeThere);
-		binding.rackPhoto.setOnClickListener(expandImage);
+		// TODO: put back - binding.rackPhoto.setOnClickListener(expandImage);
 
 		// Fire up map lite
 		binding.mapLite.onCreate(null);
@@ -61,8 +61,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 
-		detailViewModel = new DetailViewModel(rackId, googleMap, this);
-		binding.setViewModel(detailViewModel);
+//		detailViewModel = new DetailViewModel(rackId, googleMap, this);
+//		binding.setViewModel(detailViewModel);
 
 		MapsInitializer.initialize(this);
 		customizeMap(googleMap);

@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -14,6 +15,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         tools:context="com.bdb.bikedeboa.view.DetailActivity">
 
         <LinearLayout
@@ -21,15 +23,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/rack_photo"
+            <include layout="@layout/divider_horizontal"/>
+
+            <TextView
+                android:id="@+id/name"
+                fontPath="font/Raleway-SemiBold.ttf"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:padding="0dp"
-                android:scaleType="centerCrop"
-                app:imageAddress="@{viewModel.image}"
-                app:visible="@{viewModel.hasImage}"
-                tools:src="@drawable/spinner"/>
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:paddingTop="@dimen/default_padding"
+                android:text="@{viewModel.title}"
+                android:textColor="@color/darkerGray"
+                android:textSize="28sp"
+                tools:text="Redenção"/>
+
+            <TextView
+                android:id="@+id/address"
+                fontPath="font/Raleway-SemiBold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:paddingBottom="16dp"
+                android:text="@{viewModel.address}"
+                android:textColor="@color/darkGray"
+                android:textSize="14sp"
+                tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
+
+            <include layout="@layout/divider_horizontal"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,34 +148,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <include layout="@layout/divider_horizontal"/>
-
-            <TextView
-                android:id="@+id/name"
-                fontPath="font/Raleway-SemiBold.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="4dp"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:paddingTop="@dimen/default_margin"
-                android:text="@{viewModel.title}"
-                android:textColor="@color/darkerGray"
-                android:textSize="28sp"
-                tools:text="Redenção"/>
-
-            <TextView
-                android:id="@+id/address"
-                fontPath="font/Raleway-SemiBold.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:text="@{viewModel.address}"
-                android:textColor="@color/darkGray"
-                android:textSize="14sp"
-                tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/map_lite"

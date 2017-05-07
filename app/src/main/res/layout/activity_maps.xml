@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.bdb.bikedeboa.viewmodel.MapViewModel"/>
+            type="com.bdb.bikedeboa.viewmodel.MapViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -29,7 +29,7 @@
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                         android:padding="8dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/icon_menu"
-                        android:tint="@color/white"/>
+                        android:tint="@color/white" />
 
                     <TextView
                         android:id="@+id/place_search"
@@ -62,7 +62,7 @@
                         android:hint="@string/autocomplete_hint"
                         android:maxLines="1"
                         android:paddingLeft="@dimen/default_padding"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/filter_button"
@@ -73,7 +73,7 @@
                         android:padding="13dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/icon_filter"
-                        android:tint="@color/mediumGray"/>
+                        android:tint="@color/mediumGray" />
 
                 </LinearLayout>
 
@@ -81,40 +81,123 @@
 
             <include
                 android:id="@+id/menu_drawer"
-                layout="@layout/menu_drawer"/>
+                layout="@layout/menu_drawer" />
 
             <include
                 android:id="@+id/filter_drawer"
-                layout="@layout/filter_drawer"/>
+                layout="@layout/filter_drawer" />
 
         </android.support.v4.widget.DrawerLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_rack"
-            android:layout_width="wrap_content"
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/add_rack"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|end"-->
+            <!--android:layout_margin="@dimen/default_margin"-->
+            <!--android:clickable="true"-->
+            <!--android:src="@drawable/ic_add_location_white_24dp"-->
+            <!--android:tint="@color/white"-->
+            <!--app:backgroundTint="@color/colorPrimary"-->
+            <!--app:fabSize="normal" />-->
+
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/my_location"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="end"-->
+            <!--android:layout_marginBottom="88dp"-->
+            <!--android:layout_marginEnd="@dimen/default_margin"-->
+            <!--android:clickable="true"-->
+            <!--android:src="@drawable/ic_my_location_white_24dp"-->
+            <!--android:tint="@color/colorPrimary"-->
+            <!--app:backgroundTint="@color/white"-->
+            <!--app:fabSize="normal"-->
+            <!--app:layout_anchor="@id/add_rack"-->
+            <!--app:layout_anchorGravity="top" />-->
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbarlayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/default_margin"
-            android:clickable="true"
-            android:src="@drawable/ic_add_location_white_24dp"
-            android:tint="@color/white"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabSize="normal"/>
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_behavior="@string/ScrollingAppBarLayoutBehavior">
+
+            <!--<android.support.v7.widget.Toolbar-->
+                <!--android:id="@+id/toolbar"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="?attr/actionBarSize"-->
+                <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/anchor_point"
+            android:background="@color/colorAccent"
+            android:fitsSystemWindows="true"
+            app:layout_behavior="@string/BackDropBottomSheetBehavior">
+        </android.support.v4.view.ViewPager>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical"
+            app:anchorPoint="@dimen/anchor_point"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="@dimen/bottom_sheet_peek_height"
+            app:layout_behavior="@string/BottomSheetBehaviorGoogleMapsLike">
+
+            <include
+                android:id="@+id/detail_view"
+                layout="@layout/activity_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                bind:viewModel="@{viewModel.detailViewModel}"/>
+        </android.support.v4.widget.NestedScrollView>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/my_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginBottom="88dp"
-            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_margin="@dimen/default_margin"
             android:clickable="true"
-            android:src="@drawable/ic_my_location_white_24dp"
-            android:tint="@color/colorPrimary"
-            app:backgroundTint="@color/white"
-            app:fabSize="normal"
-            app:layout_anchor="@id/add_rack"
-            app:layout_anchorGravity="top"/>
+            android:src="@drawable/star"
+            app:layout_anchor="@id/bottom_sheet"
+            app:layout_anchorGravity="top|right|end"
+            app:layout_behavior="@string/ScrollAwareFABBehavior" />
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/merged_appbarlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:tag="modal-appbar"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_behavior="@string/MergedAppBarLayoutBehavior">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/background"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorPrimary" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/expanded_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:navigationIcon="@drawable/star"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:title="aasdasdasdasd" />
+            </FrameLayout>
+        </android.support.design.widget.AppBarLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

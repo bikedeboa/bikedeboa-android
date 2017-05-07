@@ -27,4 +27,12 @@
         <item quantity="one">%d avaliação </item>
         <item quantity="other">%d avaliações</item>
     </plurals>
+
+    <!-- bottom bar lib constants -  I don't want to leave this here -->
+    <string name="BackDropBottomSheetBehavior">com.libs.custombottomsheetbehavior.lib.BackdropBottomSheetBehavior</string>
+    <string name="BottomSheetBehaviorGoogleMapsLike">com.libs.custombottomsheetbehavior.lib.BottomSheetBehaviorGoogleMapsLike</string>
+    <string name="ScrollAwareFABBehavior">com.libs.custombottomsheetbehavior.lib.ScrollAwareFABBehavior</string>
+    <string name="MergedAppBarLayoutBehavior">com.libs.custombottomsheetbehavior.lib.MergedAppBarLayoutBehavior</string>
+    <string name="ScrollingAppBarLayoutBehavior">com.libs.custombottomsheetbehavior.lib.ScrollingAppBarLayoutBehavior</string>
+
 </resources>
