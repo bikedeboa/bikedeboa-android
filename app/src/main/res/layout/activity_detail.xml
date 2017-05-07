@@ -15,13 +15,28 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        tools:context="com.bdb.bikedeboa.view.DetailActivity">
+        android:background="@color/white">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <!--<android.support.v7.widget.Toolbar-->
+                <!--android:id="@+id/expanded_toolbar"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="80dp"-->
+                <!--app:navigationIcon="@drawable/icon_arrow_back"-->
+                <!--app:title="something"-->
+                <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
+            </FrameLayout>
 
             <include layout="@layout/divider_horizontal"/>
 

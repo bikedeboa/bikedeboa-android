@@ -194,8 +194,9 @@
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/expanded_toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="80dp"
                     app:navigationIcon="@drawable/icon_arrow_back"
+                    android:paddingTop="25dp"
                     app:title="something"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
             </FrameLayout>
