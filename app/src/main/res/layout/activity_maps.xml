@@ -186,8 +186,7 @@
             app:backgroundTint="@color/white"
             app:fabSize="normal"
             app:layout_anchor="@id/invisible"
-            app:layout_anchorGravity="top|right|end"
-            app:layout_behavior="@string/ScrollAwareFABBehavior"/>
+            app:layout_anchorGravity="top|right|end"/>
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/merged_appbarlayout"

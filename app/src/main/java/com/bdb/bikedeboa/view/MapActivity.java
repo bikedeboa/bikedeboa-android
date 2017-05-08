@@ -101,7 +101,40 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 			}
 		});
 		behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_HIDDEN);
+        behavior.addBottomSheetCallback(new BottomSheetBehaviorGoogleMapsLike.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehaviorGoogleMapsLike.STATE_COLLAPSED:
+                        Log.d("bottomsheet-", "STATE_COLLAPSED");
+						binding.myLocation.show();
+                        break;
+                    case BottomSheetBehaviorGoogleMapsLike.STATE_DRAGGING:
+						binding.myLocation.hide();
+                        Log.d("bottomsheet-", "STATE_DRAGGING");
+                        break;
+                    case BottomSheetBehaviorGoogleMapsLike.STATE_EXPANDED:
+						binding.myLocation.hide();
+                        Log.d("bottomsheet-", "STATE_EXPANDED");
+                        break;
+                    case BottomSheetBehaviorGoogleMapsLike.STATE_ANCHOR_POINT:
+						binding.myLocation.hide();
+                        Log.d("bottomsheet-", "STATE_ANCHOR_POINT");
+                        break;
+                    case BottomSheetBehaviorGoogleMapsLike.STATE_HIDDEN:
+						binding.myLocation.show();
+                        Log.d("bottomsheet-", "STATE_HIDDEN");
+                        break;
+                    default:
+                        Log.d("bottomsheet-", "STATE_SETTLING");
+                        break;
+                }
+            }
 
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
 		// binding.bottomSheetTextView = (TextView) bottomSheet.findViewById(R.id.bottom_sheet_title);
 		ItemPagerAdapter adapter = new ItemPagerAdapter(this, "");
 		binding.pager.setAdapter(adapter);
