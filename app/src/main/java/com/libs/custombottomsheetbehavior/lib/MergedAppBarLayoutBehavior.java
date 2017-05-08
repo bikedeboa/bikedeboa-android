@@ -30,6 +30,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.bdb.bikedeboa.R;
+import com.bdb.bikedeboa.view.MapActivity;
 
 import java.lang.ref.WeakReference;
 
@@ -140,6 +141,7 @@ public class MergedAppBarLayoutBehavior extends AppBarLayout.ScrollingViewBehavi
 			setFullBackGroundColor(R.color.colorPrimary);
 			setPartialBackGroundHeight(0);
 		}
+
 		return childMoved;
 	}
 
@@ -153,6 +155,10 @@ public class MergedAppBarLayoutBehavior extends AppBarLayout.ScrollingViewBehavi
 
 		mToolbar = (Toolbar) appBarLayout.findViewById(R.id.expanded_toolbar);
 		//		mToolbar.getLayoutParams().height = getStatusBarHeight() + getToolBarHeight();
+
+		if (parent.getHeight() > ((MapActivity) mContext).findViewById(R.id.detail_view).getHeight()) {
+			((MapActivity) mContext).findViewById(R.id.detail_view).setMinimumHeight(parent.getHeight());
+		}
 
 		mBackground = appBarLayout.findViewById(R.id.background);
 		mBackGroundLayoutParams = (FrameLayout.LayoutParams) mBackground.getLayoutParams();
