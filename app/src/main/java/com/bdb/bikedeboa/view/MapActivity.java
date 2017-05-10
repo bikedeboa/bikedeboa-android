@@ -125,6 +125,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		LatLng portoAlegre = new LatLng(-30.039005, -51.224059);
 		this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(portoAlegre, 14));
 		customizeMap();
+		customizeMapLocation();
 
 		// Set map specific listeners
 		googleMap.setOnMarkerClickListener(this);
@@ -146,6 +147,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 			}
 		} catch (Resources.NotFoundException e) {
 			Log.e(TAG, "Can't find style. Error: ", e);
+		}
+	}
+
+	@SuppressWarnings("MissingPermission")
+	private void customizeMapLocation() {
+		if (EasyPermissions.hasPermissions(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+			this.googleMap.setMyLocationEnabled(true);
+			this.googleMap.getUiSettings().setMyLocationButtonEnabled(false);
 		}
 	}
 
@@ -249,8 +258,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		public void onClick(View v) {
 			String permission = Manifest.permission.ACCESS_FINE_LOCATION;
 			if (EasyPermissions.hasPermissions(getBaseContext(), permission)) {
-				googleMap.setMyLocationEnabled(true);
-				googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+				customizeMapLocation();
 				mapViewModel.setLastLocation(LocationServices.FusedLocationApi.getLastLocation(googleApiClient));
 				if (mapViewModel.getLastLocation() != null) {
 					Location lastLocation = mapViewModel.getLastLocation();
