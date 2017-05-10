@@ -94,6 +94,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 		mergedAppBarLayoutBehavior = MergedAppBarLayoutBehavior.from(binding.mergedAppbarlayout);
 		mergedAppBarLayoutBehavior.setStatusBarBackgroundVisible(false);
+		mergedAppBarLayoutBehavior.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                behavior.setState(BottomSheetBehaviorGoogleMapsLike.STATE_COLLAPSED);
+            }
+        });
 		binding.detailView.summary.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -107,6 +113,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 switch (newState) {
                     case BottomSheetBehaviorGoogleMapsLike.STATE_COLLAPSED:
                         Log.d("bottomsheet-", "STATE_COLLAPSED");
+						binding.morphingFab.setImageDrawable(MapActivity.this.getResources().getDrawable(R.drawable.icon_directions));
 						binding.myLocation.show();
                         break;
                     case BottomSheetBehaviorGoogleMapsLike.STATE_DRAGGING:
@@ -123,6 +130,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         break;
                     case BottomSheetBehaviorGoogleMapsLike.STATE_HIDDEN:
 						binding.myLocation.show();
+						binding.morphingFab.setImageDrawable(MapActivity.this.getResources().getDrawable(R.drawable.ic_add_location_white_24dp));
                         Log.d("bottomsheet-", "STATE_HIDDEN");
                         break;
                     default:
