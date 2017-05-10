@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.bdb.bikedeboa.viewmodel.MapViewModel"/>
+    </data>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/filter_navigation_view"
+        fontPath="font/Raleway-Medium.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@color/white"
+        android:fitsSystemWindows="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/checkbox_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/default_margin">
+
+                <TextView
+                    fontPath="font/Raleway-Bold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:text="Filtrar bicicletários"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    fontPath="font/Raleway-SemiBold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:text="Avaliações"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <CheckBox
+                        android:id="@+id/excellent_filter"
+                        fontPath="font/Raleway-Medium.ttf"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/darkGray"
+                        android:onClick="onCheckboxClick"
+                        android:text="Excelentes"
+                        android:textColor="@color/darkerGray"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:padding="6dp"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/pin_green"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <CheckBox
+                        android:id="@+id/medium_filter"
+                        fontPath="font/Raleway-Medium.ttf"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/darkGray"
+                        android:onClick="onCheckboxClick"
+                        android:text="Médios"
+                        android:textColor="@color/darkerGray"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:padding="6dp"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/pin_yellow"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <CheckBox
+                        android:id="@+id/bad_filter"
+                        fontPath="font/Raleway-Medium.ttf"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/darkGray"
+                        android:onClick="onCheckboxClick"
+                        android:text="Ruins"
+                        android:textColor="@color/darkerGray"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:padding="6dp"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/pin_red"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <CheckBox
+                        android:id="@+id/unknown_filter"
+                        fontPath="font/Raleway-Medium.ttf"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/darkGray"
+                        android:onClick="onCheckboxClick"
+                        android:text="Sem avaliação"
+                        android:textColor="@color/darkerGray"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:padding="7dp"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/pin_gray"/>
+
+                </LinearLayout>
+
+                <TextView
+                    fontPath="font/Raleway-SemiBold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:text="Acesso"
+                    android:textColor="@color/black"/>
+
+                <CheckBox
+                    android:id="@+id/public_filter"
+                    fontPath="font/Raleway-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
+                    android:tag="true"
+                    android:text="@string/public_rack"
+                    android:textColor="@color/darkerGray"/>
+
+                <CheckBox
+                    android:id="@+id/restricted_filter"
+                    fontPath="font/Raleway-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
+                    android:tag="false"
+                    android:text="@string/private_rack"
+                    android:textColor="@color/darkerGray"/>
+
+                <TextView
+                    fontPath="font/Raleway-SemiBold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:text="Tipo de bicicletário"
+                    android:textColor="@color/black"/>
+
+                <CheckBox
+                    android:id="@+id/deroda_filter"
+                    fontPath="font/Raleway-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
+                    android:tag="deroda"
+                    android:text="@string/deroda"
+                    android:textColor="@color/darkerGray"/>
+
+                <CheckBox
+                    android:id="@+id/uinvetido_filter"
+                    fontPath="font/Raleway-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
+                    android:tag="uinvertido"
+                    android:text="@string/uinvertido"
+                    android:textColor="@color/darkerGray"/>
+
+                <CheckBox
+                    android:id="@+id/grade_filter"
+                    fontPath="font/Raleway-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
+                    android:tag="grade"
+                    android:text="@string/grade"
+                    android:textColor="@color/darkerGray"/>
+
+                <CheckBox
+                    android:id="@+id/trave_filter"
+                    fontPath="font/Raleway-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
+                    android:tag="trave"
+                    android:text="@string/trave"
+                    android:textColor="@color/darkerGray"/>
+
+                <CheckBox
+                    android:id="@+id/suspenso_filter"
+                    fontPath="font/Raleway-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
+                    android:tag="suspenso"
+                    android:text="@string/suspenso"
+                    android:textColor="@color/darkerGray"/>
+
+                <CheckBox
+                    android:id="@+id/other_type_filter"
+                    fontPath="font/Raleway-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkGray"
+                    android:onClick="onCheckboxClick"
+                    android:tag="other"
+                    android:text="@string/outro"
+                    android:textColor="@color/darkerGray"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </android.support.design.widget.NavigationView>
+
+</layout>

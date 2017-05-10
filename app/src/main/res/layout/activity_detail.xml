@@ -258,7 +258,7 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingBottom="0dp"
-                app:visible="@{viewModel.hasOwnershipAndType}">
+                app:visible="@{viewModel.hasAccessAndType}">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -269,7 +269,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="90dp"
-                        android:src="@{viewModel.ownershipImage}"
+                        android:src="@{viewModel.accessImage}"
                         tools:src="@drawable/icon_public"/>
 
                     <TextView
@@ -277,7 +277,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{viewModel.ownership}"
+                        android:text="@{viewModel.access}"
                         android:textColor="@color/mediumGray"
                         tools:text="@string/public_rack"/>
 
@@ -327,7 +327,8 @@
                     android:text="@string/more_info"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:textSize="@dimen/default_padding"/>
+                    android:paddingTop="7dp"
+                    android:textSize="12sp"/>
 
                 <TextView
                     fontPath="font/Raleway-Regular.ttf"
@@ -336,7 +337,8 @@
                     android:padding="5dp"
                     android:text="@{viewModel.description}"
                     android:textColor="@color/darkGray"
-                    android:textSize="@dimen/default_padding"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
                     tools:text="Lugar bastante frequentado por ciclistas. É de boa deixa na frente mas se precisar eles permitem deixar dentro do café também."/>
 
             </LinearLayout>
@@ -357,7 +359,7 @@
                     android:text="@string/rate_this_rack"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:textSize="@dimen/default_padding"/>
+                    android:textSize="12sp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
