@@ -18,7 +18,7 @@ public class BikeDeBoaApplication extends Application {
 
 		AssetHelper.init(this.getResources());
 		initDatabase();
-		NetworkManager.init();
+		NetworkManager.init(this.getResources());
 		UserManager.authenticate();
 		RackManager.init(this).fetchLocalLightList();
 	}

@@ -1,5 +1,8 @@
 package com.bdb.bikedeboa.model.manager;
 
+import android.content.res.Resources;
+
+import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.model.network.Service;
 import com.bdb.bikedeboa.model.network.response.LocalFull;
 import com.bdb.bikedeboa.model.network.response.LocalLight;
@@ -19,10 +22,10 @@ public final class NetworkManager {
 	private NetworkManager() {
 	}
 
-	public static void init() {
+	public static void init(Resources resources) {
 
 		Retrofit retrofit = new Retrofit.Builder()
-				.baseUrl("https://bdb-api.herokuapp.com/")
+				.baseUrl(resources.getString(R.string.api_address))
 				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 
