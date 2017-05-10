@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">bikedeboa</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">bike de boa</string>
     <string name="how_to_get_there">Como chegar</string>
     <string name="rate">Avaliar</string>
     <string name="suggest_change">Sugerir Mudança</string>

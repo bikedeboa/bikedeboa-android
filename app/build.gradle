@@ -4,15 +4,37 @@ apply plugin: 'realm-android'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
+    Process gitLog = 'git rev-list --all'.execute()
+    Process lineCount = 'wc -l'.execute()
+
+    def gitCommitCount = (gitLog | lineCount).text.trim()
+    def buildNumber = Integer.valueOf(System.getenv("BUILD_NUMBER") ?: gitCommitCount) / 100
+    def baseVersion = 0.01
+    def versionNumber = baseVersion + buildNumber
+
     defaultConfig {
         applicationId "com.bdb.bikedeboa"
         minSdkVersion 19
         targetSdkVersion 25
         multiDexEnabled true
         versionCode 1
-        versionName "1.0"
+        versionName "${baseVersion}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    productFlavors {
+        QA {
+            resValue "string", "app_version", "bike de boa app v" + "${versionNumber}"
+            versionName 'QA.' + "${versionNumber}"
+            /* signingConfig signingConfigs.release */
+        }
+        DEV {
+            resValue "string", "app_version", 'bike de boa app v' + "${versionNumber}"
+            versionName 'DEV.' + "${versionNumber}"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
