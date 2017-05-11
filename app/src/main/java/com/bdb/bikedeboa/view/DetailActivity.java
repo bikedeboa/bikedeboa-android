@@ -1,14 +1,18 @@
 package com.bdb.bikedeboa.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.databinding.ActivityDetailBinding;
@@ -29,11 +33,19 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 	private static final String TAG = DetailActivity.class.getSimpleName();
 	private int rackId;
 	private ActivityDetailBinding binding;
+	private ViewDataBinding ratingDialogBinding;
 	private DetailViewModel detailViewModel;
+	private AlertDialog ratingDialog;
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+	}
+
+	@Override
+	public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+		return super.onCreateView(parent, name, context, attrs);
+
 	}
 
 	@Override
@@ -47,6 +59,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 			rackId = extras.getInt(RACK_ID);
 			detailViewModel = new DetailViewModel(rackId, this);
 			binding.setViewModel(detailViewModel);
+			buildRatingDialog();
 		} else {
 			// Something's not right, finish this activity
 			this.finish();
@@ -55,6 +68,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 		// Set click listeners
 		binding.howToGetThere.setOnClickListener(getMeThere);
 		binding.rackPhoto.setOnClickListener(expandImage);
+		binding.rate.setOnClickListener(launchRatingDialog);
 
 		// Fire up map lite
 		binding.mapLite.onCreate(null);
@@ -85,6 +99,14 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 		}
 	}
 
+	private void buildRatingDialog() {
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+		ratingDialogBinding = DataBindingUtil.inflate(getLayoutInflater(),
+				R.layout.rating_dialog, (ViewGroup) binding.getRoot(), false);
+		dialogBuilder.setView(ratingDialogBinding.getRoot());
+		ratingDialog = dialogBuilder.create();
+	}
+
 	private View.OnClickListener getMeThere = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -103,6 +125,13 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 			Intent intent = new Intent(DetailActivity.this, ExpandImageActivity.class);
 			intent.putExtra(RACK_ID, rackId);
 			startActivity(intent);
+		}
+	};
+
+	private View.OnClickListener launchRatingDialog = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			ratingDialog.show();
 		}
 	};
 }

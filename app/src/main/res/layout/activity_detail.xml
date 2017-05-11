@@ -12,6 +12,7 @@
     </data>
 
     <ScrollView
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context="com.bdb.bikedeboa.view.DetailActivity">
@@ -67,6 +68,7 @@
                 <include layout="@layout/divider_vertical"/>
 
                 <LinearLayout
+                    android:id="@+id/rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -81,7 +83,6 @@
                         android:tint="@color/darkGray"/>
 
                     <TextView
-                        android:id="@+id/rate"
                         fontPath="font/Raleway-Medium.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"

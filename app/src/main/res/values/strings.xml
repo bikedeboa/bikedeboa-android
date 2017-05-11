@@ -26,4 +26,15 @@
         <item quantity="one">%d avaliação </item>
         <item quantity="other">%d avaliações</item>
     </plurals>
+    <string-array name="characteristics_labels">
+        <item>Iluminado</item>
+        <item>Movimentado</item>
+        <item>Monitorado</item>
+        <item>Fácil Acesso</item>
+        <item>Espaçoso</item>
+        <item>Coberto</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
