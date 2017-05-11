@@ -16,4 +16,9 @@ public class LocalLight {
 	public String structureType;
 	@SerializedName("isPublic")
 	public String isPublic;
+	@SerializedName("photo")
+	public String photoUrl;
+	@SerializedName("text")
+	public String text;
+
 }

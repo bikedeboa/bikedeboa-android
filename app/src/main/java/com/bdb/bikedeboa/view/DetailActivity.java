@@ -39,11 +39,14 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			rackId = extras.getInt(RACK_ID);
+			detailViewModel = new DetailViewModel(rackId, this);
+			binding.setViewModel(detailViewModel);
 		} else {
 			// Something's not right, finish this activity
 			this.finish();
@@ -61,11 +64,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 
-		detailViewModel = new DetailViewModel(rackId, googleMap, this);
-		binding.setViewModel(detailViewModel);
-
 		MapsInitializer.initialize(this);
 		customizeMap(googleMap);
+		detailViewModel.setUpMap(googleMap);
 	}
 
 	private void customizeMap(GoogleMap googleMap) {

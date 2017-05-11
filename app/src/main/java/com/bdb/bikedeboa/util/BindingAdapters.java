@@ -13,23 +13,38 @@ import com.adroitandroid.chipcloud.Chip;
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.model.model.Tag;
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
 public class BindingAdapters {
 
 	@BindingAdapter({"imageAddress"})
-	public static void loadImage(ImageView imageView, String imageAddress) {
-		// Works for both Uris and Urls
-		Glide.with(imageView.getContext())
-				.load(imageAddress)
-				.thumbnail(Glide.with(imageView.getContext())
-						.load(R.drawable.wheel_loading))
-				.crossFade()
-				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
-				.into(imageView);
+	public static void loadImage(final ImageView imageView, final String imageAddress) {
+
+		if (imageAddress != null && imageAddress.startsWith("https://s3.amazonaws.com/bikedeboa/")) {
+
+			Context context = imageView.getContext();
+			// Hopefully the thumbnail is already disk cached and no requests are made
+			DrawableRequestBuilder<String> thumbnailRequest = Glide
+					.with(context)
+					.load(imageAddress.replace("images/", "images/thumbs/"))
+					.diskCacheStrategy(DiskCacheStrategy.ALL)
+					.override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+					.transform(new BlurTransformation(context));
+
+			Glide.with(context)
+					.load(imageAddress)
+					.thumbnail(thumbnailRequest)
+					.crossFade()
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE)
+					.priority(Priority.HIGH)
+					.into(imageView);
+		}
 	}
 
 	@BindingAdapter({"visible"})

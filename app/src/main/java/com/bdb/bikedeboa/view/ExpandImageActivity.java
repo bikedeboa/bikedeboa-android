@@ -5,9 +5,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bdb.bikedeboa.R;
+import com.bdb.bikedeboa.util.BlurTransformation;
 import com.bdb.bikedeboa.viewmodel.DetailViewModel;
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.Target;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import static com.bdb.bikedeboa.util.Constants.RACK_ID;
@@ -31,13 +35,24 @@ public class ExpandImageActivity extends AppCompatActivity {
 			this.finish();
 		}
 
-		DetailViewModel detailViewModel = new DetailViewModel(rackId);
+		DetailViewModel detailViewModel = new DetailViewModel(rackId, this);
 		PhotoView photoView = (PhotoView) findViewById(R.id.photo_view);
+
+		// Request cached thumbnail
+		DrawableRequestBuilder<String> thumbnailRequest = Glide
+				.with(this)
+				.load(detailViewModel.getImage().replace("images/", "images/thumbs/"))
+				.diskCacheStrategy(DiskCacheStrategy.ALL)
+				.override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+				.transform(new BlurTransformation(this));
+
 		Glide.with(this)
 				.load(detailViewModel.getImage())
-				.thumbnail(Glide.with(this)
-						.load(R.drawable.wheel_loading))
+				.thumbnail(thumbnailRequest)
+				.crossFade()
 				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
+				.priority(Priority.HIGH)
 				.into(photoView);
+
 	}
 }

@@ -22,26 +22,16 @@ public class DetailViewModel extends BaseObservable implements
 		RackManager.SingleRackCallback {
 
 	private final RackManager rackManager;
-	private GoogleMap googleMap;
 	private Resources res = null;
 	private Rack rack;
 
-	public DetailViewModel(int rackId, GoogleMap googleMap, Context context) {
-		this.googleMap = googleMap;
+	public DetailViewModel(int rackId, Context context) {
 		this.res = context.getResources();
 		this.rackManager = RackManager.getInstance();
 		this.rackManager.setSingleRackCallback(this);
 		this.rack = this.rackManager.getRack(rackId);
 
 		fetchRackDetails();
-		setUpMap();
-	}
-
-	// Constructor for ExpandImageActivity
-	public DetailViewModel(int rackId) {
-		this.rackManager = RackManager.getInstance();
-		this.rackManager.setSingleRackCallback(this);
-		this.rack = this.rackManager.getRack(rackId);
 	}
 
 	public void fetchRackDetails() {
@@ -127,7 +117,7 @@ public class DetailViewModel extends BaseObservable implements
 		return AssetHelper.getStructureTypeImage(rack.getStructureType());
 	}
 
-	private void setUpMap() {
+	public void setUpMap(GoogleMap googleMap) {
 
 		LatLng pinPosition = new LatLng(rack.getLatitude(), rack.getLongitude());
 		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pinPosition, 18));

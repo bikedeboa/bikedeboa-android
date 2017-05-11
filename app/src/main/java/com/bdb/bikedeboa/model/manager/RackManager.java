@@ -7,6 +7,9 @@ import android.util.Pair;
 import com.bdb.bikedeboa.model.model.Rack;
 import com.bdb.bikedeboa.model.network.response.LocalFull;
 import com.bdb.bikedeboa.model.network.response.LocalLight;
+import com.bdb.bikedeboa.util.BlurTransformation;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +40,11 @@ public class RackManager {
 		rackList = new ArrayList<>();
 		ratingRangeFilter = new ArrayList<>();
 		structureTypeFilter = new ArrayList<>();
-		// Just for testing
-//		accessFilter = "true";
-//		structureTypeFilter.add("uinvertido");
-//		ratingRangeFilter.add(new Pair<Float, Float>(3.5f, 5f));
 
 		realm = Realm.getDefaultInstance();
 		// Update rack list to match db on instantiation
 		updateRackList();
+		fetchLocalLightList();
 	}
 
 	public static RackManager init(Context context) {
@@ -137,6 +137,14 @@ public class RackManager {
 					if (rack == null || !rack.isComplete()) {
 						realm.copyToRealmOrUpdate(new Rack(localLight));
 					}
+
+					// Cache rack thumbnails
+					if (!localLight.photoUrl.equals("")) {
+						Glide.with(context)
+								.load(localLight.photoUrl.replace("images/", "images/thumbs/"))
+								.transform(new BlurTransformation(context))
+								.preload(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+					}
 				}
 				realm.commitTransaction();
 				updateRackList();
@@ -169,7 +177,7 @@ public class RackManager {
 
 				if (rack != null) {
 					realm.beginTransaction();
-					rack.completeRack(localFull, context);
+					rack.completeRack(localFull);
 					realm.commitTransaction();
 
 					if (singleRackCallback != null) {
