@@ -7,3 +7,4 @@
 * Hamburger menu (nada funcional ainda)
 * Botão de "minha localização"
 * Filtragem de bicicletários
+* Caching de thumbnails bonitinhos.
