@@ -1,7 +1,5 @@
 package com.bdb.bikedeboa.model.model;
 
-import android.content.Context;
-
 import com.bdb.bikedeboa.model.network.response.LocalFull;
 import com.bdb.bikedeboa.model.network.response.LocalLight;
 
@@ -39,12 +37,11 @@ public class Rack extends RealmObject {
 		this.averageRating = localLight.average != null ? localLight.average : 0;
 		this.structureType = localLight.structureType;
 		this.isPublic = localLight.isPublic;
+		this.photoUrl = localLight.photoUrl;
+		this.text = localLight.text;
 	}
 
-	public void completeRack(LocalFull localFull, Context context) {
-
-		this.text = localFull.text;
-		this.photoUrl = localFull.photo;
+	public void completeRack(LocalFull localFull) {
 		this.description = localFull.description;
 		this.address = localFull.address;
 		this.checkInNumber = localFull.checkIns;

@@ -1,9 +1,1 @@
-* Customização do mapa e fontes
-* Visualização dos bicicletários no mapa
-* Página de detalhes do bicicletário com foto, tags, nota, tipo e público/restrito
-* Expansão da foto do bicicletário
-* Busca por endereço
-* Como chegar redirecionando pro google maps.
-* Hamburger menu (nada funcional ainda)
-* Botão de "minha localização"
-* Filtragem de bicicletários
+* Caching de thumbnails bonitinhos.

@@ -20,7 +20,7 @@ public class BikeDeBoaApplication extends Application {
 		initDatabase();
 		NetworkManager.init(this.getResources());
 		UserManager.authenticate();
-		RackManager.init(this).fetchLocalLightList();
+		RackManager.init(this);
 	}
 
 	private void initDatabase() {
