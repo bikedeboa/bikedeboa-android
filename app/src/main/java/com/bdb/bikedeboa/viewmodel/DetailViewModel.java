@@ -125,4 +125,8 @@ public class DetailViewModel extends BaseObservable implements
 				.position(pinPosition)
 				.icon(AssetHelper.getCustomPin(rack.getAverageRating(), false)));
 	}
+
+	public void submitRating(int nStars, List<Integer> tagIds) {
+		rackManager.submitRating(rack.getId(), nStars, tagIds);
+	}
 }

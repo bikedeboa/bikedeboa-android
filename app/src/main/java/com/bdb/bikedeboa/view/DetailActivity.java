@@ -2,26 +2,29 @@ package com.bdb.bikedeboa.view;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.adroitandroid.chipcloud.ChipListener;
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.databinding.ActivityDetailBinding;
+import com.bdb.bikedeboa.databinding.RatingDialogBinding;
+import com.bdb.bikedeboa.util.TagMap;
 import com.bdb.bikedeboa.viewmodel.DetailViewModel;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -33,19 +36,14 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 	private static final String TAG = DetailActivity.class.getSimpleName();
 	private int rackId;
 	private ActivityDetailBinding binding;
-	private ViewDataBinding ratingDialogBinding;
+	private RatingDialogBinding ratingDialogBinding;
 	private DetailViewModel detailViewModel;
 	private AlertDialog ratingDialog;
+	private List<Integer> selectedChips;
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-	}
-
-	@Override
-	public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-		return super.onCreateView(parent, name, context, attrs);
-
 	}
 
 	@Override
@@ -100,10 +98,38 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 	}
 
 	private void buildRatingDialog() {
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 		ratingDialogBinding = DataBindingUtil.inflate(getLayoutInflater(),
-				R.layout.rating_dialog, (ViewGroup) binding.getRoot(), false);
-		dialogBuilder.setView(ratingDialogBinding.getRoot());
+				R.layout.rating_dialog, null, false);
+		selectedChips = new ArrayList<>();
+
+		ratingDialogBinding.ratingChipCloud.addChips(TagMap.getTags());
+
+		ratingDialogBinding.ratingChipCloud.setChipListener(new ChipListener() {
+			@Override
+			public void chipSelected(int i) {
+				selectedChips.add(TagMap.indexToId(i));
+			}
+
+			@Override
+			public void chipDeselected(int i) {
+				selectedChips.remove(i); // Disambiguation
+			}
+		});
+
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this)
+				.setView(ratingDialogBinding.getRoot())
+				.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						detailViewModel.submitRating(2, selectedChips);
+					}
+				})
+				.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+					}
+				});
 		ratingDialog = dialogBuilder.create();
 	}
 

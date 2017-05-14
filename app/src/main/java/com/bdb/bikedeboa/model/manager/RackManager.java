@@ -7,6 +7,7 @@ import android.util.Pair;
 import com.bdb.bikedeboa.model.model.Rack;
 import com.bdb.bikedeboa.model.network.response.LocalFull;
 import com.bdb.bikedeboa.model.network.response.LocalLight;
+import com.bdb.bikedeboa.model.network.response.ReviewResponse;
 import com.bdb.bikedeboa.util.BlurTransformation;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
@@ -168,7 +169,7 @@ public class RackManager {
 		@Override
 		public void onResponse(Call<LocalFull> call, Response<LocalFull> response) {
 			// Complete or update data of an already existing rack
-			if (response != null) {
+			if (response.body() != null) {
 
 				LocalFull localFull = response.body();
 				Rack rack = realm.where(Rack.class)
@@ -199,6 +200,26 @@ public class RackManager {
 		this.accessFilter = accessFilter;
 		updateRackList();
 	}
+
+	public void submitRating(int rackId, int nStars, List<Integer> tagIds) {
+
+		NetworkManager.submitRating(rackId, nStars, tagIds, UserManager.getAuthKey(), reviewCallback);
+	}
+
+	private Callback<ReviewResponse> reviewCallback = new Callback<ReviewResponse>() {
+		@Override
+		public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
+			if (response.body() != null) {
+				fetchLocalFull(response.body().getLocalId());
+			}
+		}
+
+		@Override
+		public void onFailure(Call<ReviewResponse> call, Throwable t) {
+			// TODO problems submiting review -- show a snackbar or something
+			Log.w(TAG, "Failure submitting review.");
+		}
+	};
 
 	public interface RackListCallback {
 		void onRackListUpdate(List<Rack> rackList);
