@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailViewModel extends BaseObservable implements
@@ -24,12 +25,18 @@ public class DetailViewModel extends BaseObservable implements
 	private final RackManager rackManager;
 	private Resources res = null;
 	private Rack rack;
+	private GoogleMap googleMap;
+	// Rating variables
+	private int ratingInProgress = 0;
+	private List<Integer> selectedChips;
+
 
 	public DetailViewModel(int rackId, Context context) {
 		this.res = context.getResources();
 		this.rackManager = RackManager.getInstance();
 		this.rackManager.setSingleRackCallback(this);
 		this.rack = this.rackManager.getRack(rackId);
+		this.selectedChips = new ArrayList<>();
 
 		fetchRackDetails();
 	}
@@ -41,6 +48,7 @@ public class DetailViewModel extends BaseObservable implements
 	@Override
 	public void onRackUpdate(Rack rack) {
 		notifyPropertyChanged(BR._all);
+		setMap(null); // If googleMaps is already not null, it will work
 	}
 
 	public String getTitle() {
@@ -117,16 +125,41 @@ public class DetailViewModel extends BaseObservable implements
 		return AssetHelper.getStructureTypeImage(rack.getStructureType());
 	}
 
-	public void setUpMap(GoogleMap googleMap) {
-
-		LatLng pinPosition = new LatLng(rack.getLatitude(), rack.getLongitude());
-		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pinPosition, 18));
-		googleMap.addMarker(new MarkerOptions()
-				.position(pinPosition)
-				.icon(AssetHelper.getCustomPin(rack.getAverageRating(), false)));
+	public void setMap(GoogleMap googleMap) {
+		// Setter
+		if (this.googleMap == null && googleMap != null) {
+			this.googleMap = googleMap;
+		}
+		// In case it's already set and we are just using
+		if (this.googleMap != null) {
+			LatLng pinPosition = new LatLng(rack.getLatitude(), rack.getLongitude());
+			this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pinPosition, 18));
+			this.googleMap.addMarker(new MarkerOptions()
+					.position(pinPosition)
+					.icon(AssetHelper.getCustomPin(rack.getAverageRating(), false)));
+		}
 	}
 
-	public void submitRating(int nStars, List<Integer> tagIds) {
-		rackManager.submitRating(rack.getId(), nStars, tagIds);
+	public void submitRating() {
+		rackManager.submitRating(rack.getId(), ratingInProgress, selectedChips);
 	}
+
+	public void setRatingInProgress(int ratingInProgress) {
+		this.ratingInProgress = ratingInProgress;
+		notifyPropertyChanged(BR._all); // Notify otherwise stars won't update on dialog
+	}
+
+	public int getRatingInProgress() {
+		return ratingInProgress;
+	}
+
+	public void addChip(int id) {
+		this.selectedChips.add(id);
+	}
+
+	public void removeChip(int id) {
+		this.selectedChips.remove(Integer.valueOf(id));
+	}
+
+
 }

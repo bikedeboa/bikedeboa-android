@@ -23,8 +23,6 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -39,7 +37,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 	private RatingDialogBinding ratingDialogBinding;
 	private DetailViewModel detailViewModel;
 	private AlertDialog ratingDialog;
-	private List<Integer> selectedChips;
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -78,7 +75,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
 		MapsInitializer.initialize(this);
 		customizeMap(googleMap);
-		detailViewModel.setUpMap(googleMap);
+		detailViewModel.setMap(googleMap);
 	}
 
 	private void customizeMap(GoogleMap googleMap) {
@@ -98,21 +95,22 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 	}
 
 	private void buildRatingDialog() {
+
 		ratingDialogBinding = DataBindingUtil.inflate(getLayoutInflater(),
 				R.layout.rating_dialog, null, false);
-		selectedChips = new ArrayList<>();
+		ratingDialogBinding.setViewModel(detailViewModel);
 
 		ratingDialogBinding.ratingChipCloud.addChips(TagMap.getTags());
 
 		ratingDialogBinding.ratingChipCloud.setChipListener(new ChipListener() {
 			@Override
 			public void chipSelected(int i) {
-				selectedChips.add(TagMap.indexToId(i));
+				detailViewModel.addChip(TagMap.indexToId(i));
 			}
 
 			@Override
 			public void chipDeselected(int i) {
-				selectedChips.remove(i); // Disambiguation
+				detailViewModel.removeChip(TagMap.indexToId(i));
 			}
 		});
 
@@ -121,7 +119,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 				.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						detailViewModel.submitRating(2, selectedChips);
+						detailViewModel.submitRating();
 					}
 				})
 				.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -160,4 +158,10 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 			ratingDialog.show();
 		}
 	};
+
+	public void onStarClick(View view) {
+		int ratingInProgress = Integer.parseInt((String) view.getTag());
+		detailViewModel.setRatingInProgress(ratingInProgress);
+		ratingDialog.show();
+	}
 }

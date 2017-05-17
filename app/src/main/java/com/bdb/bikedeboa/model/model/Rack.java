@@ -21,7 +21,6 @@ public class Rack extends RealmObject {
 	private String photoUrl;
 	private String description;
 	private String address;
-	private int checkInNumber;
 	private int reviewNumber;
 	//	private RealmList<Review> reviewList;
 	private RealmList<Tag> tagList = new RealmList<>();
@@ -44,8 +43,8 @@ public class Rack extends RealmObject {
 	public void completeRack(LocalFull localFull) {
 		this.description = localFull.description;
 		this.address = localFull.address;
-		this.checkInNumber = localFull.checkIns;
 		this.reviewNumber = localFull.reviews;
+		this.averageRating = localFull.average;
 
 		this.tagList.clear();
 		for (LocalFull.Tag tag : localFull.tags) {
@@ -94,10 +93,6 @@ public class Rack extends RealmObject {
 
 	public String getAddress() {
 		return address;
-	}
-
-	public int getCheckIns() {
-		return checkInNumber;
 	}
 
 	public int getReviewNumber() {

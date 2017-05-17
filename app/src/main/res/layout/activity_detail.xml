@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.bdb.bikedeboa.viewmodel.DetailViewModel"/>
+            type="com.bdb.bikedeboa.viewmodel.DetailViewModel" />
     </data>
 
     <ScrollView
@@ -30,7 +30,7 @@
                 android:scaleType="centerCrop"
                 app:imageAddress="@{viewModel.image}"
                 app:visible="@{viewModel.hasImage}"
-                tools:src="@drawable/spinner"/>
+                tools:src="@drawable/spinner" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:src="@drawable/route"
-                        android:tint="@color/darkGray"/>
+                        android:tint="@color/darkGray" />
 
                     <TextView
                         fontPath="font/Raleway-Medium.ttf"
@@ -61,11 +61,11 @@
                         android:text="@string/how_to_get_there"
                         android:textAlignment="center"
                         android:textAllCaps="true"
-                        android:textSize="10sp"/>
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
-                <include layout="@layout/divider_vertical"/>
+                <include layout="@layout/divider_vertical" />
 
                 <LinearLayout
                     android:id="@+id/rate"
@@ -80,7 +80,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:src="@drawable/review"
-                        android:tint="@color/darkGray"/>
+                        android:tint="@color/darkGray" />
 
                     <TextView
                         fontPath="font/Raleway-Medium.ttf"
@@ -90,11 +90,11 @@
                         android:text="@string/rate"
                         android:textAlignment="center"
                         android:textAllCaps="true"
-                        android:textSize="10sp"/>
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
-                <include layout="@layout/divider_vertical"/>
+                <include layout="@layout/divider_vertical" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
                         android:layout_marginBottom="5dp"
                         android:padding="3dp"
                         android:src="@drawable/pencil_edit_button"
-                        android:tint="@color/darkGray"/>
+                        android:tint="@color/darkGray" />
 
                     <TextView
                         android:id="@+id/suggest_change"
@@ -120,13 +120,13 @@
                         android:text="@string/suggest_change"
                         android:textAlignment="center"
                         android:textAllCaps="true"
-                        android:textSize="10sp"/>
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <include layout="@layout/divider_horizontal"/>
+            <include layout="@layout/divider_horizontal" />
 
             <TextView
                 android:id="@+id/name"
@@ -140,7 +140,7 @@
                 android:text="@{viewModel.title}"
                 android:textColor="@color/darkerGray"
                 android:textSize="28sp"
-                tools:text="Redenção"/>
+                tools:text="Redenção" />
 
             <TextView
                 android:id="@+id/address"
@@ -152,7 +152,7 @@
                 android:text="@{viewModel.address}"
                 android:textColor="@color/darkGray"
                 android:textSize="14sp"
-                tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS"/>
+                tools:text="Av. João Pessoa, s/n - Cidade Baixa, Porto Alegre - RS" />
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/map_lite"
@@ -162,7 +162,7 @@
                 android:background="@color/lightGray"
                 map:cameraZoom="18"
                 map:liteMode="true"
-                map:mapType="normal"/>
+                map:mapType="normal" />
 
             <LinearLayout
                 android:id="@+id/stars"
@@ -189,7 +189,7 @@
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        tools:text="4.3"/>
+                        tools:text="4.3" />
 
                 </LinearLayout>
 
@@ -197,31 +197,31 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/star"
-                    android:tint="@color/lightGray"/>
+                    android:tint="@color/lightGray" />
 
             </LinearLayout>
 
@@ -232,7 +232,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/mediumGray"
                 app:visible="@{viewModel.averageRating > 0}"
-                tools:text="4 avaliações"/>
+                tools:text="4 avaliações" />
 
             <com.adroitandroid.chipcloud.ChipCloud
                 xmlns:chipcloud="http://schemas.android.com/apk/res-auto"
@@ -248,9 +248,9 @@
                 chipcloud:gravity="center"
                 chipcloud:selectMode="none"
                 chipcloud:textSize="13sp"
-                chipcloud:verticalSpacing="10dp"/>
+                chipcloud:verticalSpacing="10dp" />
 
-            <include layout="@layout/divider_horizontal"/>
+            <include layout="@layout/divider_horizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -271,7 +271,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="90dp"
                         android:src="@{viewModel.accessImage}"
-                        tools:src="@drawable/icon_public"/>
+                        tools:src="@drawable/icon_public" />
 
                     <TextView
                         fontPath="font/Raleway-Bold.ttf"
@@ -280,7 +280,7 @@
                         android:layout_gravity="center"
                         android:text="@{viewModel.access}"
                         android:textColor="@color/mediumGray"
-                        tools:text="@string/public_rack"/>
+                        tools:text="@string/public_rack" />
 
                 </LinearLayout>
 
@@ -294,7 +294,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="90dp"
                         android:src="@{viewModel.structureTypeImage}"
-                        tools:src="@drawable/tipo_deroda"/>
+                        tools:src="@drawable/tipo_deroda" />
 
                     <TextView
                         fontPath="font/Raleway-Bold.ttf"
@@ -303,7 +303,7 @@
                         android:layout_gravity="center"
                         android:text="@{viewModel.structureType}"
                         android:textColor="@color/mediumGray"
-                        tools:text="@string/deroda"/>
+                        tools:text="@string/deroda" />
 
                 </LinearLayout>
 
@@ -325,11 +325,11 @@
                     fontPath="font/Raleway-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
                     android:text="@string/more_info"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:paddingTop="7dp"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
 
                 <TextView
                     fontPath="font/Raleway-Regular.ttf"
@@ -337,10 +337,10 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="@{viewModel.description}"
-                    android:textColor="@color/darkGray"
                     android:textAlignment="center"
+                    android:textColor="@color/darkGray"
                     android:textSize="14sp"
-                    tools:text="Lugar bastante frequentado por ciclistas. É de boa deixa na frente mas se precisar eles permitem deixar dentro do café também."/>
+                    tools:text="Lugar bastante frequentado por ciclistas. É de boa deixa na frente mas se precisar eles permitem deixar dentro do café também." />
 
             </LinearLayout>
 
@@ -360,7 +360,7 @@
                     android:text="@string/rate_this_rack"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -373,36 +373,46 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
+                        android:onClick="onStarClick"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tag="1"
+                        android:tint="@color/lightMediumGray" />
 
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
+                        android:onClick="onStarClick"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tag="2"
+                        android:tint="@color/lightMediumGray" />
 
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
+                        android:onClick="onStarClick"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tag="3"
+                        android:tint="@color/lightMediumGray" />
 
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
+                        android:onClick="onStarClick"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tag="4"
+                        android:tint="@color/lightMediumGray" />
 
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="2dp"
+                        android:onClick="onStarClick"
                         android:src="@drawable/star_empty"
-                        android:tint="@color/lightMediumGray"/>
+                        android:tag="5"
+                        android:tint="@color/lightMediumGray" />
 
                 </LinearLayout>
 

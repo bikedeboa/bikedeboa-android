@@ -65,6 +65,10 @@ public class MapViewModel extends BaseObservable implements RackManager.RackList
 		}
 	}
 
+	public void forceMarkersUpdate() {
+		placeMarkers(rackManager.getRackList());
+	}
+
 	@Override
 	public void onRackListUpdate(List<Rack> rackList) {
 		placeMarkers(rackList);

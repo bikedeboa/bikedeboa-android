@@ -49,10 +49,10 @@ import pub.devrel.easypermissions.EasyPermissions;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.bdb.bikedeboa.R.id.map;
-import static com.bdb.bikedeboa.util.Constants.LOCATION_REQUEST_CODE;
-import static com.bdb.bikedeboa.util.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
+import static com.bdb.bikedeboa.util.Constants.LOCATION_REQUEST;
+import static com.bdb.bikedeboa.util.Constants.PLACE_AUTOCOMPLETE_REQUEST;
 import static com.bdb.bikedeboa.util.Constants.RACK_ID;
-import static com.bdb.bikedeboa.util.Constants.SETTINGS_REQUEST_CODE;
+import static com.bdb.bikedeboa.util.Constants.SETTINGS_REQUEST;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		GoogleMap.OnMarkerClickListener,
@@ -245,7 +245,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 								.setCountry("BR")
 								.build())
 						.build(MapActivity.this);
-				startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+				startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST);
 			} catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
 				// TODO: Handle the error.
 			}
@@ -266,7 +266,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 				}
 			} else {
 				EasyPermissions.requestPermissions(MapActivity.this,
-						getString(R.string.location_rationale), LOCATION_REQUEST_CODE, permission);
+						getString(R.string.location_rationale), LOCATION_REQUEST, permission);
 			}
 		}
 	};
@@ -279,7 +279,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+		if (requestCode == PLACE_AUTOCOMPLETE_REQUEST) {
 			if (resultCode == RESULT_OK) {
 				// Move camera to that place and add normal marker
 				Place place = PlaceAutocomplete.getPlace(this, data);
@@ -300,7 +300,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 	// Permissions code
 	@Override
 	public void onPermissionsGranted(int requestCode, List<String> permissions) {
-		if (requestCode == LOCATION_REQUEST_CODE && permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
+		if (requestCode == LOCATION_REQUEST && permissions.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
 			binding.myLocation.callOnClick();
 		}
 	}
@@ -319,7 +319,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 					.setTitle(R.string.title_rationale)
 					.setPositiveButton(R.string.app_settings)
 					.setNegativeButton(R.string.cancel)
-					.setRequestCode(SETTINGS_REQUEST_CODE)
+					.setRequestCode(SETTINGS_REQUEST)
 					.build()
 					.show();
 		}

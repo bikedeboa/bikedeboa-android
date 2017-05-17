@@ -202,7 +202,6 @@ public class RackManager {
 	}
 
 	public void submitRating(int rackId, int nStars, List<Integer> tagIds) {
-
 		NetworkManager.submitRating(rackId, nStars, tagIds, UserManager.getAuthKey(), reviewCallback);
 	}
 

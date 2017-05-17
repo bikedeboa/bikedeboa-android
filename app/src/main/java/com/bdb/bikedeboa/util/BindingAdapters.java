@@ -78,17 +78,33 @@ public class BindingAdapters {
 	public static void setStars(LinearLayout linearLayout, float rating) {
 
 		Context context = linearLayout.getContext();
-		int color = AssetHelper.getColorFromScore(rating);
-
-		// Child 0 is the textView with the written score
-		Drawable roundedBackground = ContextCompat.getDrawable(context, R.drawable.rounded_edges);
-		roundedBackground.setColorFilter(color, PorterDuff.Mode.ADD);
-		linearLayout.getChildAt(0).setBackground(roundedBackground);
-
+		int gray = AssetHelper.getColorFromScore(0);
 		int nStars = Math.round(rating);
-		for (int i = 1; i <= nStars; ++i) {
-			ImageView imageView = (ImageView) linearLayout.getChildAt(i);
-			imageView.setColorFilter(color);
+
+		if (linearLayout.getChildCount() > 5) {
+			// Child 0 is the textView with the written score (from detail view)
+			Drawable roundedBackground = ContextCompat.getDrawable(context, R.drawable.rounded_edges);
+			roundedBackground.setColorFilter(AssetHelper.getColorFromScore(rating), PorterDuff.Mode.ADD);
+			linearLayout.getChildAt(0).setBackground(roundedBackground);
+
+			for (int i = 0; i < 5; ++i) {
+				ImageView imageView = (ImageView) linearLayout.getChildAt(i + 1);
+				if (i < nStars) {
+					imageView.setColorFilter(AssetHelper.getColorFromScore(rating));
+				} else {
+					imageView.setColorFilter(gray);
+				}
+			}
+		} else {
+			// Fill stars -- used in rating
+			for (int i = 0; i < 5; ++i) {
+				ImageView imageView = (ImageView) linearLayout.getChildAt(i);
+				if (i < nStars) {
+					imageView.setColorFilter(AssetHelper.getColorFromScore(3)); // Yellow stars
+				} else {
+					imageView.setColorFilter(gray);
+				}
+			}
 		}
 	}
 }

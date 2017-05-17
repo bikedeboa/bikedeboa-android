@@ -21,6 +21,8 @@ public class LocalFull {
 	public String text;
 	@SerializedName("photo")
 	public String photo;
+	@SerializedName("average")
+	public float average;
 	@SerializedName("description")
 	public String description;
 	@SerializedName("address")
@@ -29,8 +31,6 @@ public class LocalFull {
 	public String createdAt;
 	@SerializedName("reviews")
 	public int reviews;
-	@SerializedName("checkins")
-	public int checkIns;
 	@SerializedName("tags")
 	public List<Tag> tags = null;
 
