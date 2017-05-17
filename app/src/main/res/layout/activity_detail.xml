@@ -360,7 +360,8 @@
                     android:text="@string/rate_this_rack"
                     android:textAlignment="center"
                     android:textColor="@color/mediumGray"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:visible="@{!viewModel.userRated}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

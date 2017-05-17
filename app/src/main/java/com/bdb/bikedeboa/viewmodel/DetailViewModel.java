@@ -161,5 +161,8 @@ public class DetailViewModel extends BaseObservable implements
 		this.selectedChips.remove(Integer.valueOf(id));
 	}
 
+	public boolean isUserRated() {
+		return rack.getUserRatingId() != -1;
+	}
 
 }

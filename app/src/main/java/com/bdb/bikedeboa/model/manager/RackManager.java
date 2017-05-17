@@ -209,7 +209,11 @@ public class RackManager {
 		@Override
 		public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
 			if (response.body() != null) {
-				fetchLocalFull(response.body().getLocalId());
+				ReviewResponse review = response.body();
+				fetchLocalFull(review.getLocalId()); // Trigger view update
+				realm.beginTransaction();
+				getRack(review.getLocalId()).setUserRatingId(review.getReviewId());
+				realm.commitTransaction();
 			}
 		}
 

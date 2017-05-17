@@ -104,17 +104,13 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
 		ratingDialogBinding.ratingChipCloud.setChipListener(new ChipListener() {
 			@Override
-			public void chipSelected(int i) {
-				detailViewModel.addChip(TagMap.indexToId(i));
-			}
+			public void chipSelected(int i) { detailViewModel.addChip(TagMap.indexToId(i)); }
 
 			@Override
-			public void chipDeselected(int i) {
-				detailViewModel.removeChip(TagMap.indexToId(i));
-			}
+			public void chipDeselected(int i) { detailViewModel.removeChip(TagMap.indexToId(i)); }
 		});
 
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this)
+		ratingDialog = new AlertDialog.Builder(this)
 				.setView(ratingDialogBinding.getRoot())
 				.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
 					@Override
@@ -124,11 +120,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 				})
 				.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-
-					}
-				});
-		ratingDialog = dialogBuilder.create();
+					public void onClick(DialogInterface dialog, int which) { }
+				}).create();
 	}
 
 	private View.OnClickListener getMeThere = new View.OnClickListener() {

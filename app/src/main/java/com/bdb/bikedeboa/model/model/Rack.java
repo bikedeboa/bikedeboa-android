@@ -25,6 +25,7 @@ public class Rack extends RealmObject {
 	//	private RealmList<Review> reviewList;
 	private RealmList<Tag> tagList = new RealmList<>();
 	private boolean isComplete = false;
+	private int userRatingId = -1; // If user has rated this rack, this value will be different -1
 
 	public Rack() {
 	}
@@ -105,5 +106,13 @@ public class Rack extends RealmObject {
 
 	public RealmList<Tag> getTagList() {
 		return tagList;
+	}
+
+	public int getUserRatingId() {
+		return userRatingId;
+	}
+
+	public void setUserRatingId(int userRatingId) {
+		this.userRatingId = userRatingId;
 	}
 }
