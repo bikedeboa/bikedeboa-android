@@ -3,6 +3,7 @@ package com.bdb.bikedeboa.view;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
@@ -11,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.util.Log;
 import android.util.Pair;
@@ -86,6 +88,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		binding.drawerButton.setOnClickListener(menuDrawerToggleListener);
 		binding.filterButton.setOnClickListener(filterDrawerToggleListener);
 		binding.myLocation.setOnClickListener(myLocationListener);
+		binding.addRack.setOnClickListener(addRackListener);
 
 		// Create the location client to start receiving updates
 		googleApiClient = new GoogleApiClient.Builder(getBaseContext())
@@ -267,6 +270,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 			} else {
 				EasyPermissions.requestPermissions(MapActivity.this,
 						getString(R.string.location_rationale), LOCATION_REQUEST_CODE, permission);
+			}
+		}
+	};
+
+	private View.OnClickListener addRackListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (binding.addRackView.getVisibility() == View.VISIBLE) {
+				binding.addRackView.setVisibility(View.GONE);
+				binding.addRack.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary)));
+				binding.addRack.setImageResource(R.drawable.ic_add_location_white_24dp);
+			} else {
+				binding.addRackView.setVisibility(View.VISIBLE);
+				binding.addRack.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getBaseContext(), R.color.darkerGray)));
+				binding.addRack.setImageResource(R.drawable.ic_clear_white_24dp);
 			}
 		}
 	};
