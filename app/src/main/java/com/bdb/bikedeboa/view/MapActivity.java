@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
+import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -89,6 +90,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 		binding.filterButton.setOnClickListener(filterDrawerToggleListener);
 		binding.myLocation.setOnClickListener(myLocationListener);
 		binding.addRack.setOnClickListener(addRackListener);
+		binding.addRackView.setListener(addRackViewClickListener);
 
 		// Create the location client to start receiving updates
 		googleApiClient = new GoogleApiClient.Builder(getBaseContext())
@@ -214,6 +216,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 			binding.drawerLayout.closeDrawer(GravityCompat.START);
 		} else if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
 			binding.drawerLayout.closeDrawer(GravityCompat.END);
+		} else if (binding.addRackView.getVisibility() == View.VISIBLE) {
+			binding.addRack.callOnClick();
 		} else {
 			super.onBackPressed();
 		}
@@ -286,6 +290,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 				binding.addRack.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getBaseContext(), R.color.darkerGray)));
 				binding.addRack.setImageResource(R.drawable.ic_clear_white_24dp);
 			}
+		}
+	};
+
+	private AddRackView.AddRackViewClickListener addRackViewClickListener = new AddRackView.AddRackViewClickListener() {
+		@Override
+		public void onClick(Point point) {
+			googleMap.addMarker(new MarkerOptions()
+					.position(googleMap.getProjection().fromScreenLocation(point))
+					.title("Hello world"));
+			binding.addRack.callOnClick();
 		}
 	};
 
