@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:drawable="@drawable/add_rack"
+                 tools:targetApi="lollipop">
+    <target
+        android:name="animGroup"
+        android:animation="@animator/bounce"/>
+
+    <target
+        android:name="addRackVector"
+        android:animation="@animator/alpha"/>
+</animated-vector>

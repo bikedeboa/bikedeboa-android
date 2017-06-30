@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -13,11 +14,11 @@ import com.bdb.bikedeboa.R;
 
 public class AddRackView extends View {
 
-	private VectorDrawableCompat addRack;
+	private AnimatedVectorDrawableCompat addRack;
 	private VectorDrawableCompat target;
-	private float addRackScale = 0.1F;
+	private float addRackScale = 0.15F;
 	private float targetScale = 0.25F;
-	private float innerTargetOffset = 50 * targetScale;
+	private float innerTargetOffset = 125 * targetScale;
 
 	private AddRackViewClickListener listener;
 
@@ -42,10 +43,11 @@ public class AddRackView extends View {
 
 	@SuppressWarnings("ConstantConditions")
 	private void init(Context context) {
-		addRack = VectorDrawableCompat.create(context.getResources(), R.drawable.add_rack, null);
+		addRack = AnimatedVectorDrawableCompat.create(context, R.drawable.animated_add_rack);
 		addRack.setBounds(0, 0, addRack.getIntrinsicWidth(), addRack.getIntrinsicHeight());
 		target = VectorDrawableCompat.create(context.getResources(), R.drawable.target, null);
 		target.setBounds(0, 0, target.getIntrinsicWidth(), target.getIntrinsicHeight());
+		addRack.start();
 	}
 
 	@Override
@@ -62,11 +64,14 @@ public class AddRackView extends View {
 		canvas.scale(addRackScale, addRackScale);
 		addRack.draw(canvas);
 		canvas.restore();
+
+		canvas.save();
 		float widthTranslate = (addRack.getIntrinsicWidth() * addRackScale - target.getIntrinsicWidth() * targetScale) * 0.5F;
 		float heightTranslate = (addRack.getIntrinsicHeight() * addRackScale) - innerTargetOffset;
 		canvas.translate(widthTranslate, heightTranslate);
 		canvas.scale(targetScale, targetScale);
 		target.draw(canvas);
+		canvas.restore();
 	}
 
 	@Override
