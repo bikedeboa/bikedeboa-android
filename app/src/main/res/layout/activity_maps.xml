@@ -11,12 +11,20 @@
             type="com.bdb.bikedeboa.viewmodel.MapViewModel"/>
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.DrawerLayout
-            android:id="@+id/drawer_layout"
+        <include
+            android:id="@+id/menu_drawer"
+            layout="@layout/menu_drawer"/>
+
+        <include
+            android:id="@+id/filter_drawer"
+            layout="@layout/filter_drawer"/>
+
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context="com.bdb.bikedeboa.view.MapActivity">
@@ -79,51 +87,44 @@
 
             </FrameLayout>
 
-            <include
-                android:id="@+id/menu_drawer"
-                layout="@layout/menu_drawer"/>
 
-            <include
-                android:id="@+id/filter_drawer"
-                layout="@layout/filter_drawer"/>
+            <com.bdb.bikedeboa.view.AddRackView
+                android:id="@+id/add_rack_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
 
-        </android.support.v4.widget.DrawerLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add_rack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/default_margin"
+                android:clickable="true"
+                android:src="@drawable/ic_add_location_white_24dp"
+                android:tint="@color/white"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabSize="normal"/>
 
-        <com.bdb.bikedeboa.view.AddRackView
-            android:id="@+id/add_rack_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/my_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginBottom="88dp"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:clickable="true"
+                android:src="@drawable/ic_my_location_green_24dp"
+                android:tint="@color/colorPrimary"
+                app:backgroundTint="@color/white"
+                app:fabSize="normal"
+                app:layout_anchor="@id/add_rack"
+                app:layout_anchorGravity="top"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_rack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/default_margin"
-            android:clickable="true"
-            android:src="@drawable/ic_add_location_white_24dp"
-            android:tint="@color/white"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabSize="normal"/>
+        </android.support.design.widget.CoordinatorLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/my_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginBottom="88dp"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:clickable="true"
-            android:src="@drawable/ic_my_location_green_24dp"
-            android:tint="@color/colorPrimary"
-            app:backgroundTint="@color/white"
-            app:fabSize="normal"
-            app:layout_anchor="@id/add_rack"
-            app:layout_anchorGravity="top"/>
-
-    </android.support.design.widget.CoordinatorLayout>
+    </android.support.v4.widget.DrawerLayout>
 
 
 </layout>

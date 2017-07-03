@@ -17,6 +17,7 @@ public class AddRackView extends View {
 	private AnimatedVectorDrawableCompat addRack;
 	private VectorDrawableCompat target;
 	private float addRackScale = 0.15F;
+	private float addRackIntrinsicScale = 0.7F;
 	private float targetScale = 0.25F;
 	private float innerTargetOffset = 125 * targetScale;
 
@@ -77,6 +78,13 @@ public class AddRackView extends View {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int eventAction = event.getActionMasked();
+		float touchX = event.getX();
+		float touchY = event.getY();
+
+		if (!insidePin(touchX, touchY)) {
+			return false;
+		}
+
 		switch (eventAction) {
 			case MotionEvent.ACTION_DOWN:
 				int centerX = (int) ((getLeft() + getRight()) * 0.5F);
@@ -88,6 +96,18 @@ public class AddRackView extends View {
 				return true;
 		}
 		return false;
+	}
+
+	public boolean insidePin(float x, float y) {
+		// check if inside the bounds of the pin
+		// calculate the radius from the coordinates to the center of the pin
+		double pinRadius = addRack.getIntrinsicWidth() * addRackScale * addRackIntrinsicScale * 0.5F;
+		double exactCenterX = getWidth() * 0.5F;
+		double exactCenterY = getHeight() * 0.5F;
+		double cathetusXSquared = Math.pow(exactCenterX - x, 2);
+		double cathetusYSquared = Math.pow(exactCenterY - y, 2);
+		double hypotenuse = Math.sqrt(cathetusXSquared + cathetusYSquared);
+		return hypotenuse < pinRadius;
 	}
 
 	public interface AddRackViewClickListener {

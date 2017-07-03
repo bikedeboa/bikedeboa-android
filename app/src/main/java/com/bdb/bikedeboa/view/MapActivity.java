@@ -19,6 +19,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 
 import com.bdb.bikedeboa.R;
 import com.bdb.bikedeboa.databinding.ActivityMapsBinding;
@@ -287,6 +288,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 				binding.addRack.setImageResource(R.drawable.ic_add_location_white_24dp);
 			} else {
 				binding.addRackView.setVisibility(View.VISIBLE);
+				TranslateAnimation animation = new TranslateAnimation(0, 0, -1000, 0);
+				animation.setDuration(500);
+				binding.addRackView.startAnimation(animation);
 				binding.addRack.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getBaseContext(), R.color.darkerGray)));
 				binding.addRack.setImageResource(R.drawable.ic_clear_white_24dp);
 			}
